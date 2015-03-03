@@ -35,13 +35,17 @@ set ttyfast
 set textwidth=120
 set nowrap
 set number
-set textwidth=0 
+set textwidth=0
 set wrapmargin=0
 set background=dark
 set hlsearch
+
+"Tab settings
 set tabstop=4
 set shiftwidth=4
 set expandtab
+set softtabstop=4
+
 colorscheme blackboard
 
 " Pylint configuration file
@@ -71,3 +75,8 @@ let g:miniBufExplModSelTarget = 1
 "Airline
 set laststatus=2
 let g:airline_powerline_fonts = 1
+
+"Semantic highlight
+:nnoremap <Leader>s :SemanticHighlightToggle<cr>
+let s:semanticGUIColors = [ '#72d572', '#c5e1a5', '#e6ee9c', '#fff59d', '#ffe082', '#ffcc80', '#ffab91', '#bcaaa4', '#b0bec5', '#ffa726', '#ff8a65', '#f9bdbb', '#f9bdbb', '#f8bbd0', '#e1bee7', '#d1c4e9', '#ffe0b2', '#c5cae9', '#d0d9ff', '#b3e5fc', '#b2ebf2', '#b2dfdb', '#a3e9a4', '#dcedc8' , '#f0f4c3', '#ffb74d' ]
+
