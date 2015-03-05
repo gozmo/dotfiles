@@ -15,5 +15,4 @@ git clone https://github.com/jaxbot/semantic-highlight.vim.git
 git clone https://github.com/bling/vim-airline.git
 git clone https://github.com/tpope/vim-fugitive.git
 git clone https://github.com/bronson/vim-trailing-whitespace.git
-git clone https://github.com/rickharris/vim-blackboard.git
 git clone https://github.com/scrooloose/nerdcommenter.git
