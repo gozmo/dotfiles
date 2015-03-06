@@ -6,10 +6,12 @@ if exists('+colorcolumn') | set colorcolumn=80,120 | endif
 " If you want the cursor to start in main window
 autocmd VimEnter * wincmd p
 
-nnoremap <F3> :buffers<CR>:buffer<Space>
 nmap <silent> <F2> :NERDTreeToggle<CR>
-nmap <silent> <F5> :CtrlPBuffer<CR>
+nnoremap <F3> :buffers<CR>:buffer<Space>
+nmap <silent> <F4> :CtrlPBuffer<CR>
 nmap <silent> <F5> :MiniBufExplorer<CR>
+nmap <silent> <F5> :GundoToggle <CR>
+
 nmap <C-t> :CtrlP /home/pontus/projects/trunk
 
 for n in range(1, 9)
@@ -39,6 +41,7 @@ set textwidth=0
 set wrapmargin=0
 set background=dark
 set hlsearch
+set ignorecase
 
 "Tab settings
 set tabstop=4
