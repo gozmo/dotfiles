@@ -42,6 +42,7 @@ set wrapmargin=0
 set background=dark
 set hlsearch
 set ignorecase
+set noequalalways
 "Tab settings
 set tabstop=4
 set shiftwidth=4
