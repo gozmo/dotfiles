@@ -32,6 +32,8 @@ vnoremap <silent> # :<C-U>
 
 let g:NERDTreeWinSize=31
 
+filetype plugin indent on
+syntax on
 set t_Co=256
 set ttyfast
 set textwidth=120
@@ -42,6 +44,7 @@ set wrapmargin=0
 set background=dark
 set hlsearch
 set ignorecase
+set noequalalways
 
 "Tab settings
 set tabstop=4
