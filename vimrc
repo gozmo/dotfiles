@@ -45,6 +45,8 @@ set background=dark
 set hlsearch
 set ignorecase
 set noequalalways
+set encoding=utf-8
+setglobal fileencoding=utf-8
 
 "Tab settings
 set tabstop=4
