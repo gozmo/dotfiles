@@ -13,6 +13,7 @@ nmap <silent> <F5> :MiniBufExplorer<CR>
 nmap <silent> <F5> :GundoToggle <CR>
 
 nmap <C-t> :CtrlP /home/pontus/projects/trunk
+nmap <C-s> :CtrlpBuffer
 
 for n in range(1, 9)
   exe "nnoremap <silent> <M-".n."> :".n."wincmd w<CR>"
