@@ -12,8 +12,8 @@ nmap <silent> <F4> :CtrlPBuffer<CR>
 nmap <silent> <F5> :MiniBufExplorer<CR>
 nmap <silent> <F5> :GundoToggle <CR>
 
-nmap <C-t> :CtrlP /home/pontus/projects/trunk
-nmap <C-s> :CtrlpBuffer
+map <C-t> :CtrlP /home/pontus/projects/trunk
+map <C-s> :CtrlPBuffer
 
 for n in range(1, 9)
   exe "nnoremap <silent> <M-".n."> :".n."wincmd w<CR>"
@@ -46,6 +46,7 @@ set background=dark
 set hlsearch
 set ignorecase
 set noequalalways
+set showmatch
 set encoding=utf-8
 setglobal fileencoding=utf-8
 
