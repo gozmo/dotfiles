@@ -1,4 +1,4 @@
-l -s vimrc ../.vimrc
+ln -s vimrc ../.vimrc
 
 git clone https://github.com/tpope/vim-pathogen.git
 mv vim-pathogen/autoload .
