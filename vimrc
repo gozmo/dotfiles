@@ -13,7 +13,7 @@ nmap <silent> <F4> :CtrlPBuffer<CR>
 nmap <silent> <F5> :MiniBufExplorer<CR>
 nmap <silent> <F5> :GundoToggle <CR>
 
-map <C-t> :CtrlP /home/pontus/projects/trunk
+map <C-t> :CtrlP /home/pontus/projects/
 map <C-s> :CtrlPBuffer
 
 for n in range(1, 9)
