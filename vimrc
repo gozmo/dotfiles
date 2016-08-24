@@ -93,3 +93,6 @@ let s:semanticGUIColors = [ '#72d572', '#c5e1a5', '#e6ee9c', '#fff59d', '#ffe082
 
 set wildignore+=*.png,*.jpg,*.jpeg,*/build/*,*.pyc,*.log,*/log/*,*/logs/*,*.log.*,*.class
 let g:miniBufExplVSplit = 30
+
+"Fugitive
+set diffopt+=vertical
