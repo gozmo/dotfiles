@@ -7,11 +7,9 @@ if exists('+colorcolumn') | set colorcolumn=80,120 | endif
 autocmd VimEnter * wincmd p
 
 nmap <silent> <F2> :NERDTreeToggle<CR>
-"nnoremap <F3> :buffers<CR>:buffer<Space>"
 nmap <silent> <F3> :MBEToggle<CR>
 nmap <silent> <F4> :CtrlPBuffer<CR>
-nmap <silent> <F5> :MiniBufExplorer<CR>
-nmap <silent> <F5> :GundoToggle <CR>
+nnoremap <F5> :UndotreeToggle<cr>
 
 map <C-t> :CtrlP /home/pontus/projects/
 map <C-s> :CtrlPBuffer
@@ -96,3 +94,43 @@ let g:miniBufExplVSplit = 30
 
 "Fugitive
 set diffopt+=vertical
+
+"Undotree
+if has("persistent_undo")
+    set undodir=~/.undodir/
+    set undofile
+endif
+
+if !exists('g:undotree_WindowLayout')
+    let g:undotree_WindowLayout = 1
+endif
+
+" undotree window width
+if !exists('g:undotree_SplitWidth')
+    if exists('g:undotree_ShortIndicators')
+        let g:undotree_SplitWidth = 24
+    else
+        let g:undotree_SplitWidth = 30
+    endif
+endif
+
+" diff window height
+if !exists('g:undotree_DiffpanelHeight')
+    let g:undotree_DiffpanelHeight = 10
+endif
+
+" if set, let undotree window get focus after being opened, otherwise
+" focus will stay in current window.
+if !exists('g:undotree_SetFocusWhenToggle')
+    let g:undotree_SetFocusWhenToggle = 0
+endif
+
+" relative timestamp
+if !exists('g:undotree_RelativeTimestamp')
+    let g:undotree_RelativeTimestamp = 1
+endif
+
+" Highlight changed text
+if !exists('g:undotree_HighlightChangedText')
+    let g:undotree_HighlightChangedText = 1
+endif
