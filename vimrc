@@ -134,3 +134,5 @@ endif
 if !exists('g:undotree_HighlightChangedText')
     let g:undotree_HighlightChangedText = 1
 endif
+
+set autoread
