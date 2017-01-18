@@ -18,3 +18,4 @@ git clone https://github.com/fholgado/minibufexpl.vim.git
 git clone https://github.com/gdetrez/vim-gf.git
 git clone https://github.com/scrooloose/syntastic.git
 git clone https://github.com/mbbill/undotree.git
+git clone --recursive https://github.com/davidhalter/jedi-vim.git
