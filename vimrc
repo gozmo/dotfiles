@@ -136,3 +136,6 @@ if !exists('g:undotree_HighlightChangedText')
 endif
 
 set autoread
+
+" If installed using git
+set rtp+=~/.fzf

@@ -19,3 +19,5 @@ git clone https://github.com/gdetrez/vim-gf.git
 git clone https://github.com/scrooloose/syntastic.git
 git clone https://github.com/mbbill/undotree.git
 git clone --recursive https://github.com/davidhalter/jedi-vim.git
+git clone https://github.com/jceb/vim-orgmode.git
+git clone git://github.com/tpope/vim-speeddating.git
