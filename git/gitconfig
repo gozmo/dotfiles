@@ -1,0 +1,15 @@
+[alias]
+    co = checkout
+    cob = checkout -b
+    coo = !git fetch && git checkout
+    br = branch
+    st = status
+    cm = commit -m
+    cam = commit -a -m
+    amend = commit --amend -m
+    master = !git checkout master && git pull origin 
+    po = push origin
+    plo = pull origin
+[user]
+	name = pontus
+	email = you@example.com

@@ -1,23 +1,4 @@
-ln -s vimrc ../.vimrc
-
-git clone https://github.com/tpope/vim-pathogen.git
-mv vim-pathogen/autoload .
-rm -fr vim-pathogen
-
-mkdir bundle
-cd bundle
-git clone https://github.com/mileszs/ack.vim.git
-git clone https://github.com/kien/ctrlp.vim.git
-git clone https://github.com/scrooloose/nerdtree.git
-git clone https://github.com/jaxbot/semantic-highlight.vim.git
-git clone https://github.com/bling/vim-airline.git
-git clone https://github.com/tpope/vim-fugitive.git
-git clone https://github.com/bronson/vim-trailing-whitespace.git
-git clone https://github.com/scrooloose/nerdcommenter.git
-git clone https://github.com/fholgado/minibufexpl.vim.git
-git clone https://github.com/gdetrez/vim-gf.git
-git clone https://github.com/scrooloose/syntastic.git
-git clone https://github.com/mbbill/undotree.git
-git clone --recursive https://github.com/davidhalter/jedi-vim.git
-git clone https://github.com/jceb/vim-orgmode.git
-git clone git://github.com/tpope/vim-speeddating.git
+bash ./vim/setup_vim.sh
+bash ./git/setup_git.sh
+bash ./bash/setup_bash.sh
+bash ./tmux/setup_tmux.sh
