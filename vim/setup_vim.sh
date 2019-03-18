@@ -1,9 +1,9 @@
 ln -s "${PWD}/vim/vimrc" ~/.vimrc
 
+
 mkdir -p ~/.vim
 
-cp -r colors ~/.vim
-
+cp -r "${PWD}/vim/colors" ~/.vim/
 cd ~/.vim
 
 git clone https://github.com/tpope/vim-pathogen.git
