@@ -88,6 +88,11 @@ let g:miniBufExplVSplit = 30
 "Fugitive config
 set diffopt+=vertical
 
+"CtrlP config
+
+"root dir is nearest ancestor with .git in it
+let g:ctrlp_working_path_mode = 'r'
+
 "Undotree config
 if has("persistent_undo")
     set undodir=~/.undodir/
