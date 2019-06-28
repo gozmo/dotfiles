@@ -1,11 +1,15 @@
 execute pathogen#infect()
 
-if exists('+colorcolumn') | set colorcolumn=80,120 | endif
+
+" Show a red column and linewidth 120
+if exists('+colorcolumn') | set colorcolumn=120 | endif
 
 " autocmd VimEnter * NERDTree
 " If you want the cursor to start in main window
 autocmd VimEnter * wincmd p
 
+
+" Keymappings
 nmap <silent> <F2> :NERDTreeToggle<CR>
 nmap <silent> <F3> :MBEToggle<CR>
 nmap <silent> <F4> :CtrlPBuffer<CR>
@@ -13,10 +17,6 @@ nnoremap <F5> :UndotreeToggle<cr>
 
 map <C-t> :CtrlP /home/pontus/projects/
 map <C-s> :CtrlPBuffer
-
-for n in range(1, 9)
-  exe "nnoremap <silent> <M-".n."> :".n."wincmd w<CR>"
-endfor
 
 "Search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>
@@ -30,23 +30,21 @@ vnoremap <silent> # :<C-U>
   \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
 
-let g:NERDTreeWinSize=31
-
 filetype plugin indent on
 syntax on
-set t_Co=256
-set ttyfast
-set textwidth=120
-set nowrap
-set number
-set textwidth=0
-set wrapmargin=0
+set autoread
 set background=dark
+set encoding=utf-8
 set hlsearch
 set ignorecase
 set noequalalways
+set nowrap
+set number
 set showmatch
-set encoding=utf-8
+set t_Co=256
+set textwidth=120
+set ttyfast
+set wrapmargin=0
 setglobal fileencoding=utf-8
 
 "Tab settings
@@ -57,31 +55,26 @@ set softtabstop=4
 
 colorscheme blackboard
 
-" Pylint configuration file
-" If file not found use 'pylintrc' from python-mode plugin directory
-let g:pymode_lint_config = "$HOME/.pylintrc"
-
 if has('gui_running')
   set guifont=Monospace
 endif
 
-"Syntastic config
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
 
-"Minibuf expl config
+""""""""""""""""""
+" Plugin configs "
+""""""""""""""""""
+
+" Nerdtree config
+let g:NERDTreeWinSize=31
+
+"Minibuf config
 let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplMapWindowNavArrows = 1
 let g:miniBufExplMapCTabSwitchBufs = 1
 let g:miniBufExplModSelTarget = 1
 
-"Airline
+"Airline config
 set laststatus=2
 let g:airline_powerline_fonts = 1
 
@@ -92,10 +85,10 @@ let s:semanticGUIColors = [ '#72d572', '#c5e1a5', '#e6ee9c', '#fff59d', '#ffe082
 set wildignore+=*.png,*.jpg,*.jpeg,*/build/*,*.pyc,*.log,*/log/*,*/logs/*,*.log.*,*.class
 let g:miniBufExplVSplit = 30
 
-"Fugitive
+"Fugitive config
 set diffopt+=vertical
 
-"Undotree
+"Undotree config
 if has("persistent_undo")
     set undodir=~/.undodir/
     set undofile
@@ -135,7 +128,11 @@ if !exists('g:undotree_HighlightChangedText')
     let g:undotree_HighlightChangedText = 1
 endif
 
-set autoread
 
 " If installed using git
 set rtp+=~/.fzf
+
+for n in range(1, 9)
+  exe "nnoremap <silent> <M-".n."> :".n."wincmd w<CR>"
+endfor
+
