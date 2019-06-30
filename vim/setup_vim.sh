@@ -27,3 +27,4 @@ git clone https://github.com/szw/vim-tags.git
 git clone https://github.com/jceb/vim-orgmode.git
 git clone git://github.com/tpope/vim-speeddating.git #Dep for orgmode
 git clone https://github.com/szw/vim-tags.git
+git clone git://github.com/majutsushi/tagbar

@@ -13,6 +13,7 @@ autocmd VimEnter * wincmd p
 nmap <silent> <F2> :NERDTreeToggle<CR>
 nmap <silent> <F3> :MBEToggle<CR>
 nnoremap <F4> :UndotreeToggle<cr>
+nmap <F5> :TagbarToggle<CR>
 
 "Search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>
