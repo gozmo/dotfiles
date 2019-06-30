@@ -1,0 +1,9 @@
+NerdTree
+
+NerdCommenter
+
+CtrlP
+
+zoomwin
+
+

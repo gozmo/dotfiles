@@ -1,19 +1,16 @@
 execute pathogen#infect()
 
+let mapleader=" "
 
 " Show a red column and linewidth 120
 if exists('+colorcolumn') | set colorcolumn=120 | endif
 
-" autocmd VimEnter * NERDTree
-" If you want the cursor to start in main window
-autocmd VimEnter * wincmd p
-
-
-" Keymappings
+" F-key mappings
 nmap <silent> <F2> :NERDTreeToggle<CR>
 nmap <silent> <F3> :MBEToggle<CR>
 nnoremap <F4> :UndotreeToggle<cr>
 nmap <F5> :TagbarToggle<CR>
+nmap <F12> :sp ~/.vim/useful_bindings.txt<cr>
 
 "Search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>
