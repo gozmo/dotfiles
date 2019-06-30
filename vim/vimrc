@@ -12,11 +12,7 @@ autocmd VimEnter * wincmd p
 " Keymappings
 nmap <silent> <F2> :NERDTreeToggle<CR>
 nmap <silent> <F3> :MBEToggle<CR>
-nmap <silent> <F4> :CtrlPBuffer<CR>
-nnoremap <F5> :UndotreeToggle<cr>
-
-map <C-t> :CtrlP /home/pontus/projects/
-map <C-s> :CtrlPBuffer
+nnoremap <F4> :UndotreeToggle<cr>
 
 "Search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>
@@ -46,6 +42,8 @@ set textwidth=120
 set ttyfast
 set wrapmargin=0
 setglobal fileencoding=utf-8
+
+set wildignore=*.json,*.jpg,*.csv
 
 "Tab settings
 set tabstop=4
