@@ -30,3 +30,4 @@ git clone https://github.com/chrisbra/NrrwRgn
 git clone https://github.com/tpope/vim-surround
 git clone https://github.com/airblade/vim-gitgutter
 git clone https://github.com/vim-scripts/ZoomWin
+git clone https://github.com/junegunn/fzf.vim

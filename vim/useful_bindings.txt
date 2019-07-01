@@ -17,23 +17,11 @@ Semantic highlight
 url: https:/hub.com/jaxbot/semantic-highlight.vim
     <Leader>s : Enable semantic highlight
 
-CtrlP
-url: https:/hub.com/kien/ctrlp.vim
-
-    <c-p>
-    :CtrlP
-    :CtrlPMixed
-    :CtrlPBuffer
-
 Zoomwin
 url: https://github.com/vim-scripts/ZoomWin
 
     <c-w>o : the current window zooms into a full screen
     <c-w>o again: the previous set of windows is restored
-
-Ack
-url: https:/hub.com/mileszs/ack.vim
-    <leader>a : Get a prompt with ack
 
 Fugitive
 url: https://github.com/tpope/vim-fugitive
