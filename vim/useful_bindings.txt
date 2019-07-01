@@ -1,9 +1,78 @@
 NerdTree
+url: https:/hub.com/scrooloose/nerdtree
+    <F2> :toggle nerdtree
+    
+    <F5> in nerdtree to refresh tree
+
 
 NerdCommenter
+url: https:/hub.com/scrooloose/nerdcommenter
+
+    <num><leader>cc : Comment lines
+
+    In visual:
+    <leader>cc : comment region
+
+Semantic highlight
+url: https:/hub.com/jaxbot/semantic-highlight.vim
+    <Leader>s : Enable semantic highlight
 
 CtrlP
+url: https:/hub.com/kien/ctrlp.vim
 
-zoomwin
+    <c-p>
+    :CtrlP
+    :CtrlPMixed
+    :CtrlPBuffer
+
+Zoomwin
+url: https://github.com/vim-scripts/ZoomWin
+
+    <c-w>o : the current window zooms into a full screen
+    <c-w>o again: the previous set of windows is restored
+
+Ack
+url: https:/hub.com/mileszs/ack.vim
+    <leader>a : Get a prompt with ack
+
+Fugitive
+url: https://github.com/tpope/vim-fugitive
+
+    :Gblame
+    :Gdiff
+    :Gstatus
+    :Gcommit
+    :Gmove : git mv, renames buffer and file
+    :Gwrite : git add
+
+Minibufexpl
+url: https:/hub.com/fholgado/minibufexpl.vim
+    <F3> : toggle buffer window to the left
+
+undotree
+url: https:/hub.com/mbbill/undotree
+    <F4> : toggle undotree to the left
 
 
+Tagbar
+url: https:/hub.com/majutsushi/tagbar
+    <F5> : toggle tagbar to the right
+
+Easy motion
+url: https:/hub.com/easymotion/vim-easymotion
+     <leader><leader>w
+     <leader><leader>f
+
+Narrowregion
+url: https:/hub.com/chrisbra/NrrwRgn
+    :NR! : opens selected region in n new narrowed buffer
+
+Vimgutter
+url: https:/hub.com/airblade/vimgutter
+    <leader>hp : preview
+    <leader>hs : stage
+    <leader>hu : undo
+
+Orgmode
+url: https:/hub.com/jceb/vim-orgmode
+    TODO

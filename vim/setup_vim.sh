@@ -21,7 +21,6 @@ git clone https://github.com/tpope/vim-fugitive.git
 git clone https://github.com/bronson/vim-trailing-whitespace.git
 git clone https://github.com/fholgado/minibufexpl.vim.git
 git clone https://github.com/mbbill/undotree.git
-git clone https://github.com/szw/vim-tags.git
 git clone https://github.com/jceb/vim-orgmode.git
 git clone git://github.com/tpope/vim-speeddating.git #Dep for orgmode
 git clone git://github.com/majutsushi/tagbar

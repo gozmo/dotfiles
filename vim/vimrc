@@ -61,8 +61,11 @@ endif
 " Plugin configs "
 """"""""""""""""""
 
+" Ack
+:nnoremap <Leader>a :Ack 
+
 " Nerdtree config
-let g:NERDTreeWinSize=31
+let g:NERDTreeWinSize=31 "This doesn't work on some systems
 
 "Minibuf config
 let g:miniBufExplMapWindowNavVim = 1
