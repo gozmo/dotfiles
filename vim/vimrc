@@ -24,6 +24,15 @@ vnoremap <silent> # :<C-U>
   \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
 
+" Search and replace the word under the cursor
+nnoremap <leader>* :%s/\<<c-r><c-w>\>//g<left><left>
+
+" Moving a line up or down
+nnoremap <c-k> :m-2<cr>==
+nnoremap <c-j> :m+<cr>==
+xnoremap <c-k> :m-2<cr>gv=gv
+xnoremap <c-j> :m'>+<cr>gv=gv
+
 filetype plugin indent on
 syntax on
 set autoread
