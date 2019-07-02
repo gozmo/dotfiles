@@ -1,2 +1,3 @@
 powerline-shell
 black
+jedi
