@@ -14,18 +14,33 @@ HISTFILESIZE=200000
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-parse_git_branch() {
-    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+####
+# powerline-shell 
+####
+function _update_ps1() {
+    PS1=$(powerline-shell $?)
 }
-#export PS1="\u@\h \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
-#export PROMPT_COMMAND="echo -n \[\$(date +%H:%M:%S)\]\ "
-#http://bashrcgenerator.com/
-export PS1="\[\033[38;5;9m\][\[$(tput sgr0)\]\[\033[38;5;249m\]\T\[$(tput sgr0)\]\[\033[38;5;9m\]]\[$(tput sgr0)\]\[\033[38;5;15m\] \[$(tput sgr0)\]\[\033[38;5;75m\]\u\[$(tput sgr0)\]\[\033[38;5;202m\]@\[$(tput sgr0)\]\[\033[38;5;38m\]\h\[$(tput sgr0)\]\[\033[38;5;15m\] \[$(tput sgr0)\]\[\033[38;5;157m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]\[$(tput sgr0)\]\[\033[33m\]\$(parse_git_branch)\[\033[00m\]> "
+
+if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
+    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+fi
+
+####
+# fzf
+###
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
+####
+# java
+####
+
 # Java debugging
 export JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
+
+####
+# tmux
+####
 
 #Start tmux on every login
 [[ $- != *i* ]] && return
