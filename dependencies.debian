@@ -1,0 +1,8 @@
+apt-get install vim
+apt-get install git
+apt-get install tmux
+apt-get install fzf
+apt-get install ripgrep
+apt-get install ctags
+apt-get install fonts-powerline
+
