@@ -1,3 +1,11 @@
+FZF
+
+    <leader>f : search 
+
+    <c-s> open file hor split
+    <c-v> open file vert split
+    <c-t> new tab
+
 NerdTree
 url: https:/hub.com/scrooloose/nerdtree
     <F2> :toggle nerdtree
