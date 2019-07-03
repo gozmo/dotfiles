@@ -1,8 +1,12 @@
 apt-get install vim
 apt-get install git
 apt-get install tmux
-apt-get install fzf
-apt-get install ripgrep
 apt-get install ctags
 apt-get install fonts-powerline
 
+
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
+
+wget https://github.com/BurntSushi/ripgrep/releases/download/11.0.1/ripgrep_11.0.1_amd64.deb
+sudo dpkg -i ripgrep_11.0.1_amd64.deb
