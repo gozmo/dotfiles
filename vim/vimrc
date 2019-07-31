@@ -144,5 +144,5 @@ endfor
 "FZF
 
 :nnoremap <Leader>f :FZF<cr>
-:nnoremap <Leader>r :Rg<cr>
+:nnoremap <Leader>g :Rg<cr>
 

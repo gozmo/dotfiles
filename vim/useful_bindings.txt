@@ -1,6 +1,12 @@
-FZF
+Norm mode:
+* : search for string 
 
-    <leader>f : search 
+
+FZF
+url: https://github.com/junegunn/fzf/blob/master/README-VIM.md
+
+    <leader>f : search file
+    <leader>r : search string
 
     <c-s> open file hor split
     <c-v> open file vert split
