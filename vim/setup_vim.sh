@@ -5,6 +5,13 @@ ln -s "${PWD}/vim/useful_bindings.txt" ~/.vim/useful_bindings.txt
 cp -r "${PWD}/vim/colors" ~/.vim/
 cd ~/.vim
 
+sudo apt-get install exuberant-ctags
+
+# ripgrep
+sudo add-apt-repository ppa:x4121/ripgrep
+sudo apt-get update
+sudo apt-get install ripgrep
+
 git clone https://github.com/tpope/vim-pathogen.git
 mv vim-pathogen/autoload .
 rm -fr vim-pathogen
