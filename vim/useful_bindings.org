@@ -1,0 +1,86 @@
+* Norm mode:
+    * : search for string 
+
+
+* FZF
+    url: https://github.com/junegunn/fzf/blob/master/README-VIM.md
+
+    <leader>f : search file
+    <leader>r : search string
+
+    <c-s> open file hor split
+    <c-v> open file vert split
+    <c-t> new tab
+
+* NerdTree
+    url: https:/hub.com/scrooloose/nerdtree
+    <F2> :toggle nerdtree
+    
+    <F5> in nerdtree to refresh tree
+
+
+* NerdCommenter
+    url: https:/hub.com/scrooloose/nerdcommenter
+
+    <num><leader>cc : Comment lines
+
+    In visual:
+    <leader>cc : comment region
+
+* Semantic highlight
+    url: https:/hub.com/jaxbot/semantic-highlight.vim
+
+    <Leader>s : Enable semantic highlight
+
+* Zoomwin
+    url: https://github.com/vim-scripts/ZoomWin
+
+    <c-w>o : the current window zooms into a full screen
+    <c-w>o again: the previous set of windows is restored
+
+* Fugitive
+    url: https://github.com/tpope/vim-fugitive
+
+    :Gblame
+    :Gdiff
+    :Gstatus
+    :Gcommit
+    :Gmove : git mv, renames buffer and file
+    :Gwrite : git add
+
+* Minibufexpl
+    url: https:/hub.com/fholgado/minibufexpl.vim
+        <F3> : toggle buffer window to the left
+
+* undotree
+    url: https:/hub.com/mbbill/undotree
+        <F4> : toggle undotree to the left
+
+
+* Tagbar
+    url: https:/hub.com/majutsushi/tagbar
+        <F5> : toggle tagbar to the right
+
+* Easy motion
+    url: https:/hub.com/easymotion/vim-easymotion
+         <leader><leader>w
+         <leader><leader>f
+
+* Narrowregion
+    url: https:/hub.com/chrisbra/NrrwRgn
+        :NR! : opens selected region in n new narrowed buffer
+
+* Vimgutter
+    url: https:/hub.com/airblade/vimgutter
+        <leader>hp : preview
+        <leader>hs : stage
+        <leader>hu : undo
+
+* Orgmode
+    url: https:/hub.com/jceb/vim-orgmode
+        TODO
+
+
+* Neat Commands
+ ** Sorting
+    sort csv on 2 column: sort n  /[^,]*,/
