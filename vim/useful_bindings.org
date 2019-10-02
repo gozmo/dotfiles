@@ -82,5 +82,5 @@
 
 
 * Neat Commands
- ** Sorting
+** Sorting
     sort csv on 2 column: sort n  /[^,]*,/
