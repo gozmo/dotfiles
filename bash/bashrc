@@ -35,7 +35,7 @@ function _update_ps1() {
 # python
 ####
 
-export PYTHONSTARTUP=~./.dotfiles/python/startup.py
+export PYTHONSTARTUP=~/.dotfiles/python/startup.py
 
 ####
 # java
