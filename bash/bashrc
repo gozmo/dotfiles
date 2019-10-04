@@ -32,6 +32,12 @@ function _update_ps1() {
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 ####
+# python
+####
+
+export PYTHONSTARTUP=~./.dotfiles/python/startup.py
+
+####
 # java
 ####
 
