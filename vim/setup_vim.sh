@@ -7,6 +7,10 @@ cd ~/.vim
 
 sudo apt-get install exuberant-ctags
 
+#fzf
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
+
 # ripgrep
 sudo add-apt-repository ppa:x4121/ripgrep
 sudo apt-get update

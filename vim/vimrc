@@ -145,4 +145,5 @@ endfor
 
 :nnoremap <Leader>f :FZF<cr>
 :nnoremap <Leader>g :Rg<cr>
+:nnoremap <Leader>b :Buffers<cr>
 
