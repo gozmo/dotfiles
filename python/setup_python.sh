@@ -1,1 +1,3 @@
-pip3 install --user pudb
+python3 -m pip install --user pudb
+
+git clone https://github.com/pyenv/pyenv.git ~/.pyenv

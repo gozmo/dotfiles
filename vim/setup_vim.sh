@@ -40,7 +40,7 @@ git clone https://github.com/ludovicchabant/vim-gutentags
 git clone https://github.com/airblade/vim-gitgutter
 git clone https://github.com/junegunn/fzf.vim
 git clone https://github.com/vimwiki/vimwiki.git
-git clons https://github.com/junegunn/goyo.vim.git
+git clone https://github.com/junegunn/goyo.vim.git
 
 #themes
 git clone https://github.com/lisposter/vim-blackboard.git
@@ -49,6 +49,7 @@ git clone https://github.com/ayu-theme/ayu-vim.git
 git clone https://github.com/drewtempelmeyer/palenight.vim.git
 git clone https://github.com/morhetz/gruvbox.git
 git clone https://github.com/jacoborus/tender.vim.git
+git clone https://github.com/junegunn/seoul256.vim.git
 
 # Remove?
 git clone https://github.com/jaxbot/semantic-highlight.vim.git
