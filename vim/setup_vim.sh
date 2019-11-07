@@ -38,6 +38,14 @@ git clone https://github.com/airblade/vim-gitgutter
 git clone https://github.com/junegunn/fzf.vim
 git clone https://github.com/vimwiki/vimwiki.git
 
+#themes
+git clone https://github.com/lisposter/vim-blackboard.git
+git clone https://github.com/arcticicestudio/nord-vim.git
+git clone https://github.com/ayu-theme/ayu-vim.git
+git clone https://github.com/drewtempelmeyer/palenight.vim.git
+git clone https://github.com/morhetz/gruvbox.git
+git clone https://github.com/jacoborus/tender.vim.git
+
 # Remove?
 git clone https://github.com/jaxbot/semantic-highlight.vim.git
 git clone --recursive https://github.com/davidhalter/jedi-vim.git
