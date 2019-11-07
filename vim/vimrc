@@ -147,3 +147,7 @@ endfor
 :nnoremap <Leader>g :Rg<cr>
 :nnoremap <Leader>b :Buffers<cr>
 
+"Goyo
+
+:nnoremap <Leader>d :Goyo<cr>
+

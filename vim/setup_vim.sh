@@ -37,6 +37,7 @@ git clone https://github.com/ludovicchabant/vim-gutentags
 git clone https://github.com/airblade/vim-gitgutter
 git clone https://github.com/junegunn/fzf.vim
 git clone https://github.com/vimwiki/vimwiki.git
+git clons https://github.com/junegunn/goyo.vim.git
 
 #themes
 git clone https://github.com/lisposter/vim-blackboard.git
