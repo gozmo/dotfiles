@@ -1,5 +1,4 @@
-execute pathogen#infect()
-
+execute pathogen#infect() 
 let mapleader=" "
 
 " Show a red column and linewidth 120
@@ -146,6 +145,11 @@ endfor
 :nnoremap <Leader>f :FZF<cr>
 :nnoremap <Leader>g :Rg<cr>
 :nnoremap <Leader>b :Buffers<cr>
+:nnoremap <Leader>t :BTags<cr>
+
+" Semantic highlight
+:nnoremap <Leader>h :SemanticHighlightToggle<cr>
+let g:semanticGUIColors = [30,66,100,172,69,22,24] 
 
 "Goyo
 

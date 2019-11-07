@@ -2,18 +2,21 @@ mkdir -p ~/.vim
 
 ln -s "${PWD}/vim/vimrc" ~/.vimrc
 ln -s "${PWD}/vim/useful_bindings.txt" ~/.vim/useful_bindings.txt
-cp -r "${PWD}/vim/colors" ~/.vim/
 cd ~/.vim
 
 
 #fzf
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install
+if ! type "$fzf" > /dev/null; then
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    ~/.fzf/install
+fi
 
 # ripgrep
-sudo add-apt-repository ppa:x4121/ripgrep
-sudo apt-get update
-sudo apt-get install ripgrep
+if ! type "$rg" > /dev/null; then
+    sudo add-apt-repository ppa:x4121/ripgrep
+    sudo apt-get update
+    sudo apt-get install ripgrep
+fi
 
 git clone https://github.com/tpope/vim-pathogen.git
 mv vim-pathogen/autoload .
