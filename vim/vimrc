@@ -58,7 +58,7 @@ set shiftwidth=4
 set expandtab
 set softtabstop=4
 
-colorscheme blackboard
+colorscheme grubox
 
 if has('gui_running')
   set guifont=Monospace
