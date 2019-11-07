@@ -58,7 +58,7 @@ set shiftwidth=4
 set expandtab
 set softtabstop=4
 
-colorscheme grubox
+colorscheme gruvbox
 
 if has('gui_running')
   set guifont=Monospace
