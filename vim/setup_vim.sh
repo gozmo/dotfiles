@@ -5,7 +5,6 @@ ln -s "${PWD}/vim/useful_bindings.txt" ~/.vim/useful_bindings.txt
 cp -r "${PWD}/vim/colors" ~/.vim/
 cd ~/.vim
 
-sudo apt-get install exuberant-ctags
 
 #fzf
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
@@ -20,24 +19,28 @@ git clone https://github.com/tpope/vim-pathogen.git
 mv vim-pathogen/autoload .
 rm -fr vim-pathogen
 
-mkdir ~/.vim/bundle
-cd ~/.vim/bundle
+export BUNDLE_DIR=~/.vim/bundle
+if [ -d "$BUNDLE_DIR" ]; then
+    rm -fr $BUNDLE_DIR
+fi
+
+mkdir $BUNDLE_DIR
+cd $BUNDLE_DIR
 git clone https://github.com/scrooloose/nerdtree.git
 git clone https://github.com/scrooloose/nerdcommenter.git
-git clone https://github.com/jaxbot/semantic-highlight.vim.git
 git clone https://github.com/bling/vim-airline.git
 git clone https://github.com/tpope/vim-fugitive.git
-git clone https://github.com/bronson/vim-trailing-whitespace.git
-git clone https://github.com/fholgado/minibufexpl.vim.git
 git clone https://github.com/mbbill/undotree.git
 git clone https://github.com/jceb/vim-orgmode.git
 git clone git://github.com/tpope/vim-speeddating.git #Dep for orgmode
-git clone git://github.com/majutsushi/tagbar
 git clone https://github.com/ludovicchabant/vim-gutentags
-git clone https://github.com/easymotion/vim-easymotion
-git clone https://github.com/chrisbra/NrrwRgn
-git clone https://github.com/tpope/vim-surround
 git clone https://github.com/airblade/vim-gitgutter
-git clone https://github.com/vim-scripts/ZoomWin
 git clone https://github.com/junegunn/fzf.vim
+git clone https://github.com/vimwiki/vimwiki.git
+
+# Remove?
+git clone https://github.com/jaxbot/semantic-highlight.vim.git
 git clone --recursive https://github.com/davidhalter/jedi-vim.git
+git clone https://github.com/easymotion/vim-easymotion
+git clone git://github.com/majutsushi/tagbar
+git clone https://github.com/bronson/vim-trailing-whitespace.git
