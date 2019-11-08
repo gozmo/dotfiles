@@ -45,15 +45,12 @@ git clone https://github.com/junegunn/goyo.vim.git
 #themes
 git clone https://github.com/lisposter/vim-blackboard.git
 git clone https://github.com/arcticicestudio/nord-vim.git
-git clone https://github.com/ayu-theme/ayu-vim.git
 git clone https://github.com/drewtempelmeyer/palenight.vim.git
 git clone https://github.com/morhetz/gruvbox.git
 git clone https://github.com/jacoborus/tender.vim.git
-git clone https://github.com/junegunn/seoul256.vim.git
 
 # Remove?
 git clone https://github.com/jaxbot/semantic-highlight.vim.git
 git clone --recursive https://github.com/davidhalter/jedi-vim.git
 git clone https://github.com/easymotion/vim-easymotion
 git clone git://github.com/majutsushi/tagbar
-git clone https://github.com/bronson/vim-trailing-whitespace.git
