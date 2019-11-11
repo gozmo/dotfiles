@@ -41,6 +41,7 @@ git clone https://github.com/airblade/vim-gitgutter
 git clone https://github.com/junegunn/fzf.vim
 git clone https://github.com/vimwiki/vimwiki.git
 git clone https://github.com/junegunn/goyo.vim.git
+git clone https://github.com/RRethy/vim-illuminate.git
 
 #themes
 git clone https://github.com/lisposter/vim-blackboard.git

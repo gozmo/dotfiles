@@ -145,3 +145,6 @@ let g:semanticTermColors = [100,136,31]
 
 autocmd VimEnter * noremap <Leader>z :Goyo<cr>
 
+
+" Vimwiki
+let g:vimwiki_list = [{'path': '~/Dropbox/vimwiki/'}]
