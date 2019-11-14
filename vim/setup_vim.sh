@@ -1,7 +1,7 @@
 mkdir -p ~/.vim
+mv "${HOME}/vim/vimrc" "$BACKUP_FOLDER"/vim/vimrc
 
 ln -s "${PWD}/vim/vimrc" ~/.vimrc
-ln -s "${PWD}/vim/useful_bindings.txt" ~/.vim/useful_bindings.txt
 cd ~/.vim
 
 
@@ -34,14 +34,14 @@ git clone https://github.com/scrooloose/nerdcommenter.git
 git clone https://github.com/bling/vim-airline.git
 git clone https://github.com/tpope/vim-fugitive.git
 git clone https://github.com/mbbill/undotree.git
-git clone https://github.com/jceb/vim-orgmode.git
-git clone git://github.com/tpope/vim-speeddating.git #Dep for orgmode
 git clone https://github.com/ludovicchabant/vim-gutentags
 git clone https://github.com/airblade/vim-gitgutter
 git clone https://github.com/junegunn/fzf.vim
 git clone https://github.com/vimwiki/vimwiki.git
 git clone https://github.com/junegunn/goyo.vim.git
 git clone https://github.com/RRethy/vim-illuminate.git
+git clone --recursive https://github.com/davidhalter/jedi-vim.git
+git clone git://github.com/majutsushi/tagbar
 
 #themes
 git clone https://github.com/lisposter/vim-blackboard.git
@@ -52,6 +52,3 @@ git clone https://github.com/jacoborus/tender.vim.git
 
 # Remove?
 git clone https://github.com/jaxbot/semantic-highlight.vim.git
-git clone --recursive https://github.com/davidhalter/jedi-vim.git
-git clone https://github.com/easymotion/vim-easymotion
-git clone git://github.com/majutsushi/tagbar
