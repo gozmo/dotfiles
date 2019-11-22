@@ -1,4 +1,4 @@
-mv "${HOME}/tmux/tmux.conf"  "$BACKUP_FILDER"/tmux/tmux.conf
+mv "${HOME}/tmux/tmux.conf"  "$BACKUP_FOLDER"/tmux/tmux.conf
 
 mkdir -p ~/.tmux/plugins
 

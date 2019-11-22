@@ -8,7 +8,6 @@ if exists('+colorcolumn') | set colorcolumn=120 | endif
 nmap <silent> <F2> :NERDTreeToggle<CR>
 nmap <F3> :TagbarToggle<CR>
 nnoremap <F5> :UndotreeToggle<cr>
-nmap <F12> :sp ~/.dotfiles/vim/useful_bindings.org<cr>
 
 "Search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>
@@ -70,6 +69,7 @@ endif
 
 " Nerdtree config
 let g:NERDTreeWinSize=31 "This doesn't work on some systems
+let g:NERDTreeWinPos = "right"
 
 "Airline config
 set laststatus=2
@@ -87,7 +87,7 @@ if has("persistent_undo")
 endif
 
 if !exists('g:undotree_WindowLayout')
-    let g:undotree_WindowLayout = 1
+    let g:undotree_WindowLayout = 4
 endif
 
 " undotree window width
