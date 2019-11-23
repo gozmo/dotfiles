@@ -1,5 +1,9 @@
-cp ~/.bashrc $BACKUP_FOLDER/.bashrc
-
-pip3 install --user powerline-shell
+if ! hash powerline-shell 2>/dev/null
+then
+    pip3 install --user powerline-shell
+fi
  
-echo "source ${PWD}/bash/bashrc" >> ~/.bashrc
+if egrep -q -e "/dotfiles/bash/bashrc" /home/goz/.bashrc
+then
+    echo "source ${HOME}/dotfiles/bash/bashrc" >> ~/.bashrc
+fi

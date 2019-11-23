@@ -1,21 +1,21 @@
 mkdir -p ~/.vim
-mv "${HOME}/vim/vimrc" "$BACKUP_FOLDER"/vim/vimrc
 
-ln -s "${PWD}/vim/vimrc" ~/.vimrc
+ln -s "${HOME}/dotfiles/vim/vimrc" ~/.vimrc
 cd ~/.vim
 
 
 #fzf
-if ! type "$fzf" > /dev/null; then
+if ! hash fzf 2>/dev/null
+then
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
     ~/.fzf/install
 fi
 
 # ripgrep
-if ! type "$rg" > /dev/null; then
-    sudo add-apt-repository ppa:x4121/ripgrep
-    sudo apt-get update
-    sudo apt-get install ripgrep
+if ! hash rg 2>/dev/null
+then
+    curl -LO https://github.com/BurntSushi/ripgrep/releases/download/11.0.2/ripgrep_11.0.2_amd64.deb
+    sudo dpkg -i ripgrep_11.0.2_amd64.deb
 fi
 
 git clone https://github.com/tpope/vim-pathogen.git
@@ -23,7 +23,8 @@ mv vim-pathogen/autoload .
 rm -fr vim-pathogen
 
 export BUNDLE_DIR=~/.vim/bundle
-if [ -d "$BUNDLE_DIR" ]; then
+if [ -d "$BUNDLE_DIR" ]
+then
     rm -fr $BUNDLE_DIR
 fi
 
