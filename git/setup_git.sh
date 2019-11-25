@@ -1,2 +1,3 @@
-ln -s "${PWD}/git/gitconfig" ~/.gitconfig 
+rm ~/.gitconfig
+ln -s "${HOME}/dotfiles/git/gitconfig" ~/.gitconfig
 

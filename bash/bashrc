@@ -1,5 +1,5 @@
 
-export PATH=$PATH:~/.dotfiles/bin
+export PATH=$PATH:~/dotfiles/bin
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 
@@ -30,9 +30,9 @@ function _update_ps1() {
     PS1=$(powerline-shell $?)
 }
 
-#if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
-    #PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
-#fi
+if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
+    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+fi
 
 ####
 # fzf
@@ -44,7 +44,7 @@ function _update_ps1() {
 # python
 ####
 
-export PYTHONSTARTUP=~/.dotfiles/python/startup.py
+export PYTHONSTARTUP=~/dotfiles/python/startup.py
 
 ####
 # java
@@ -70,3 +70,8 @@ alias l='ls -CF --color=auto'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
+
+####
+# Gruvbox colors
+####
+source $HOME/dotfiles/bash/gruvbox_color.sh

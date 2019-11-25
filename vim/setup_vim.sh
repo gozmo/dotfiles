@@ -1,21 +1,21 @@
 mkdir -p ~/.vim
 
-ln -s "${PWD}/vim/vimrc" ~/.vimrc
-ln -s "${PWD}/vim/useful_bindings.txt" ~/.vim/useful_bindings.txt
+ln -s "${HOME}/dotfiles/vim/vimrc" ~/.vimrc
 cd ~/.vim
 
 
 #fzf
-if ! type "$fzf" > /dev/null; then
+if ! hash fzf 2>/dev/null
+then
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
     ~/.fzf/install
 fi
 
 # ripgrep
-if ! type "$rg" > /dev/null; then
-    sudo add-apt-repository ppa:x4121/ripgrep
-    sudo apt-get update
-    sudo apt-get install ripgrep
+if ! hash rg 2>/dev/null
+then
+    curl -LO https://github.com/BurntSushi/ripgrep/releases/download/11.0.2/ripgrep_11.0.2_amd64.deb
+    sudo dpkg -i ripgrep_11.0.2_amd64.deb
 fi
 
 git clone https://github.com/tpope/vim-pathogen.git
@@ -23,7 +23,8 @@ mv vim-pathogen/autoload .
 rm -fr vim-pathogen
 
 export BUNDLE_DIR=~/.vim/bundle
-if [ -d "$BUNDLE_DIR" ]; then
+if [ -d "$BUNDLE_DIR" ]
+then
     rm -fr $BUNDLE_DIR
 fi
 
@@ -34,14 +35,14 @@ git clone https://github.com/scrooloose/nerdcommenter.git
 git clone https://github.com/bling/vim-airline.git
 git clone https://github.com/tpope/vim-fugitive.git
 git clone https://github.com/mbbill/undotree.git
-git clone https://github.com/jceb/vim-orgmode.git
-git clone git://github.com/tpope/vim-speeddating.git #Dep for orgmode
 git clone https://github.com/ludovicchabant/vim-gutentags
 git clone https://github.com/airblade/vim-gitgutter
 git clone https://github.com/junegunn/fzf.vim
 git clone https://github.com/vimwiki/vimwiki.git
 git clone https://github.com/junegunn/goyo.vim.git
 git clone https://github.com/RRethy/vim-illuminate.git
+git clone --recursive https://github.com/davidhalter/jedi-vim.git
+git clone git://github.com/majutsushi/tagbar
 
 #themes
 git clone https://github.com/lisposter/vim-blackboard.git
@@ -52,6 +53,3 @@ git clone https://github.com/jacoborus/tender.vim.git
 
 # Remove?
 git clone https://github.com/jaxbot/semantic-highlight.vim.git
-git clone --recursive https://github.com/davidhalter/jedi-vim.git
-git clone https://github.com/easymotion/vim-easymotion
-git clone git://github.com/majutsushi/tagbar
