@@ -135,7 +135,7 @@ autocmd VimEnter * noremap <Leader>f :FZF<cr>
 autocmd VimEnter * noremap <Leader>g :Rg<cr>
 autocmd VimEnter * noremap <Leader>b :Buffers<cr>
 autocmd VimEnter * noremap <Leader>t :BTags<cr>
-autocmd VimEnter * noremap <Leader>t :Marks<cr>
+autocmd VimEnter * noremap <Leader>m :Marks<cr>
 
 " Semantic highlight
 autocmd VimEnter * noremap <Leader>h :SemanticHighlightToggle<cr>
@@ -143,7 +143,7 @@ let g:semanticTermColors = [100,136,31]
 
 "Goyo
 
-autocmd VimEnter * noremap <Leader>z :Goyo<cr>
+autocmd VimEnter * noremap <Leader>z :Goyo 120<cr>
 
 
 " Vimwiki
