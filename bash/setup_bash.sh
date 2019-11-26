@@ -6,13 +6,13 @@ then
 fi
  
 
-if [ -f $HOME/.bashrc ]
+if [[ -f $HOME/.bashrc ]]
 then
     mv $HOME/.bashrc $HOME/.bashrc.local
     ln -s $HOME/dotfiles/bash/bashrc $HOME/.bashrc
 fi
 
-if [ -L $HOME/.bashrc ]
+if [[ -L $HOME/.bashrc ]]
 then
     rm $HOME/.bashrc
     ln -s $HOME/dotfiles/bash/bashrc $HOME/.bashrc
