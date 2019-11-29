@@ -1,5 +1,9 @@
 mkdir -p ~/.vim
 
+if [[ -L $HOME/.vimrc ]] 
+then
+	rm $HOME/.vimrc
+fi
 ln -s "${HOME}/dotfiles/vim/vimrc" ~/.vimrc
 cd ~/.vim
 
