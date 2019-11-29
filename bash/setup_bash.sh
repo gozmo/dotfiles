@@ -1,4 +1,4 @@
-apt-get install fonts-powerline
+sudo apt-get install fonts-powerline
 
 if ! hash powerline-shell 2>/dev/null
 then
