@@ -134,7 +134,8 @@ autocmd VimEnter * noremap <Leader>f :FZF<cr>
 autocmd VimEnter * noremap <Leader>g :Rg<cr>
 autocmd VimEnter * noremap <Leader>b :Buffers<cr>
 autocmd VimEnter * noremap <Leader>t :BTags<cr>
-autocmd VimEnter * noremap <Leader>t :Marks<cr>
+autocmd VimEnter * noremap <Leader>r :Tags<cr>
+autocmd VimEnter * noremap <Leader>m :Marks<cr>
 
 " Semantic highlight
 autocmd VimEnter * noremap <Leader>h :SemanticHighlightToggle<cr>
