@@ -81,10 +81,8 @@ set wildignore+=*.png,*.jpg,*.jpeg,*/build/*,*.pyc,*.log,*/log/*,*/logs/*,*.log.
 set diffopt+=vertical
 
 "Undotree config
-if has("persistent_undo")
-    set undodir=~/.undodir/
-    set undofile
-endif
+set undodir=~/.undodir/
+set undofile
 
 if !exists('g:undotree_WindowLayout')
     let g:undotree_WindowLayout = 4
