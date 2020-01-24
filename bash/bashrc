@@ -1,6 +1,6 @@
 
 
-export PATH=$PATH:~/dotfiles/bin
+export PATH=$PATH:~/dotfiles/bin:$HOME/.local/bin
 
 # append to the history file, don't overwrite it
 shopt -s histappend
