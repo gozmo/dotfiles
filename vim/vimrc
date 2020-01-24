@@ -146,3 +146,5 @@ autocmd VimEnter * noremap <Leader>z :Goyo<cr>
 
 " Vimwiki
 let g:vimwiki_list = [{'path': '~/Dropbox/vimwiki/'}]
+let g:vimwiki_listsyms = '✗○◐●✓'
+
