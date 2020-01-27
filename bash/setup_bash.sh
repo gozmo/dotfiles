@@ -3,7 +3,7 @@ then
     pip3 install --user powerline-shell
 fi
  
-if egrep -q -e "/dotfiles/bash/bashrc" /home/goz/.bashrc
+if egrep -q -e "/dotfiles/bash/bashrc" $HOME/.bashrc
 then
     echo "source ${HOME}/dotfiles/bash/bashrc" >> ~/.bashrc
 fi
