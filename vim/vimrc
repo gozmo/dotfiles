@@ -81,10 +81,8 @@ set wildignore+=*.png,*.jpg,*.jpeg,*/build/*,*.pyc,*.log,*/log/*,*/logs/*,*.log.
 set diffopt+=vertical
 
 "Undotree config
-if has("persistent_undo")
-    set undodir=~/.undodir/
-    set undofile
-endif
+set undodir=~/.undodir/
+set undofile
 
 if !exists('g:undotree_WindowLayout')
     let g:undotree_WindowLayout = 4
@@ -134,6 +132,7 @@ autocmd VimEnter * noremap <Leader>f :FZF<cr>
 autocmd VimEnter * noremap <Leader>g :Rg<cr>
 autocmd VimEnter * noremap <Leader>b :Buffers<cr>
 autocmd VimEnter * noremap <Leader>t :BTags<cr>
+autocmd VimEnter * noremap <Leader>r :Tags<cr>
 autocmd VimEnter * noremap <Leader>m :Marks<cr>
 
 " Semantic highlight
@@ -147,3 +146,5 @@ autocmd VimEnter * noremap <Leader>z :Goyo 120<cr>
 
 " Vimwiki
 let g:vimwiki_list = [{'path': '~/Dropbox/vimwiki/'}]
+let g:vimwiki_listsyms = '✗○◐●✓'
+

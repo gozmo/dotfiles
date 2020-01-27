@@ -1,8 +1,14 @@
 mkdir -p ~/.vim
 
+if [[ -L $HOME/.vimrc ]] 
+then
+	rm $HOME/.vimrc
+fi
 ln -s "${HOME}/dotfiles/vim/vimrc" ~/.vimrc
 cd ~/.vim
 
+#Tags 
+sudo apt-get install exuberant-ctags
 
 #fzf
 if ! hash fzf 2>/dev/null

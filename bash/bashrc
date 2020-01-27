@@ -1,12 +1,6 @@
 
-export PATH=$PATH:~/dotfiles/bin
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
 
-if command -v pyenv 1>/dev/null 2>&1; then
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-fi
+export PATH=$PATH:~/dotfiles/bin:$HOME/.local/bin
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -45,6 +39,15 @@ fi
 ####
 
 export PYTHONSTARTUP=~/dotfiles/python/startup.py
+eval "$(pipenv --completion)"
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+
+#if command -v pyenv 1>/dev/null 2>&1; then
+    #eval "$(pyenv init -)"
+    #eval "$(pyenv virtualenv-init -)"
+#fi
 
 ####
 # java
@@ -75,3 +78,5 @@ alias egrep='egrep --color=auto'
 # Gruvbox colors
 ####
 source $HOME/dotfiles/bash/gruvbox_color.sh
+
+source $HOME/.bashrc.local
