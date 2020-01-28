@@ -141,10 +141,12 @@ let g:semanticTermColors = [100,136,31]
 
 "Goyo
 
-autocmd VimEnter * noremap <Leader>z :Goyo<cr>
+autocmd VimEnter * noremap <Leader>z :Goyo 120<cr>
 
 
 " Vimwiki
 let g:vimwiki_list = [{'path': '~/Dropbox/vimwiki/'}]
 let g:vimwiki_listsyms = '✗○◐●✓'
 
+" Jedi vim
+let g:jedi#goto_assignments_command = "<leader>jg"
