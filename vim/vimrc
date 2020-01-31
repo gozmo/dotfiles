@@ -134,6 +134,8 @@ autocmd VimEnter * noremap <Leader>b :Buffers<cr>
 autocmd VimEnter * noremap <Leader>t :BTags<cr>
 autocmd VimEnter * noremap <Leader>r :Tags<cr>
 autocmd VimEnter * noremap <Leader>m :Marks<cr>
+autocmd VimEnter * noremap <Leader>l :BLines<cr>
+autocmd VimEnter * noremap <Leader>k :Lines<cr>
 
 " Semantic highlight
 autocmd VimEnter * noremap <Leader>h :SemanticHighlightToggle<cr>
