@@ -143,7 +143,8 @@ let g:semanticTermColors = [100,136,31]
 
 "Goyo
 
-autocmd VimEnter * noremap <Leader>z :Goyo 120<cr>
+autocmd VimEnter * noremap <Leader>z :Goyo<cr>
+let g:goyo_width = 120
 
 
 " Vimwiki
