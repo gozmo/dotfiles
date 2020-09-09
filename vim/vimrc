@@ -131,8 +131,8 @@ endfor
 autocmd VimEnter * noremap <Leader>f :FZF<cr>
 autocmd VimEnter * noremap <Leader>g :Rg<cr>
 autocmd VimEnter * noremap <Leader>b :Buffers<cr>
-autocmd VimEnter * noremap <Leader>t :BTags<cr>
-autocmd VimEnter * noremap <Leader>r :Tags<cr>
+autocmd VimEnter * noremap <Leader>t :Tags<cr>
+autocmd VimEnter * noremap <Leader>y :BTags<cr>
 autocmd VimEnter * noremap <Leader>m :Marks<cr>
 autocmd VimEnter * noremap <Leader>l :BLines<cr>
 autocmd VimEnter * noremap <Leader>k :Lines<cr>
