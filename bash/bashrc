@@ -80,3 +80,8 @@ alias egrep='egrep --color=auto'
 source $HOME/dotfiles/bash/gruvbox_color.sh
 
 source $HOME/.bashrc.local
+
+###
+# Pipenv
+###
+eval "$(pipenv --completion)"
