@@ -49,6 +49,7 @@ git clone https://github.com/junegunn/goyo.vim.git
 git clone https://github.com/RRethy/vim-illuminate.git
 git clone --recursive https://github.com/davidhalter/jedi-vim.git
 git clone git://github.com/majutsushi/tagbar
+git clone https://github.com/nvie/vim-flake8.git
 
 #themes
 git clone https://github.com/lisposter/vim-blackboard.git
