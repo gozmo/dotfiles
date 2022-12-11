@@ -8,8 +8,7 @@
     cam = commit -a -m
     amend = commit --amend -m
     master = !git checkout master && git pull origin 
-    po = push origin
-    plo = pull origin
+    fa = fetch --all
 [user]
 	name = pontus
 	email = you@example.com
