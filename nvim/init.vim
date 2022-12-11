@@ -40,7 +40,8 @@ if exists('+colorcolumn') | set colorcolumn=120 | endif
 " F-key mappings
 nmap <silent> <F2> :NERDTreeToggle<CR>
 nmap <F3> :TagbarToggle<CR>
-nnoremap <F5> :UndotreeToggle<cr>
+nmap <F3> :ALEToggle<CR>
+noremap <F5> :UndotreeToggle<CR>
 
 "Search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>
