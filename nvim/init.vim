@@ -14,7 +14,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'junegunn/limelight.vim'
-    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'APZelos/blamer.nvim'
 
 " telescope
 Plug 'nvim-lua/plenary.nvim'
@@ -309,3 +310,9 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 EOF
+
+
+""" blamer
+let g:blamer_enabled = 1
+let g:blamer_delay = 2000
+let g:blamer_show_in_insert_modes = 0
