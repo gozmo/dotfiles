@@ -74,14 +74,7 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
-####
-# Gruvbox colors
-####
-source $HOME/dotfiles/bash/gruvbox_color.sh
 
+## Local bashrc
 source $HOME/.bashrc.local
 
-###
-# Pipenv
-###
-eval "$(pipenv --completion)"
