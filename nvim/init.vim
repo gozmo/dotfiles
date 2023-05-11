@@ -32,6 +32,10 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'sainnhe/everforest'
 Plug 'morhetz/gruvbox'
 
+" Trouble
+Plug 'nvim-tree/nvim-web-devicons'
+Plug 'folke/trouble.nvim'
+
 call plug#end()
 
 
@@ -324,6 +328,16 @@ require'nvim-treesitter.configs'.setup {
     additional_vim_regex_highlighting = false,
   },
 }
+EOF
+
+
+""" Trouble
+lua << EOF
+  require("trouble").setup {
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+  }
 EOF
 
 
