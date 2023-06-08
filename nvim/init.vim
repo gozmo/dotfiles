@@ -32,6 +32,10 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'sainnhe/everforest'
 Plug 'morhetz/gruvbox'
 
+" Trouble
+Plug 'nvim-tree/nvim-web-devicons'
+Plug 'folke/trouble.nvim'
+
 call plug#end()
 
 
@@ -40,6 +44,21 @@ let mapleader=" "
 
 " Show a red column and linewidth 120
 if exists('+colorcolumn') | set colorcolumn=120 | endif
+
+" Terminal mode
+tnoremap <Esc> <C-\><C-n>
+tnoremap <A-h> <C-\><C-N><C-w>h
+tnoremap <A-j> <C-\><C-N><C-w>j
+tnoremap <A-k> <C-\><C-N><C-w>k
+tnoremap <A-l> <C-\><C-N><C-w>l
+inoremap <A-h> <C-\><C-N><C-w>h
+inoremap <A-j> <C-\><C-N><C-w>j
+inoremap <A-k> <C-\><C-N><C-w>k
+inoremap <A-l> <C-\><C-N><C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
 
 " F-key mappings
 nmap <silent> <F2> :NERDTreeToggle<CR>
@@ -309,6 +328,16 @@ require'nvim-treesitter.configs'.setup {
     additional_vim_regex_highlighting = false,
   },
 }
+EOF
+
+
+""" Trouble
+lua << EOF
+  require("trouble").setup {
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+  }
 EOF
 
 
