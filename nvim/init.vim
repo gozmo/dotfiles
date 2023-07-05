@@ -1,6 +1,8 @@
 call plug#begin()
+
 Plug 'neovim/nvim-lspconfig'
 
+Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
 Plug 'RRethy/vim-illuminate'
 Plug 'airblade/vim-gitgutter'
 Plug 'dense-analysis/ale'
