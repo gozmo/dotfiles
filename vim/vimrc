@@ -73,12 +73,12 @@ let g:NERDTreeWinPos = "right"
 
 "Airline config
 set laststatus=2
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 0
 
 set wildignore+=*.png,*.jpg,*.jpeg,*/build/*,*.pyc,*.log,*/log/*,*/logs/*,*.log.*,*.class,*.json,*.txt
 
 "Fugitive config
-set diffopt+=vertical
+"set diffopt+=vertical
 
 "Undotree config
 if !isdirectory($HOME."/.vim/undo-dir")
