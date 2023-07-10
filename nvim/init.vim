@@ -18,6 +18,8 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'junegunn/limelight.vim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'APZelos/blamer.nvim'
+Plug 'vuciv/vim-bujo'
+Plug 'vimwiki/vimwiki'
 
 " telescope
 Plug 'nvim-lua/plenary.nvim'
