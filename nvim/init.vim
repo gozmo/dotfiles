@@ -21,9 +21,12 @@ Plug 'APZelos/blamer.nvim'
 Plug 'vuciv/vim-bujo'
 Plug 'vimwiki/vimwiki'
 
+" To be able to install pyright
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 " telescope
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
+Plug 'nvim-telescope/telescope.nvim'
 
 " Completion
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -139,6 +142,10 @@ let g:NERDTreeWinPos = "right"
 "Airline config
 set laststatus=2
 let g:airline_powerline_fonts = 1
+let g:airline_section_x = ''
+let g:airline_section_y = ''
+
+
 
 set wildignore+=*.png,*.jpg,*.jpeg,*/build/*,*.pyc,*.log,*/log/*,*/logs/*,*.log.*,*.class,*.json,*.txt
 
@@ -191,7 +198,8 @@ endif
 nnoremap <leader>f <cmd>Telescope find_files<cr>
 nnoremap <leader>g <cmd>Telescope live_grep<cr>
 nnoremap <leader>b <cmd>Telescope buffers<cr>
-nnoremap <leader>t <cmd>Telescope help_tags<cr>
+nnoremap <leader>t <cmd>Telescope tags<cr>
+nnoremap <leader>r <cmd>Telescope registers<cr>
 "Goyo
 
 autocmd VimEnter * noremap <Leader>z :Goyo<cr>
