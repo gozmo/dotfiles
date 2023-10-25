@@ -20,6 +20,7 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'APZelos/blamer.nvim'
 Plug 'vuciv/vim-bujo'
 Plug 'vimwiki/vimwiki'
+Plug 'folke/trouble.nvim'
 
 " To be able to install pyright
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -38,6 +39,19 @@ Plug 'hrsh7th/nvim-cmp'
 " Colorschemes
 Plug 'sainnhe/everforest'
 Plug 'morhetz/gruvbox'
+Plug 'catppuccin/nvim'
+Plug 'Rigellute/rigel'
+Plug 'AlexvZyl/nordic.nvim'
+
+Plug 'EdenEast/nightfox.nvim'
+Plug 'rebelot/kanagawa.nvim'
+Plug 'folke/tokyonight.nvim'
+Plug 'nordtheme/vim'
+Plug 'jacoborus/tender.vim'
+
+Plug 'srcery-colors/srcery-vim'
+Plug 'jnurmine/Zenburn'
+Plug 'franbach/miramare'
 
 " Trouble
 Plug 'nvim-tree/nvim-web-devicons'
@@ -144,6 +158,7 @@ set laststatus=2
 let g:airline_powerline_fonts = 1
 let g:airline_section_x = ''
 let g:airline_section_y = ''
+let g:airline_section_z = ''
 
 
 
