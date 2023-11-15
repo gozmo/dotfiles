@@ -27,7 +27,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " telescope
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.4'}
 
 " Completion
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -37,21 +37,14 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 
 " Colorschemes
-Plug 'sainnhe/everforest'
 Plug 'morhetz/gruvbox'
 Plug 'catppuccin/nvim'
 Plug 'Rigellute/rigel'
-Plug 'AlexvZyl/nordic.nvim'
-
 Plug 'EdenEast/nightfox.nvim'
-Plug 'rebelot/kanagawa.nvim'
-Plug 'folke/tokyonight.nvim'
-Plug 'nordtheme/vim'
-Plug 'jacoborus/tender.vim'
-
-Plug 'srcery-colors/srcery-vim'
-Plug 'jnurmine/Zenburn'
 Plug 'franbach/miramare'
+
+Plug 'challenger-deep-theme/vim'
+Plug 'mhartington/oceanic-next'
 
 " Trouble
 Plug 'nvim-tree/nvim-web-devicons'
