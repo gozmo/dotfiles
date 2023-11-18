@@ -22,6 +22,10 @@ Plug 'vuciv/vim-bujo'
 Plug 'vimwiki/vimwiki'
 Plug 'folke/trouble.nvim'
 
+" Evaluate
+Plug 'folke/todo-comments.nvim'
+Plug 'folke/flash.nvim'
+
 " To be able to install pyright
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
