@@ -50,6 +50,10 @@ Plug 'franbach/miramare'
 Plug 'challenger-deep-theme/vim'
 Plug 'mhartington/oceanic-next'
 
+Plug 'lifepillar/vim-gruvbox8'
+Plug 'olimorris/onedarkpro.nvim'
+Plug 'sainnhe/sonokai'
+
 " Trouble
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'folke/trouble.nvim'
@@ -130,7 +134,7 @@ set shiftwidth=4
 set expandtab
 set softtabstop=4
 
-colorscheme gruvbox
+colorscheme sonokai
 "colorscheme seoul256 
 
 if has('gui_running')
@@ -215,7 +219,7 @@ nnoremap <leader>r <cmd>Telescope registers<cr>
 "Goyo
 
 autocmd VimEnter * noremap <Leader>z :Goyo<cr>
-let g:goyo_width = 140
+let g:goyo_width = 180
 
 
 " nvim cmp, Completion
@@ -369,3 +373,11 @@ EOF
 let g:blamer_enabled = 1
 let g:blamer_delay = 2000
 let g:blamer_show_in_insert_modes = 0
+
+
+""" Todo todo-comments
+
+lua << EOF
+    require("todo-comments").setup {}
+
+EOF
