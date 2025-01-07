@@ -20,7 +20,6 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'APZelos/blamer.nvim'
 Plug 'vuciv/vim-bujo'
 Plug 'vimwiki/vimwiki'
-Plug 'folke/trouble.nvim'
 
 " Evaluate
 Plug 'folke/todo-comments.nvim'
