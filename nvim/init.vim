@@ -43,24 +43,18 @@ Plug 'hrsh7th/nvim-cmp'
 " Colorschemes
 Plug 'morhetz/gruvbox'
 Plug 'catppuccin/nvim'
-Plug 'Rigellute/rigel'
 Plug 'EdenEast/nightfox.nvim'
-Plug 'franbach/miramare'
-
-Plug 'challenger-deep-theme/vim'
-Plug 'mhartington/oceanic-next'
-
-Plug 'lifepillar/vim-gruvbox8'
-Plug 'olimorris/onedarkpro.nvim'
 Plug 'sainnhe/sonokai'
 
 " Trouble
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'folke/trouble.nvim'
 
-" snippets
-Plug 'hrsh7th/vim-vsnip'
-Plug 'hrsh7th/vim-vsnip-integ'
+
+Plug 'folke/which-key.nvim'
+
+" follow latest release and install jsregexp.
+Plug 'L3MON4D3/LuaSnip', {'tag': 'v2.*', 'do': 'make install_jsregexp'} 
 
 call plug#end()
 
@@ -387,9 +381,6 @@ lua << EOF
 EOF
 
 
-""" vsnip 
-imap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
-smap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
 
 """ marks
 lua << EOF
