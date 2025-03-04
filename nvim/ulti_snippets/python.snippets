@@ -1,0 +1,116 @@
+priority -50
+
+
+snippet cmp "methods implementing rich comparison"
+def __eq__(self, other):
+	${1:pass}
+
+def __ne__(self, other):
+	${2:pass}
+
+def __lt__(self, other):
+	${3:pass}
+
+def __le__(self, other):
+	${4:pass}
+
+def __gt__(self, other):
+	${5:pass}
+
+def __ge__(self, other):
+	${6:pass}
+
+def __cmp__(self, other):
+	${7:pass}
+endsnippet
+
+snippet repr "methods implementing string representation"
+def __repr__(self):
+	${1:pass}
+
+def __str__(self):
+	${2:pass}
+
+def __unicode__(self):
+	${3:pass}
+endsnippet
+
+
+
+snippet deff "function or class method"
+def ${1:fname}(`!p snip.rv = "self, " if snip.indent else ""`$2):
+	$0
+endsnippet
+
+snippet def "function with docstrings" b
+def ${1:function}(`!p
+if snip.indent:
+	snip.rv = 'self' + (", " if len(t[2]) else "")`${2:arg1}):
+	`!p snip.rv = triple_quotes(snip)`${4:TODO: Docstring for $1.}`!p
+write_function_docstring(t, snip) `
+	${5:${VISUAL:pass}}
+endsnippet
+
+
+snippet from "from module import name" b
+from ${1:module} import ${2:Stuff}
+endsnippet
+
+##########################
+# Try / Except / Finally #
+##########################
+snippet try "Try / Except" b
+try:
+	${1:${VISUAL:pass}}
+except ${2:Exception} as ${3:e}:
+	${4:raise $3}
+endsnippet
+
+snippet trye "Try / Except / Else" b
+try:
+	${1:${VISUAL:pass}}
+except ${2:Exception} as ${3:e}:
+	${4:raise $3}
+else:
+	${5:pass}
+endsnippet
+
+snippet tryf "Try / Except / Finally" b
+try:
+	${1:${VISUAL:pass}}
+except ${2:Exception} as ${3:e}:
+	${4:raise $3}
+finally:
+	${5:pass}
+endsnippet
+
+snippet tryef "Try / Except / Else / Finally" b
+try:
+	${1:${VISUAL:pass}}
+except${2: ${3:Exception} as ${4:e}}:
+	${5:raise}
+else:
+	${6:pass}
+finally:
+	${7:pass}
+endsnippet
+
+snippet pudb "Debug with pudb" b
+import pudb
+pudb.set_trace()
+endsnippet
+
+snippet pudbt "Debug with pudb and telnet client"
+#telnet 127.0.0.1 6899
+import subprocess
+from pudb.remote import set_trace
+
+r = subprocess.run(['tput', 'cols'], stdout=subprocess.PIPE)
+cols = int(r.stdout.decode("utf-8"))
+
+r = subprocess.run(['tput', 'lines'], stdout=subprocess.PIPE)
+lines = int(r.stdout.decode("utf-8"))
+
+set_trace(term_size=(cols, lines))
+
+endsnippet

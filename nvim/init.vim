@@ -3,42 +3,43 @@ call plug#begin()
 Plug 'neovim/nvim-lspconfig'
 
 Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
-Plug 'RRethy/vim-illuminate'
-Plug 'airblade/vim-gitgutter'
-Plug 'dense-analysis/ale'
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/rainbow_parentheses.vim'
-Plug 'majutsushi/tagbar'
-Plug 'mbbill/undotree'
-Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree'
-Plug 'tpope/vim-fugitive'
-Plug 'vim-airline/vim-airline'
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'junegunn/limelight.vim'
+Plug 'RRethy/vim-illuminate' "highlights other uses of a variable
+Plug 'airblade/vim-gitgutter' "Show git status on lines on lhs.
+Plug 'junegunn/goyo.vim' "focus mode
+Plug 'junegunn/limelight.vim' "highlight active text section
+Plug 'majutsushi/tagbar' "Press F3 and get a Tagbar on rhs
+Plug 'mbbill/undotree' "Press F5 and get undohistory
+Plug 'scrooloose/nerdcommenter' "Comment code with <leader>cc
+Plug 'scrooloose/nerdtree' "Press F2 and get the directory tree
+Plug 'tpope/vim-fugitive'  "git plugin
+Plug 'vim-airline/vim-airline' "Nice looking status bar
+Plug 'ludovicchabant/vim-gutentags' "generate tags for tagbar
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'APZelos/blamer.nvim'
-Plug 'vuciv/vim-bujo'
+Plug 'APZelos/blamer.nvim'  "Highlights the author and commit when hoovering on a line
+Plug 'vuciv/vim-bujo' "Task manager and Todo lists
+Plug 'chentoast/marks.nvim'  "Shows marks on sideline
+Plug 'sindrets/diffview.nvim' "Easily cycle through different git diffs of a file
+Plug 'folke/which-key.nvim' "Show command window 
 Plug 'vimwiki/vimwiki'
-Plug 'chentoast/marks.nvim'
 
-" Evaluate
-Plug 'folke/todo-comments.nvim'
-Plug 'folke/flash.nvim'
+" Completion                   
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'       
+Plug 'hrsh7th/cmp-cmdline'         
+Plug 'hrsh7th/nvim-cmp'              
+                       
 
-" To be able to install pyright
+" Trouble
+Plug 'nvim-tree/nvim-web-devicons'
+Plug 'folke/trouble.nvim'
+
+"" To be able to install pyright
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " telescope
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.4'}
-
-" Completion
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/nvim-cmp'
 
 " Colorschemes
 Plug 'morhetz/gruvbox'
@@ -46,15 +47,24 @@ Plug 'catppuccin/nvim'
 Plug 'EdenEast/nightfox.nvim'
 Plug 'sainnhe/sonokai'
 
-" Trouble
-Plug 'nvim-tree/nvim-web-devicons'
-Plug 'folke/trouble.nvim'
+
+"coc
 
 
-Plug 'folke/which-key.nvim'
+" --- Evaluate these plugins ---
+Plug 'folke/todo-comments.nvim'
+Plug 'folke/flash.nvim'
+"Plug 'dense-analysis/ale'
 
-" follow latest release and install jsregexp.
-Plug 'L3MON4D3/LuaSnip', {'tag': 'v2.*', 'do': 'make install_jsregexp'} 
+" Track the engine.
+Plug 'SirVer/ultisnips'
+" Snippets are separated from the engine. Add this if you want them:
+Plug 'honza/vim-snippets'
+
+
+"----------------------------------
+
+
 
 call plug#end()
 
@@ -144,9 +154,6 @@ endif
 """"""""""""""""""
 " Plugin configs "
 """"""""""""""""""
-"rainbow_parentheses
-autocmd VimEnter * RainbowParentheses
-
 
 " Nerdtree config
 let g:NERDTreeWinSize=31 "This doesn't work on some systems
@@ -420,4 +427,18 @@ require'marks'.setup {
   },
   mappings = {}
 }
+
 EOF
+
+" Ultisnips
+" Trigger configuration. You need to change this to something other than <tab> if you use one of the following:
+" - https://github.com/Valloric/YouCompleteMe
+" - https://github.com/nvim-lua/completion-nvim
+set runtimepath+=~/dotfiles/nvim/
+let g:UltiSnipsSnippetDirectories=["UltiSnips","ulti_snippets", $HOME.'/dotfiles/nvim/ulti_snippets']
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
