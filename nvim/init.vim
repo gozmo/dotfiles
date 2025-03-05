@@ -29,7 +29,6 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'         
 Plug 'hrsh7th/nvim-cmp'              
                        
-
 " Trouble
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'folke/trouble.nvim'
@@ -46,10 +45,6 @@ Plug 'morhetz/gruvbox'
 Plug 'catppuccin/nvim'
 Plug 'EdenEast/nightfox.nvim'
 Plug 'sainnhe/sonokai'
-
-
-"coc
-
 
 " --- Evaluate these plugins ---
 Plug 'folke/todo-comments.nvim'
@@ -221,6 +216,12 @@ nnoremap <leader>g <cmd>Telescope live_grep<cr>
 nnoremap <leader>b <cmd>Telescope buffers<cr>
 nnoremap <leader>t <cmd>Telescope tags<cr>
 nnoremap <leader>r <cmd>Telescope registers<cr>
+
+lua << EOF 
+require('telescope').setup{ defaults = { file_ignore_patterns = {"build"} } } 
+EOF
+
+
 "Goyo
 
 autocmd VimEnter * noremap <Leader>z :Goyo<cr>
