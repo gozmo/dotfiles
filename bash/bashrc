@@ -1,6 +1,6 @@
 
 
-export PATH=$PATH:~/dotfiles/bin:$HOME/.local/bin:$HOME/.pyenv/bin
+export PATH=~/opt/nvim/:$PATH:~/dotfiles/bin:$HOME/.local/bin:$HOME/.pyenv/bin
 
 # append to the history file, don't overwrite it
 shopt -s histappend
