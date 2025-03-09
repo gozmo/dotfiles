@@ -46,6 +46,10 @@ Plug 'catppuccin/nvim'
 Plug 'EdenEast/nightfox.nvim'
 Plug 'sainnhe/sonokai'
 
+" Test Colorschemes
+Plug 'sainnhe/gruvbox-material'
+Plug 'sainnhe/edge'
+
 " --- Evaluate these plugins ---
 Plug 'folke/todo-comments.nvim'
 Plug 'folke/flash.nvim'

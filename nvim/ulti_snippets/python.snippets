@@ -114,3 +114,11 @@ lines = int(r.stdout.decode("utf-8"))
 set_trace(term_size=(cols, lines))
 
 endsnippet
+
+snippet argparse "Simple argparse"
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("--experiment_name")
+parser.add_argument("--hpo", default=False, action=argparse.BooleanOptionalAction)
+args = parser.parse_args()
+endsnippet
