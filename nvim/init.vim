@@ -45,6 +45,7 @@ Plug 'morhetz/gruvbox'
 Plug 'catppuccin/nvim'
 Plug 'EdenEast/nightfox.nvim'
 Plug 'sainnhe/sonokai'
+Plug 'folke/tokyonight.nvim'
 
 " Test Colorschemes
 Plug 'sainnhe/gruvbox-material'
@@ -59,8 +60,6 @@ Plug 'folke/flash.nvim'
 Plug 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
 Plug 'honza/vim-snippets'
-
-
 "----------------------------------
 
 
@@ -92,8 +91,11 @@ nnoremap <A-l> <C-w>l
 " F-key mappings
 nmap <silent> <F2> :NERDTreeToggle<CR>
 nmap <F3> :TagbarToggle<CR>
-nmap <F4> :ALEToggle<CR>
+nmap <F4> :Trouble<CR>
 noremap <F5> :UndotreeToggle<CR>
+nmap <F6> :Goyo<CR>
+nmap <F7> :Limelight!!<CR>
+nmap <F8> :DiffviewOpen -uno<CR>
 
 "Search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>
@@ -230,6 +232,9 @@ EOF
 
 autocmd VimEnter * noremap <Leader>z :Goyo<cr>
 let g:goyo_width = 180
+
+"Limelight
+let g:limelight_paragraph_span = 1
 
 
 " nvim cmp, Completion
