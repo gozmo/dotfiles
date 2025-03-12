@@ -21,6 +21,7 @@ Plug 'chentoast/marks.nvim'  "Shows marks on sideline
 Plug 'sindrets/diffview.nvim' "Easily cycle through different git diffs of a file
 Plug 'folke/which-key.nvim' "Show command window 
 Plug 'vimwiki/vimwiki'
+Plug 'folke/todo-comments.nvim' " Find todo comments in repo
 
 " Completion                   
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -42,19 +43,15 @@ Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.4'}
 
 " Colorschemes
 Plug 'morhetz/gruvbox'
-Plug 'catppuccin/nvim'
+Plug 'sainnhe/gruvbox-material'
 Plug 'EdenEast/nightfox.nvim'
 Plug 'sainnhe/sonokai'
 Plug 'folke/tokyonight.nvim'
-
-" Test Colorschemes
-Plug 'sainnhe/gruvbox-material'
-Plug 'sainnhe/edge'
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 
 " --- Evaluate these plugins ---
-Plug 'folke/todo-comments.nvim'
-Plug 'folke/flash.nvim'
-"Plug 'dense-analysis/ale'
+Plug 'folke/flash.nvim' "Navigation plugin
+Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
 
 " Track the engine.
 Plug 'SirVer/ultisnips'
@@ -143,8 +140,7 @@ set shiftwidth=4
 set expandtab
 set softtabstop=4
 
-colorscheme sonokai
-"colorscheme seoul256 
+colorscheme catppuccin-frappe
 
 if has('gui_running')
   set guifont=Monospace
