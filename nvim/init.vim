@@ -29,6 +29,9 @@ Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'       
 Plug 'hrsh7th/cmp-cmdline'         
 Plug 'hrsh7th/nvim-cmp'              
+
+" Debug
+Plug 'mfussenegger/nvim-dap'
                        
 " Trouble
 Plug 'nvim-tree/nvim-web-devicons'
@@ -39,24 +42,19 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " telescope
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.4'}
+Plug 'nvim-telescope/telescope.nvim'
 
 " Colorschemes
-Plug 'morhetz/gruvbox'
 Plug 'sainnhe/gruvbox-material'
-Plug 'EdenEast/nightfox.nvim'
 Plug 'sainnhe/sonokai'
 Plug 'folke/tokyonight.nvim'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 
 " --- Evaluate these plugins ---
 Plug 'folke/flash.nvim' "Navigation plugin
-Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
 
-" Track the engine.
+" Snippets
 Plug 'SirVer/ultisnips'
-" Snippets are separated from the engine. Add this if you want them:
-Plug 'honza/vim-snippets'
 "----------------------------------
 
 
@@ -115,6 +113,12 @@ nnoremap <c-j> :m+<cr>==
 xnoremap <c-k> :m-2<cr>gv=gv
 xnoremap <c-j> :m'>+<cr>gv=gv
 
+"
+lua << EOF
+    vim.api.nvim_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { noremap = true, silent = true })
+    vim.api.nvim_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
+EOF
+
 filetype plugin indent on
 syntax on
 set autoread
@@ -140,7 +144,8 @@ set shiftwidth=4
 set expandtab
 set softtabstop=4
 
-colorscheme catppuccin-frappe
+let g:sonokai_style = 'andromeda'
+colorscheme sonokai
 
 if has('gui_running')
   set guifont=Monospace
@@ -220,7 +225,8 @@ nnoremap <leader>t <cmd>Telescope tags<cr>
 nnoremap <leader>r <cmd>Telescope registers<cr>
 
 lua << EOF 
-require('telescope').setup{ defaults = { file_ignore_patterns = {"build"} } } 
+
+require('telescope').setup{ defaults = { file_ignore_patterns = {"build", "mlruns", "models/", "cr2", "cache"} } } 
 EOF
 
 
@@ -327,7 +333,7 @@ lua <<EOF
 
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all"
-  ensure_installed = { "c", "lua", "rust" },
+  ensure_installed = { "c", "lua", "rust", "python","markdown", "yaml"},
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
@@ -337,7 +343,7 @@ require'nvim-treesitter.configs'.setup {
   auto_install = true,
 
   -- List of parsers to ignore installing (for "all")
-  ignore_install = { "javascript" },
+  ignore_install = { "javascript", "c" },
 
   ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
   -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
