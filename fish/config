@@ -1,0 +1,6 @@
+set FLINE_PATH $HOME/opt/fishline
+source $FLINE_PATH/fishline.fish
+
+function fish_prompt
+    fishline -s $status
+end
