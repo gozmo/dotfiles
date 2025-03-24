@@ -22,6 +22,7 @@ Plug 'sindrets/diffview.nvim' "Easily cycle through different git diffs of a fil
 Plug 'folke/which-key.nvim' "Show command window 
 Plug 'vimwiki/vimwiki'
 Plug 'folke/todo-comments.nvim' " Find todo comments in repo
+Plug 'bhugovilela/palette.nvim' " edit colorscheme
 
 " Completion                   
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -32,6 +33,7 @@ Plug 'hrsh7th/nvim-cmp'
 
 " Debug
 Plug 'mfussenegger/nvim-dap'
+Plug 'Davidyz/coredumpy.nvim' 
                        
 " Trouble
 Plug 'nvim-tree/nvim-web-devicons'
@@ -50,11 +52,14 @@ Plug 'sainnhe/sonokai'
 Plug 'folke/tokyonight.nvim'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 
+" Snippets
+Plug 'SirVer/ultisnips'
+
 " --- Evaluate these plugins ---
 Plug 'folke/flash.nvim' "Navigation plugin
 
-" Snippets
-Plug 'SirVer/ultisnips'
+
+
 "----------------------------------
 
 
@@ -226,7 +231,8 @@ nnoremap <leader>r <cmd>Telescope registers<cr>
 
 lua << EOF 
 
-require('telescope').setup{ defaults = { file_ignore_patterns = {"build", "mlruns", "models/", "cr2", "cache"} } } 
+
+require('telescope').setup{ defaults = { file_ignore_patterns = {"build", "mlruns", "cr2", "cache"} } } 
 EOF
 
 
@@ -454,3 +460,4 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
+
