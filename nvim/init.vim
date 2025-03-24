@@ -91,7 +91,7 @@ nnoremap <A-l> <C-w>l
 " F-key mappings
 nmap <silent> <F2> :NERDTreeToggle<CR>
 nmap <F3> :TagbarToggle<CR>
-nmap <F4> :Trouble<CR>
+nmap <F4> :TroubleToggle<CR>
 noremap <F5> :UndotreeToggle<CR>
 nmap <F6> :Goyo<CR>
 nmap <F7> :Limelight!!<CR>
