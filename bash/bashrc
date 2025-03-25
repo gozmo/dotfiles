@@ -1,5 +1,15 @@
 
 
+if [ "$TERM" = "xterm" ]; then
+    export TERM=xterm-256color
+fi
+if [ "$TERM" = "screen" -o "$TERM" = "screen-256color" ]; then
+    #export TERM=screen-256color
+    export TERM=xterm-256color
+    unset TERMCAP
+fi
+
+
 export PATH=~/opt/nvim/:$PATH:~/dotfiles/bin:$HOME/.local/bin:$HOME/.pyenv/bin:~/opt/fishline/
 
 # append to the history file, don't overwrite it
@@ -13,8 +23,12 @@ HISTCONTROL=ignoreboth
 HISTSIZE=100000
 HISTFILESIZE=200000
 
+
+# Force tmux to user 256 colours
+alias tmux='tmux -2'
+
 # check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
+    # update the values of LINES and COLUMNS.b
 shopt -s checkwinsize
 
 ####
