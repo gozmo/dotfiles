@@ -1,28 +1,32 @@
 call plug#begin()
 
 Plug 'neovim/nvim-lspconfig'
-
-Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
-Plug 'RRethy/vim-illuminate' "highlights other uses of a variable
-Plug 'airblade/vim-gitgutter' "Show git status on lines on lhs.
-Plug 'junegunn/goyo.vim' "focus mode
-Plug 'junegunn/limelight.vim' "highlight active text section
-Plug 'majutsushi/tagbar' "Press F3 and get a Tagbar on rhs
-Plug 'mbbill/undotree' "Press F5 and get undohistory
-Plug 'scrooloose/nerdcommenter' "Comment code with <leader>cc
-Plug 'scrooloose/nerdtree' "Press F2 and get the directory tree
-Plug 'tpope/vim-fugitive'  "git plugin
-Plug 'vim-airline/vim-airline' "Nice looking status bar
-Plug 'ludovicchabant/vim-gutentags' "generate tags for tagbar
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'APZelos/blamer.nvim'  "Highlights the author and commit when hoovering on a line
-Plug 'vuciv/vim-bujo' "Task manager and Todo lists
-Plug 'chentoast/marks.nvim'  "Shows marks on sideline
-Plug 'sindrets/diffview.nvim' "Easily cycle through different git diffs of a file
-Plug 'folke/which-key.nvim' "Show command window 
-Plug 'vimwiki/vimwiki'
+Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
+
+" Bars and window stuff
 Plug 'folke/todo-comments.nvim' " Find todo comments in repo
-Plug 'bhugovilela/palette.nvim' " edit colorscheme
+Plug 'folke/which-key.nvim' "Show command window 
+Plug 'vuciv/vim-bujo' "Task manager and Todo lists
+Plug 'scrooloose/nerdtree' "Press F2 and get the directory tree
+Plug 'mbbill/undotree' "Press F5 and get undohistory
+Plug 'majutsushi/tagbar' "Press F3 and get a Tagbar on rhs
+Plug 'ludovicchabant/vim-gutentags' "generate tags for tagbar
+
+" Vim Gutter 
+Plug 'chentoast/marks.nvim'  "Shows marks on sideline
+Plug 'airblade/vim-gitgutter' "Show git status on lines on lhs.
+
+" Git
+Plug 'tpope/vim-fugitive'  "git plugin
+Plug 'sindrets/diffview.nvim' "Easily cycle through different git diffs of a file
+Plug 'APZelos/blamer.nvim'  "Highlights the author and commit when hoovering on a line
+
+" Visual
+Plug 'RRethy/vim-illuminate' "highlights other uses of a variable
+Plug 'vim-airline/vim-airline' "Nice looking status bar
+Plug 'junegunn/limelight.vim' "highlight active text section
+Plug 'junegunn/goyo.vim' "focus mode
 
 " Completion                   
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -31,13 +35,10 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'         
 Plug 'hrsh7th/nvim-cmp'              
 
-" Debug
-Plug 'mfussenegger/nvim-dap'
-Plug 'Davidyz/coredumpy.nvim' 
                        
 " Trouble
 Plug 'nvim-tree/nvim-web-devicons'
-Plug 'folke/trouble.nvim'
+Plug 'folke/trouble.nvim' " :Trouble, shows a pretty list of error and others
 
 "" To be able to install pyright
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -47,16 +48,25 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 
 " Colorschemes
-Plug 'sainnhe/gruvbox-material'
 Plug 'sainnhe/sonokai'
-Plug 'folke/tokyonight.nvim'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 
 " Snippets
-Plug 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips' " snippets manager
+
+" Other
+Plug 'scrooloose/nerdcommenter' "Comment code with <leader>cc
+Plug 'tpope/vim-eunuch' " File management on current buffer, rename file and move it
 
 " --- Evaluate these plugins ---
 Plug 'folke/flash.nvim' "Navigation plugin
+Plug 'vimwiki/vimwiki' "wiki
+Plug 'ThePrimeagen/harpoon' " Add files to lists, useful when jumping back and forth between a small subset of files
+Plug 'cohama/lexima.vim' "automatically add matching parathesis
+
+" Debug, 
+Plug 'mfussenegger/nvim-dap'
+Plug 'Davidyz/coredumpy.nvim' 
 
 
 
@@ -93,7 +103,7 @@ nmap <silent> <F2> :NERDTreeToggle<CR>
 nmap <F3> :TagbarToggle<CR>
 nmap <F4> :TroubleToggle<CR>
 noremap <F5> :UndotreeToggle<CR>
-nmap <F6> :Goyo<CR>
+nmap <F6> :Todo<CR>
 nmap <F7> :Limelight!!<CR>
 nmap <F8> :DiffviewOpen -uno<CR>
 
@@ -239,7 +249,7 @@ EOF
 "Goyo
 
 autocmd VimEnter * noremap <Leader>z :Goyo<cr>
-let g:goyo_width = 180
+let g:goyo_width = "90%"
 
 "Limelight
 let g:limelight_paragraph_span = 1
