@@ -4,3 +4,6 @@ source $FLINE_PATH/fishline.fish
 function fish_prompt
     fishline -s $status
 end
+
+bashrc=$HOME/.bashrc
+[ -f "$bashrc" ] && source "$bashrc"
