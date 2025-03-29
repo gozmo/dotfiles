@@ -1,0 +1,31 @@
+F2 :NERDTreeToggle
+F3 :TagbarToggle
+F4 :TroubleToggle
+
+F5 :UndotreeToggle
+F6 :Todo
+F7 :Limelight
+F8 :DiffviewOpen -uno
+
+F12 :vsplit ~/dotfiles/nvim/hints
+
+
+__Movement__
+
+ctrl+i  :go forward
+ctrl+o  :go back
+grr     :rename symbol in current scope
+gnd     :go to definition
+gd      :move to local declaration
+gD      :move to global declaration
+
+ctrl+t  :move curser one tab
+
+
+ib      :select inner block with ()
+iB      :select inner block with {}
+
+"xy     :yank to register x
+"xp     :paste from register x
+
+y'a     :yank from mark a

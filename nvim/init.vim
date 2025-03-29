@@ -48,8 +48,9 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 
 " Colorschemes
-Plug 'sainnhe/sonokai'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+Plug 'sainnhe/gruvbox-material'
+Plug 'sainnhe/sonokai'
 
 " Snippets
 Plug 'SirVer/ultisnips' " snippets manager
@@ -59,16 +60,13 @@ Plug 'scrooloose/nerdcommenter' "Comment code with <leader>cc
 Plug 'tpope/vim-eunuch' " File management on current buffer, rename file and move it
 
 " --- Evaluate these plugins ---
-Plug 'folke/flash.nvim' "Navigation plugin
 Plug 'vimwiki/vimwiki' "wiki
-Plug 'ThePrimeagen/harpoon' " Add files to lists, useful when jumping back and forth between a small subset of files
 Plug 'cohama/lexima.vim' "automatically add matching parathesis
+Plug 'shellRaining/hlchunk.nvim' "shows indent depth
 
 " Debug, 
 Plug 'mfussenegger/nvim-dap'
 Plug 'Davidyz/coredumpy.nvim' 
-
-
 
 "----------------------------------
 
@@ -106,6 +104,7 @@ noremap <F5> :UndotreeToggle<CR>
 nmap <F6> :Todo<CR>
 nmap <F7> :Limelight!!<CR>
 nmap <F8> :DiffviewOpen -uno<CR>
+nmap <F12> :vsplit ~/dotfiles/nvim/hints<CR>
 
 "Search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>
@@ -159,14 +158,22 @@ set shiftwidth=4
 set expandtab
 set softtabstop=4
 
+colorscheme catppuccin-mocha
 "let g:sonokai_style = 'andromeda'
 "colorscheme sonokai
-colorscheme catppuccin-mocha
 
 if has('gui_running')
   set guifont=Monospace
 endif
 
+"" Enable autoread and set up checking triggers
+lua << EOF
+vim.o.autoread = true
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
+  command = "if mode() != 'c' | checktime | endif",
+  pattern = "*",
+})
+EOF
 
 
 """"""""""""""""""
@@ -502,3 +509,39 @@ catppuccin.setup({
   },
 })
 EOF
+
+"
+" hlchunk
+"
+lua << EOF
+local default_conf = {
+    priority = 15,
+    style = {
+        { fg = "#806d9c" },
+        { fg = "#c21f30" },
+    },
+    use_treesitter = true,
+    chars = {
+        horizontal_line = "─",
+        vertical_line = "│",
+        left_top = "╭",
+        left_bottom = "╰",
+        right_arrow = ">",
+    },
+    textobject = "",
+    max_file_size = 1024 * 1024,
+    error_sign = true,
+    -- animation related
+    duration = 200,
+    delay = 300,
+}
+require('hlchunk').setup({
+    chunk = {
+        enable = true
+    },
+    indent = {
+        enable = true
+    }
+})
+EOF
+
