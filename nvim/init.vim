@@ -51,9 +51,11 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 Plug 'sainnhe/gruvbox-material'
 Plug 'sainnhe/sonokai'
+Plug 'thesimonho/kanagawa-paper.nvim'
 
 " Snippets
 Plug 'SirVer/ultisnips' " snippets manager
+Plug 'fhill2/telescope-ultisnips.nvim'
 
 " Other
 Plug 'scrooloose/nerdcommenter' "Comment code with <leader>cc
@@ -69,8 +71,6 @@ Plug 'mfussenegger/nvim-dap'
 Plug 'Davidyz/coredumpy.nvim' 
 
 "----------------------------------
-
-
 
 call plug#end()
 
@@ -127,7 +127,7 @@ nnoremap <c-j> :m+<cr>==
 xnoremap <c-k> :m-2<cr>gv=gv
 xnoremap <c-j> :m'>+<cr>gv=gv
 
-"
+"Go to definition and declaration
 lua << EOF
     vim.api.nvim_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { noremap = true, silent = true })
     vim.api.nvim_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
@@ -193,7 +193,6 @@ let g:airline_section_z = ''
 
 
 
-set wildignore+=*.png,*.jpg,*.jpeg,*/build/*,*.pyc,*.log,*/log/*,*/logs/*,*.log.*,*.class,*.json,*.txt
 
 "Fugitive config
 set diffopt+=vertical
@@ -241,17 +240,6 @@ if !exists('g:undotree_HighlightChangedText')
 endif
 
 
-nnoremap <leader>f <cmd>Telescope find_files<cr>
-nnoremap <leader>g <cmd>Telescope live_grep<cr>
-nnoremap <leader>b <cmd>Telescope buffers<cr>
-nnoremap <leader>t <cmd>Telescope tags<cr>
-nnoremap <leader>r <cmd>Telescope registers<cr>
-
-lua << EOF 
-
-
-require('telescope').setup{ defaults = { file_ignore_patterns = {"build", "mlruns", "cr2", "cache"} } } 
-EOF
 
 
 "Goyo
@@ -274,10 +262,7 @@ lua <<EOF
     snippet = {
       -- REQUIRED - you must specify a snippet engine
       expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-        -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+        vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
       end,
     },
     window = {
@@ -293,10 +278,7 @@ lua <<EOF
     }),
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
-      { name = 'vsnip' }, -- For vsnip users.
-      -- { name = 'luasnip' }, -- For luasnip users.
-      -- { name = 'ultisnips' }, -- For ultisnips users.
-      -- { name = 'snippy' }, -- For snippy users.
+      { name = 'ultisnips' }, -- For ultisnips users.
     }, {
       { name = 'buffer' },
     })
@@ -479,6 +461,10 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
+" add to telescope
+lua << EOF
+require('telescope').load_extension('ultisnips')
+EOF
 
 "
 " catppuccin
@@ -544,4 +530,18 @@ require('hlchunk').setup({
     }
 })
 EOF
+"
+" telescope config
+" 
 
+nnoremap <leader>f <cmd>Telescope find_files<cr>
+nnoremap <leader>g <cmd>Telescope live_grep<cr>
+nnoremap <leader>b <cmd>Telescope buffers<cr>
+nnoremap <leader>t <cmd>Telescope tags<cr>
+nnoremap <leader>r <cmd>Telescope registers<cr>
+nnoremap <leader>s <cmd>Telescope ultisnips<cr>
+
+set wildignore+=*.png,*.jpg,*.jpeg,*/build/*,*.pyc,*.log,*/log/*,*/logs/*,*.log.*,*.class,*.json,*.txt,*.cr2,*.raw
+lua<<EOF 
+require('telescope').setup{ defaults = { file_ignore_patterns = {'build', 'mlruns', 'cr2', 'cache'} } } 
+EOF

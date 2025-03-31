@@ -10,6 +10,11 @@ F8 :DiffviewOpen -uno
 F12 :vsplit ~/dotfiles/nvim/hints
 
 
+__CMP Completion__
+ctrl+space  :open Completion
+ctrl+e      :cancel completion
+
+
 __Movement__
 
 ctrl+i  :go forward
