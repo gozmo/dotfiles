@@ -34,3 +34,7 @@ iB      :select inner block with {}
 "xp     :paste from register x
 
 y'a     :yank from mark a
+
+__Colors__
+
+:Inspect :To inspect the item under the cursor
