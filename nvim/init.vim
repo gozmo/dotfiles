@@ -2,7 +2,8 @@ call plug#begin()
 
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
+"Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
+Plug 'mason-org/mason.nvim'
 
 " Bars and window stuff
 Plug 'folke/todo-comments.nvim' " Find todo comments in repo
@@ -10,8 +11,11 @@ Plug 'folke/which-key.nvim' "Show command window
 Plug 'vuciv/vim-bujo' "Task manager and Todo lists
 Plug 'scrooloose/nerdtree' "Press F2 and get the directory tree
 Plug 'mbbill/undotree' "Press F5 and get undohistory
-Plug 'majutsushi/tagbar' "Press F3 and get a Tagbar on rhs
-Plug 'ludovicchabant/vim-gutentags' "generate tags for tagbar
+
+" tags
+"Plug 'majutsushi/tagbar' "Press F3 and get a Tagbar on rhs
+Plug 'liuchengxu/vista.vim'
+"Plug 'ludovicchabant/vim-gutentags' "generate tags for tagbar
 
 " Vim Gutter 
 Plug 'chentoast/marks.nvim'  "Shows marks on sideline
@@ -25,15 +29,14 @@ Plug 'APZelos/blamer.nvim'  "Highlights the author and commit when hoovering on 
 " Visual
 Plug 'RRethy/vim-illuminate' "highlights other uses of a variable
 Plug 'vim-airline/vim-airline' "Nice looking status bar
-Plug 'junegunn/limelight.vim' "highlight active text section
-Plug 'junegunn/goyo.vim' "focus mode
+Plug 'folke/zen-mode.nvim'
 
 " Completion                   
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'       
 Plug 'hrsh7th/cmp-cmdline'         
-Plug 'hrsh7th/nvim-cmp'              
+Plug 'hrsh7th/nvim-cmp'
 
                        
 " Trouble
@@ -65,6 +68,7 @@ Plug 'tpope/vim-eunuch' " File management on current buffer, rename file and mov
 Plug 'vimwiki/vimwiki' "wiki
 Plug 'cohama/lexima.vim' "automatically add matching parathesis
 Plug 'shellRaining/hlchunk.nvim' "shows indent depth
+Plug 'kdheepak/lazygit.nvim'
 
 " Debug, 
 Plug 'mfussenegger/nvim-dap'
@@ -192,6 +196,10 @@ let g:airline_section_y = ''
 let g:airline_section_z = ''
 
 
+" Mason
+lua << EOF
+require("mason").setup()
+EOF
 
 
 "Fugitive config
@@ -240,12 +248,14 @@ if !exists('g:undotree_HighlightChangedText')
 endif
 
 
+""Zenmode
+autocmd VimEnter * noremap <Leader>z :ZenMode<cr>
 
 
-"Goyo
+""Goyo
 
-autocmd VimEnter * noremap <Leader>z :Goyo<cr>
-let g:goyo_width = "90%"
+"autocmd VimEnter * noremap <Leader>z :Goyo<cr>
+"let g:goyo_width = "90%"
 
 "Limelight
 let g:limelight_paragraph_span = 1
@@ -394,8 +404,9 @@ EOF
 
 """ blamer
 let g:blamer_enabled = 1
-let g:blamer_delay = 2000
+let g:blamer_delay = 10000
 let g:blamer_show_in_insert_modes = 0
+let g:blamer_show_in_visual_modes = 0
 
 
 """ Todo todo-comments
@@ -531,6 +542,25 @@ require('hlchunk').setup({
 })
 EOF
 "
+" Ruff
+"
+lua<<EOF
+require('lspconfig').pyright.setup {
+  settings = {
+    pyright = {
+      -- Using Ruff's import organizer
+      disableOrganizeImports = true,
+    },
+    python = {
+      analysis = {
+        -- Ignore all files for analysis to exclusively use Ruff for linting
+        ignore = { '*' },
+      },
+    },
+  },
+}
+EOF
+"
 " telescope config
 " 
 
@@ -542,6 +572,7 @@ nnoremap <leader>r <cmd>Telescope registers<cr>
 nnoremap <leader>s <cmd>Telescope ultisnips<cr>
 
 set wildignore+=*.png,*.jpg,*.jpeg,*/build/*,*.pyc,*.log,*/log/*,*/logs/*,*.log.*,*.class,*.json,*.txt,*.cr2,*.raw
-lua<<EOF 
+lua << EOF 
 require('telescope').setup{ defaults = { file_ignore_patterns = {'build', 'mlruns', 'cr2', 'cache'} } } 
 EOF
+
