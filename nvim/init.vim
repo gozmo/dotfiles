@@ -24,7 +24,6 @@ Plug 'airblade/vim-gitgutter' "Show git status on lines on lhs.
 " Git
 Plug 'tpope/vim-fugitive'  "git plugin
 Plug 'sindrets/diffview.nvim' "Easily cycle through different git diffs of a file
-Plug 'APZelos/blamer.nvim'  "Highlights the author and commit when hoovering on a line
 
 " Visual
 Plug 'RRethy/vim-illuminate' "highlights other uses of a variable
@@ -400,13 +399,6 @@ lua << EOF
     -- refer to the configuration section below
   }
 EOF
-
-
-""" blamer
-let g:blamer_enabled = 1
-let g:blamer_delay = 10000
-let g:blamer_show_in_insert_modes = 0
-let g:blamer_show_in_visual_modes = 0
 
 
 """ Todo todo-comments
