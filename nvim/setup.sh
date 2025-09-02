@@ -6,6 +6,8 @@ mv nvim-linux-x86_64.appimage ~/opt/nvim/nvim
 python3 -m pip install --user --upgrade pynvim
 
 
+# curl -sL install-node.vercel.app/lts | bash
+# install to $HOME/.local
 
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'

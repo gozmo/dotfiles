@@ -9,6 +9,8 @@ F8 :DiffviewOpen -uno
 
 F12 :vsplit ~/dotfiles/nvim/hints
 
+__Tags__
+:Vista nvim_lsp
 
 __CMP Completion__
 ctrl+space  :open Completion
@@ -34,6 +36,8 @@ iB      :select inner block with {}
 "xp     :paste from register x
 
 y'a     :yank from mark a
+
+r!      :redirect command output into the buffer
 
 __Colors__
 

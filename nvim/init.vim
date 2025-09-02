@@ -101,11 +101,10 @@ nnoremap <A-l> <C-w>l
 
 " F-key mappings
 nmap <silent> <F2> :NERDTreeToggle<CR>
-nmap <F3> :TagbarToggle<CR>
+nmap <F3> :Vista nvim_lsp<CR>
 nmap <F4> :TroubleToggle<CR>
 noremap <F5> :UndotreeToggle<CR>
 nmap <F6> :Todo<CR>
-nmap <F7> :Limelight!!<CR>
 nmap <F8> :DiffviewOpen -uno<CR>
 nmap <F12> :vsplit ~/dotfiles/nvim/hints<CR>
 
@@ -137,7 +136,7 @@ lua << EOF
 EOF
 
 filetype plugin indent on
-syntax on
+"syntax on
 set autoread
 set background=dark
 set encoding=utf-8
@@ -161,9 +160,8 @@ set shiftwidth=4
 set expandtab
 set softtabstop=4
 
-colorscheme catppuccin-mocha
-"let g:sonokai_style = 'andromeda'
-"colorscheme sonokai
+let g:sonokai_style = 'andromeda'
+colorscheme sonokai
 
 if has('gui_running')
   set guifont=Monospace
@@ -536,12 +534,14 @@ EOF
 "
 " Ruff
 "
+
+" Use ruff in parallel with pyright
 lua<<EOF
 require('lspconfig').pyright.setup {
   settings = {
     pyright = {
       -- Using Ruff's import organizer
-      disableOrganizeImports = true,
+      disableOrganizeImports = false,
     },
     python = {
       analysis = {
@@ -552,6 +552,7 @@ require('lspconfig').pyright.setup {
   },
 }
 EOF
+
 "
 " telescope config
 " 
@@ -559,12 +560,13 @@ EOF
 nnoremap <leader>f <cmd>Telescope find_files<cr>
 nnoremap <leader>g <cmd>Telescope live_grep<cr>
 nnoremap <leader>b <cmd>Telescope buffers<cr>
-nnoremap <leader>t <cmd>Telescope tags<cr>
 nnoremap <leader>r <cmd>Telescope registers<cr>
 nnoremap <leader>s <cmd>Telescope ultisnips<cr>
+nnoremap <leader>t :lua require('telescope.builtin').lsp_document_symbols({ symbols='function' })<CR>
 
 set wildignore+=*.png,*.jpg,*.jpeg,*/build/*,*.pyc,*.log,*/log/*,*/logs/*,*.log.*,*.class,*.json,*.txt,*.cr2,*.raw
 lua << EOF 
 require('telescope').setup{ defaults = { file_ignore_patterns = {'build', 'mlruns', 'cr2', 'cache'} } } 
 EOF
+
 
