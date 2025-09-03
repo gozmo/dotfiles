@@ -102,7 +102,7 @@ nnoremap <A-l> <C-w>l
 " F-key mappings
 nmap <silent> <F2> :NERDTreeToggle<CR>
 nmap <F3> :Vista nvim_lsp<CR>
-nmap <F4> :TroubleToggle<CR>
+nmap <F4> :Trouble diagnostics toggle<CR>
 noremap <F5> :UndotreeToggle<CR>
 nmap <F6> :Todo<CR>
 nmap <F8> :DiffviewOpen -uno<CR>
@@ -389,6 +389,10 @@ require'nvim-treesitter.configs'.setup {
 EOF
 
 
+"lua << EOF
+"require'treesitter-context'
+"EOF
+
 """ Trouble
 lua << EOF
   require("trouble").setup {
@@ -535,23 +539,23 @@ EOF
 " Ruff
 "
 
-" Use ruff in parallel with pyright
-lua<<EOF
-require('lspconfig').pyright.setup {
-  settings = {
-    pyright = {
-      -- Using Ruff's import organizer
-      disableOrganizeImports = false,
-    },
-    python = {
-      analysis = {
-        -- Ignore all files for analysis to exclusively use Ruff for linting
-        ignore = { '*' },
-      },
-    },
-  },
-}
-EOF
+"" Use ruff in parallel with pyright
+"lua<<EOF
+"require('lspconfig').pyright.setup {
+  "settings = {
+    "pyright = {
+      "-- Using Ruff's import organizer
+      "disableOrganizeImports = true,
+    "},
+    "python = {
+      "analysis = {
+        "-- Ignore all files for analysis to exclusively use Ruff for linting
+        "ignore = { '*' },
+      "},
+    "},
+  "},
+"}
+"EOF
 
 "
 " telescope config
@@ -563,6 +567,7 @@ nnoremap <leader>b <cmd>Telescope buffers<cr>
 nnoremap <leader>r <cmd>Telescope registers<cr>
 nnoremap <leader>s <cmd>Telescope ultisnips<cr>
 nnoremap <leader>t :lua require('telescope.builtin').lsp_document_symbols({ symbols='function' })<CR>
+nnoremap <leader>e :lua require('telescope.builtin').diagnostics()<CR>
 
 set wildignore+=*.png,*.jpg,*.jpeg,*/build/*,*.pyc,*.log,*/log/*,*/logs/*,*.log.*,*.class,*.json,*.txt,*.cr2,*.raw
 lua << EOF 
