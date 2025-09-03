@@ -67,7 +67,7 @@ Plug 'tpope/vim-eunuch' " File management on current buffer, rename file and mov
 Plug 'vimwiki/vimwiki' "wiki
 Plug 'cohama/lexima.vim' "automatically add matching parathesis
 Plug 'shellRaining/hlchunk.nvim' "shows indent depth
-Plug 'kdheepak/lazygit.nvim'
+Plug 'folke/flash.nvim'
 
 " Debug, 
 Plug 'mfussenegger/nvim-dap'
@@ -107,6 +107,9 @@ noremap <F5> :UndotreeToggle<CR>
 nmap <F6> :Todo<CR>
 nmap <F8> :DiffviewOpen -uno<CR>
 nmap <F12> :vsplit ~/dotfiles/nvim/hints<CR>
+
+" User by
+nnoremap <c-r> :Telescope lsp_references<CR>
 
 "Search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>
@@ -570,8 +573,16 @@ nnoremap <leader>t :lua require('telescope.builtin').lsp_document_symbols({ symb
 nnoremap <leader>e :lua require('telescope.builtin').diagnostics()<CR>
 
 set wildignore+=*.png,*.jpg,*.jpeg,*/build/*,*.pyc,*.log,*/log/*,*/logs/*,*.log.*,*.class,*.json,*.txt,*.cr2,*.raw
+
 lua << EOF 
 require('telescope').setup{ defaults = { file_ignore_patterns = {'build', 'mlruns', 'cr2', 'cache'} } } 
 EOF
 
 
+"""
+" flash
+" 
+
+lua << EOF
+require('flash').setup()
+EOF
