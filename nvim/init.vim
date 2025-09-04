@@ -567,10 +567,11 @@ EOF
 nnoremap <leader>f <cmd>Telescope find_files<cr>
 nnoremap <leader>g <cmd>Telescope live_grep<cr>
 nnoremap <leader>b <cmd>Telescope buffers<cr>
-nnoremap <leader>r <cmd>Telescope registers<cr>
+nnoremap <leader>reg <cmd>Telescope registers<cr>
 nnoremap <leader>s <cmd>Telescope ultisnips<cr>
 nnoremap <leader>t :lua require('telescope.builtin').lsp_document_symbols({ symbols='function' })<CR>
 nnoremap <leader>e :lua require('telescope.builtin').diagnostics()<CR>
+nnoremap <leader>r :lua require('telescope.builtin').lsp_references()<CR>
 
 set wildignore+=*.png,*.jpg,*.jpeg,*/build/*,*.pyc,*.log,*/log/*,*/logs/*,*.log.*,*.class,*.json,*.txt,*.cr2,*.raw
 
