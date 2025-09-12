@@ -59,6 +59,9 @@ Plug 'thesimonho/kanagawa-paper.nvim'
 Plug 'SirVer/ultisnips' " snippets manager
 Plug 'fhill2/telescope-ultisnips.nvim'
 
+" Context
+Plug 'wellle/context.vim'
+
 " Other
 Plug 'scrooloose/nerdcommenter' "Comment code with <leader>cc
 Plug 'tpope/vim-eunuch' " File management on current buffer, rename file and move it
@@ -587,3 +590,9 @@ EOF
 lua << EOF
 require('flash').setup()
 EOF
+
+"""
+" Context
+"
+
+let g:context_enabled=1
