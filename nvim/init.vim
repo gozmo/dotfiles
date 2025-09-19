@@ -2,7 +2,6 @@ call plug#begin()
 
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-"Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
 Plug 'mason-org/mason.nvim'
 
 " Bars and window stuff
@@ -250,15 +249,6 @@ endif
 
 ""Zenmode
 autocmd VimEnter * noremap <Leader>z :ZenMode<cr>
-
-
-""Goyo
-
-"autocmd VimEnter * noremap <Leader>z :Goyo<cr>
-"let g:goyo_width = "90%"
-
-"Limelight
-let g:limelight_paragraph_span = 1
 
 
 " nvim cmp, Completion
