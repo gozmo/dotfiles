@@ -581,14 +581,6 @@ EOF
 
 
 """
-" flash
-" 
-
-lua << EOF
-require('flash').setup()
-EOF
-
-"""
 " Context
 "
 

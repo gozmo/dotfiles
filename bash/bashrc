@@ -10,7 +10,7 @@ if [ "$TERM" = "screen" -o "$TERM" = "screen-256color" ]; then
 fi
 
 
-export PATH=~/opt/lazygit:~/opt/nvim/:$PATH:~/dotfiles/bin:$HOME/.local/bin:$HOME/.pyenv/bin:~/opt/fishline/
+export PATH=~/opt/lazygit:~/opt/nvim/:$PATH:~/dotfiles/bin:$HOME/.local/bin:$HOME/.pyenv/bin:~/opt/fishline/:~/opt/lazygit
 
 # append to the history file, don't overwrite it
 shopt -s histappend
