@@ -569,7 +569,7 @@ nnoremap <leader>r :lua require('telescope.builtin').lsp_references()<CR>
 set wildignore+=*.png,*.jpg,*.jpeg,*/build/*,*.pyc,*.log,*/log/*,*/logs/*,*.log.*,*.class,*.json,*.txt,*.cr2,*.raw
 
 lua << EOF 
-require('telescope').setup{ defaults = { file_ignore_patterns = {'build', 'mlruns', 'cr2', 'cache'} } } 
+require('telescope').setup{ defaults = { file_ignore_patterns = {'build', 'mlruns', 'cr2', 'cache', 'output*', 'data'} } } 
 EOF
 
 
