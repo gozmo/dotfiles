@@ -8,13 +8,12 @@ Plug 'mason-org/mason.nvim'
 Plug 'folke/todo-comments.nvim' " Find todo comments in repo
 Plug 'folke/which-key.nvim' "Show command window 
 Plug 'vuciv/vim-bujo' "Task manager and Todo lists
-Plug 'scrooloose/nerdtree' "Press F2 and get the directory tree
+Plug 'preservim/nerdtree' "Press F2 and get the directory tree
 Plug 'mbbill/undotree' "Press F5 and get undohistory
 
 " tags
 "Plug 'majutsushi/tagbar' "Press F3 and get a Tagbar on rhs
 Plug 'liuchengxu/vista.vim'
-"Plug 'ludovicchabant/vim-gutentags' "generate tags for tagbar
 
 " Vim Gutter 
 Plug 'chentoast/marks.nvim'  "Shows marks on sideline
@@ -49,10 +48,9 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 
 " Colorschemes
-Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
-Plug 'sainnhe/gruvbox-material'
 Plug 'sainnhe/sonokai'
-Plug 'thesimonho/kanagawa-paper.nvim'
+Plug 'junegunn/seoul256.vim'
+Plug 'morhetz/gruvbox'
 
 " Snippets
 Plug 'SirVer/ultisnips' " snippets manager
@@ -62,7 +60,7 @@ Plug 'fhill2/telescope-ultisnips.nvim'
 Plug 'wellle/context.vim'
 
 " Other
-Plug 'scrooloose/nerdcommenter' "Comment code with <leader>cc
+Plug 'preservim/nerdcommenter' "Comment code with <leader>cc
 Plug 'tpope/vim-eunuch' " File management on current buffer, rename file and move it
 
 " --- Evaluate these plugins ---
@@ -74,6 +72,11 @@ Plug 'Davidyz/coredumpy.nvim'
 
 " Evaluate
 Plug 'ThePrimeagen/harpoon', {'branch': 'harpoon2'}
+
+Plug 'MunifTanjim/nui.nvim'
+Plug 'MeanderingProgrammer/render-markdown.nvim'
+Plug 'saxon1964/neovim-tips'
+Plug 'atiladefreitas/dooing'
 
 "----------------------------------
 
@@ -252,6 +255,13 @@ endif
 
 ""Zenmode
 autocmd VimEnter * noremap <Leader>z :ZenMode<cr>
+lua << EOF
+require("zen-mode").toggle({
+  window = {
+    width = .85 -- width will be 85% of the editor width
+  }
+})
+EOF
 
 
 " nvim cmp, Completion
@@ -467,35 +477,6 @@ lua << EOF
 require('telescope').load_extension('ultisnips')
 EOF
 
-"
-" catppuccin
-"
-lua << EOF
-local catppuccin = require("catppuccin")
-
-catppuccin.setup({
-  integrations = {
-    ts_rainbow = true,
-  },
-  color_overrides = {
-    mocha = {
-      text = "#F4CDE9",
-      subtext1 = "#DEBAD4",
-      subtext0 = "#C8A6BE",
-      overlay2 = "#B293A8",
-      overlay1 = "#9C7F92",
-      overlay0 = "#866C7D",
-      surface2 = "#705867",
-      surface1 = "#5A4551",
-      surface0 = "#44313B",
-
-      base = "#352939",
-      mantle = "#211924",
-      crust = "#1a1016",
-    },
-  },
-})
-EOF
 
 "
 " hlchunk
@@ -609,3 +590,14 @@ vim.keymap.set("n", "<leader>h", function() toggle_telescope(harpoon:list()) end
     { desc = "Open harpoon window" })
 
 EOF
+
+
+""""""
+" Vim tips
+"
+lua << EOF
+require("neovim_tips").setup {
+  user_file = vim.fn.stdpath("config") .. "/neovim_tips/user_tips.md",
+  daily_tip = 1,  -- Daily tip: 0=off, 1=once per day, 2=every startup
+}
+
