@@ -1,12 +1,15 @@
 F2 :NERDTreeToggle
-F3 :TagbarToggle
-F4 :TroubleToggle
+F3 :ContextToggle
+F4 :Vista
 
 F5 :UndotreeToggle
-F6 :Todo
-F7 :Limelight
+F6 
+F7
 F8 :DiffviewOpen -uno
 
+F9 :TodoTelescope
+F10 :DiffViewOpen
+F11 
 F12 :vsplit ~/dotfiles/nvim/hints
 
 __Tags__

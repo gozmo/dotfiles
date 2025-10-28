@@ -51,6 +51,7 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'sainnhe/sonokai'
 Plug 'junegunn/seoul256.vim'
 Plug 'morhetz/gruvbox'
+Plug 'rebelot/kanagawa.nvim'
 
 " Snippets
 Plug 'SirVer/ultisnips' " snippets manager
@@ -77,6 +78,7 @@ Plug 'MunifTanjim/nui.nvim'
 Plug 'MeanderingProgrammer/render-markdown.nvim'
 Plug 'saxon1964/neovim-tips'
 Plug 'atiladefreitas/dooing'
+Plug 'aaronik/treewalker.nvim'
 
 "----------------------------------
 
@@ -106,12 +108,15 @@ nnoremap <A-l> <C-w>l
 
 " F-key mappings
 nmap <silent> <F2> :NERDTreeToggle<CR>
-nmap <F3> :Vista nvim_lsp<CR>
-nmap <F4> :Trouble diagnostics toggle<CR>
-noremap <F5> :UndotreeToggle<CR>
-nmap <F6> :Todo<CR>
-nmap <F8> :DiffviewOpen -uno<CR>
-nmap <F12> :vsplit ~/dotfiles/nvim/hints<CR>
+nmap <silent> <F3> :ContextToggle<CR>
+nmap <silent> <F4> :Vista nvim_lsp<CR>
+
+nmap <silent> <F5> :UndotreeToggle<CR>
+nmap <silent> <F8> :Trouble diagnostics toggle<CR>
+
+nmap <silent> <F9> :TodoTelescope<CR>
+nmap <silent> <F10> :DiffviewOpen -uno<CR>
+nmap <silent> <F12> :vsplit ~/dotfiles/nvim/hints<CR>
 
 " User by
 nnoremap <c-r> :Telescope lsp_references<CR>
