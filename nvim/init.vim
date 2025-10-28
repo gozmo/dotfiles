@@ -49,9 +49,8 @@ Plug 'nvim-telescope/telescope.nvim'
 
 " Colorschemes
 Plug 'sainnhe/sonokai'
-Plug 'junegunn/seoul256.vim'
-Plug 'morhetz/gruvbox'
 Plug 'rebelot/kanagawa.nvim'
+Plug 'sainnhe/gruvbox-material'
 
 " Snippets
 Plug 'SirVer/ultisnips' " snippets manager
@@ -118,8 +117,6 @@ nmap <silent> <F9> :TodoTelescope<CR>
 nmap <silent> <F10> :DiffviewOpen -uno<CR>
 nmap <silent> <F12> :vsplit ~/dotfiles/nvim/hints<CR>
 
-" User by
-nnoremap <c-r> :Telescope lsp_references<CR>
 
 "Search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>
