@@ -602,4 +602,14 @@ require("neovim_tips").setup {
   user_file = vim.fn.stdpath("config") .. "/neovim_tips/user_tips.md",
   daily_tip = 1,  -- Daily tip: 0=off, 1=once per day, 2=every startup
 }
+EOF
+
+"""""
+" TreeWalker
+"
+nmap <A-h> Treewalker Left<CR>
+nmap <A-j> Treewalker Down<CR>
+nmap <A-k> Treewalker Up<CR>
+nmap <A-l> Treewalker Right<CR>
+
 
