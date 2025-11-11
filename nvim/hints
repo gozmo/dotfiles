@@ -42,6 +42,9 @@ y'a     :yank from mark a
 
 r!      :redirect command output into the buffer
 
+__Diagnostics__
+<c-w>d  :diagnostic on current line
+
 __Colors__
 
 :Inspect :To inspect the item under the cursor
