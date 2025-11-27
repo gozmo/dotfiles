@@ -51,6 +51,7 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'sainnhe/sonokai'
 Plug 'rebelot/kanagawa.nvim'
 Plug 'sainnhe/gruvbox-material'
+Plug 'michaeldyrynda/carbon'
 
 " Snippets
 Plug 'SirVer/ultisnips' " snippets manager
@@ -72,12 +73,12 @@ Plug 'Davidyz/coredumpy.nvim'
 
 " Evaluate
 Plug 'ThePrimeagen/harpoon', {'branch': 'harpoon2'}
+Plug 'saxon1964/neovim-tips' 
 
 Plug 'MunifTanjim/nui.nvim'
 Plug 'MeanderingProgrammer/render-markdown.nvim'
-Plug 'saxon1964/neovim-tips'
 Plug 'atiladefreitas/dooing'
-Plug 'aaronik/treewalker.nvim'
+Plug 'aaronik/treewalker.nvim' 
 
 "----------------------------------
 
