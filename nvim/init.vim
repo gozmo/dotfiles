@@ -60,6 +60,10 @@ Plug 'fhill2/telescope-ultisnips.nvim'
 " Context
 Plug 'wellle/context.vim'
 
+" Wiki
+Plug 'vimwiki/vimwiki'
+
+
 " Other
 Plug 'preservim/nerdcommenter' "Comment code with <leader>cc
 Plug 'tpope/vim-eunuch' " File management on current buffer, rename file and move it
@@ -74,6 +78,7 @@ Plug 'Davidyz/coredumpy.nvim'
 " Evaluate
 Plug 'ThePrimeagen/harpoon', {'branch': 'harpoon2'}
 Plug 'saxon1964/neovim-tips' 
+Plug 'linux-cultist/venv-selector.nvim'
 
 Plug 'MunifTanjim/nui.nvim'
 Plug 'MeanderingProgrammer/render-markdown.nvim'
@@ -260,12 +265,21 @@ endif
 autocmd VimEnter * noremap <Leader>z :ZenMode<cr>
 lua << EOF
 require("zen-mode").toggle({
-  window = {
-    width = .85 -- width will be 85% of the editor width
-  }
+window = {
+    width = 120, -- width will be 85% of the editor width
+    options = {
+        number = false,
+        signcolumn = "no",
+        },
+    },
 })
 EOF
 
+
+" basedpyrightc
+lua << EOF
+vim.lsp.enable("basedpyright")
+EOF
 
 " nvim cmp, Completion
 set completeopt=menu,menuone,noselect
@@ -347,6 +361,7 @@ lua <<EOF
     },
     single_file_support = true
 }
+
 EOF
 
 
@@ -601,7 +616,7 @@ EOF
 lua << EOF
 require("neovim_tips").setup {
   user_file = vim.fn.stdpath("config") .. "/neovim_tips/user_tips.md",
-  daily_tip = 1,  -- Daily tip: 0=off, 1=once per day, 2=every startup
+  daily_tip = 0,  -- Daily tip: 0=off, 1=once per day, 2=every startup
 }
 EOF
 
@@ -613,4 +628,13 @@ nmap <A-j> Treewalker Down<CR>
 nmap <A-k> Treewalker Up<CR>
 nmap <A-l> Treewalker Right<CR>
 
-
+""""""
+" Venv selector
+"
+lua << EOF
+require("venv-selector").setup({ 
+    search = {},
+    options = {
+    enable_default_searches = True -- disable all built-in searches
+  }})
+EOF
