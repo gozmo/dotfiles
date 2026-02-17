@@ -52,6 +52,9 @@ Plug 'sainnhe/sonokai'
 Plug 'rebelot/kanagawa.nvim'
 Plug 'sainnhe/gruvbox-material'
 Plug 'michaeldyrynda/carbon'
+Plug 'catppuccin/nvim'
+Plug 'scottmckendry/cyberdream.nvim'
+Plug 'olimorris/onedarkpro.nvim'
 
 " Snippets
 Plug 'SirVer/ultisnips' " snippets manager
@@ -63,10 +66,12 @@ Plug 'wellle/context.vim'
 " Wiki
 Plug 'vimwiki/vimwiki'
 
-
 " Other
 Plug 'preservim/nerdcommenter' "Comment code with <leader>cc
 Plug 'tpope/vim-eunuch' " File management on current buffer, rename file and move it
+
+" Motion
+Plug 'folke/flash.nvim'
 
 " --- Evaluate these plugins ---
 Plug 'shellRaining/hlchunk.nvim' "shows indent depth
@@ -74,6 +79,7 @@ Plug 'shellRaining/hlchunk.nvim' "shows indent depth
 " Debug, 
 Plug 'mfussenegger/nvim-dap'
 Plug 'Davidyz/coredumpy.nvim' 
+
 
 " Evaluate
 Plug 'ThePrimeagen/harpoon', {'branch': 'harpoon2'}
@@ -83,7 +89,6 @@ Plug 'linux-cultist/venv-selector.nvim'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'MeanderingProgrammer/render-markdown.nvim'
 Plug 'atiladefreitas/dooing'
-Plug 'aaronik/treewalker.nvim' 
 
 "----------------------------------
 
@@ -620,14 +625,6 @@ require("neovim_tips").setup {
 }
 EOF
 
-"""""
-" TreeWalker
-"
-nmap <A-h> Treewalker Left<CR>
-nmap <A-j> Treewalker Down<CR>
-nmap <A-k> Treewalker Up<CR>
-nmap <A-l> Treewalker Right<CR>
-
 """"""
 " Venv selector
 "
@@ -637,4 +634,12 @@ require("venv-selector").setup({
     options = {
     enable_default_searches = True -- disable all built-in searches
   }})
+EOF
+
+"""""
+" Flashvim
+"
+lua << EOF
+require("flash").setup()
+vim.keymap.set("n", "<leader>m", function() require("flash").jump() end, {})
 EOF
