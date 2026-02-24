@@ -346,27 +346,53 @@ lua <<EOF
     })
   })
 
-  -- Set up lspconfig.
-  local capabilities = require('cmp_nvim_lsp').default_capabilities()
-  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-  require("lspconfig").pyright.setup{
+-- Set up lspconfig.
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+-- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+require("lspconfig").pyright.setup{
     cmd = { "pyright-langserver", "--stdio" },
-    filetypes = { "python" },
-    --root_dir = function(startpath)
-    --       return M.search_ancestors(startpath, matcher)
-    --  end,
-    settings = {
-      python = {
-        analysis = {
-          autoSearchPaths = true,
-          diagnosticMode = "workspace",
-          useLibraryCodeForTypes = true
+        filetypes = { "python" },
+        --root_dir = function(startpath)
+            --       return M.search_ancestors(startpath, matcher)
+            --  end,
+        settings = {
+            pyright = {
+                -- Using Ruff's import organizer
+                    disableOrganizeImports = true,
+            },
+            python = {
+                analysis = {
+                    autoSearchPaths = true,
+                    diagnosticMode = "workspace",
+                    useLibraryCodeForTypes = true,
+                    ignore = {'*'}
+                },
+            },
         },
-      },
-    },
-    single_file_support = true
+        single_file_support = true
 }
 
+EOF
+
+""" Ruff lsp
+lua << EOF
+require('lspconfig').ruff.setup {
+  init_options = {
+    settings = {
+      logLevel = 'debug',
+    }
+  }
+}
+
+vim.lsp.config('ruff', {
+  init_options = {
+    settings = {
+      -- Ruff language server settings go here
+    }
+  }
+})
+
+vim.lsp.enable('ruff')
 EOF
 
 
@@ -643,3 +669,9 @@ lua << EOF
 require("flash").setup()
 vim.keymap.set("n", "<leader>m", function() require("flash").jump() end, {})
 EOF
+
+""""
+" vimwiki
+"
+
+let g:vimwiki_list = [{'path': '~/dotfiles/vimwiki/'}]
