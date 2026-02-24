@@ -1,0 +1,34 @@
+==source of is branded_fares_preselected==
+    ubia.is_branded_fares_preselected_trip,
+
+
+
+=Filter out branded fares orders=
+In the end I made a filter in the training pipeline to filter out branded fares orders.
+
+==orders for analysis==
+fetcher.py
+
+* fetcher_headroom.fetch_headroom(
+* fetch_pricing_method
+* fetch_tb1
+*  fetch_abx_ids_and_abx_scenarios
+
+
+==orders for training==
+fetcher_headroom.py
+
+==fetch_provier_items==
+called by
+* fetch_revenue_summary
+* fetch_headroom
+
+==training==
+repo: headroom_training
+file: source.py
+
+get_data()
+    fetcher_headroom.fetch_headroom
+    
+get_predictions()
+    fetcher_headroom.get_customer_item_predictions

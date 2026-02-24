@@ -1,0 +1,13 @@
+
+
+Use this snippet to access a test server. The
+file should placed here: {{{/.local/share/pybeutils/fetching.ini}}}
+{{{
+[ibefetcher]
+user = ibe
+host = team-athac04.ibetest.etgcloud.io
+port = 3306
+password = ibe
+database = ibemining
+}}}
+
