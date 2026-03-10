@@ -1,0 +1,6 @@
+## Local repo as dependency
+
+dependencies = [ 
+   "lib @ file:///home/user/repos/lib"
+]
+
