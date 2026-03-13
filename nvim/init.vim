@@ -55,6 +55,9 @@ Plug 'michaeldyrynda/carbon'
 Plug 'catppuccin/nvim'
 Plug 'scottmckendry/cyberdream.nvim'
 Plug 'olimorris/onedarkpro.nvim'
+Plug 'https://codeberg.org/evergarden/nvim.git', { 'as': 'evergarden' }
+Plug 'sainnhe/everforest'
+Plug 'rose-pine/neovim'
 
 " Snippets
 Plug 'SirVer/ultisnips' " snippets manager
@@ -268,17 +271,6 @@ endif
 
 ""Zenmode
 autocmd VimEnter * noremap <Leader>z :ZenMode<cr>
-lua << EOF
-require("zen-mode").toggle({
-window = {
-    width = 120, -- width will be 85% of the editor width
-    options = {
-        number = false,
-        signcolumn = "no",
-        },
-    },
-})
-EOF
 
 
 " basedpyrightc
