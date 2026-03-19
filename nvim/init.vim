@@ -56,8 +56,9 @@ Plug 'catppuccin/nvim'
 Plug 'scottmckendry/cyberdream.nvim'
 Plug 'olimorris/onedarkpro.nvim'
 Plug 'https://codeberg.org/evergarden/nvim.git', { 'as': 'evergarden' }
-Plug 'sainnhe/everforest'
+Plug 'neanias/everforest-nvim', { 'branch': 'main' }
 Plug 'rose-pine/neovim'
+Plug 'shaunsingh/nord.nvim'
 
 " Snippets
 Plug 'SirVer/ultisnips' " snippets manager
