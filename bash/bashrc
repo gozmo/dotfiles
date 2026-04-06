@@ -1,16 +1,5 @@
 
-
-if [ "$TERM" = "xterm" ]; then
-    export TERM=xterm-256color
-fi
-if [ "$TERM" = "screen" -o "$TERM" = "screen-256color" ]; then
-    #export TERM=screen-256color
-    export TERM=xterm-256color
-    unset TERMCAP
-fi
-
-
-export PATH=~/opt/lazygit:~/opt/nvim/:$PATH:~/dotfiles/bin:$HOME/.local/bin:$HOME/.pyenv/bin:~/opt/fishline/:~/opt/lazygit
+export PATH=~/opt/lazygit:~/opt/nvim/:$PATH:~/dotfiles/bin:$HOME/.local/bin:$HOME/.pyenv/bin:~/opt/fishline/
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -32,37 +21,10 @@ alias tmux='tmux -2'
 shopt -s checkwinsize
 
 ####
-# powerline-shell 
-####
-function _update_ps1() {
-    PS1=$(powerline-shell $?)
-}
-
-if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
-    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
-fi
-
-####
 # fzf
 ###
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
-####
-# python
-####
-#export PYENV_ROOT="$HOME/.pyenv"
-#command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-#eval "$(pyenv init -)"
-
-
-
-####
-# java
-####
-
-# Java debugging
-#export JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
 
 ####
 # tmux
