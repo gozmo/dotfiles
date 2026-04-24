@@ -59,6 +59,9 @@ Plug 'https://codeberg.org/evergarden/nvim.git', { 'as': 'evergarden' }
 Plug 'neanias/everforest-nvim', { 'branch': 'main' }
 Plug 'rose-pine/neovim'
 Plug 'shaunsingh/nord.nvim'
+Plug 'eldritch-theme/eldritch.nvim'
+Plug 'ThorstenRhau/token'
+Plug 'ember-theme/nvim'
 
 " Snippets
 Plug 'SirVer/ultisnips' " snippets manager
@@ -176,6 +179,8 @@ set textwidth=120
 set ttyfast
 set wrapmargin=0
 setglobal fileencoding=utf-8
+set scrolloff=8
+set sidescrolloff=8
 
 set wildignore=*.json,*.jpg,*.csv
 
@@ -186,7 +191,7 @@ set expandtab
 set softtabstop=4
 
 let g:sonokai_style = 'andromeda'
-colorscheme sonokai
+colorscheme token
 
 if has('gui_running')
   set guifont=Monospace
