@@ -12,7 +12,6 @@ Plug 'preservim/nerdtree' "Press F2 and get the directory tree
 Plug 'mbbill/undotree' "Press F5 and get undohistory
 
 " tags
-"Plug 'majutsushi/tagbar' "Press F3 and get a Tagbar on rhs
 Plug 'liuchengxu/vista.vim'
 
 " Vim Gutter 
@@ -27,6 +26,7 @@ Plug 'sindrets/diffview.nvim' "Easily cycle through different git diffs of a fil
 Plug 'RRethy/vim-illuminate' "highlights other uses of a variable
 Plug 'vim-airline/vim-airline' "Nice looking status bar
 Plug 'folke/zen-mode.nvim'
+Plug 'shellRaining/hlchunk.nvim' "shows indent depth
 
 " Completion                   
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -78,7 +78,6 @@ Plug 'tpope/vim-eunuch' " File management on current buffer, rename file and mov
 Plug 'folke/flash.nvim'
 
 " --- Evaluate these plugins ---
-Plug 'shellRaining/hlchunk.nvim' "shows indent depth
 
 " Debug, 
 Plug 'mfussenegger/nvim-dap'
@@ -88,8 +87,6 @@ Plug 'Davidyz/coredumpy.nvim'
 " Evaluate
 Plug 'ThePrimeagen/harpoon', {'branch': 'harpoon2'}
 Plug 'saxon1964/neovim-tips' 
-Plug 'linux-cultist/venv-selector.nvim'
-
 Plug 'MunifTanjim/nui.nvim'
 Plug 'MeanderingProgrammer/render-markdown.nvim'
 Plug 'atiladefreitas/dooing'
@@ -274,11 +271,6 @@ endif
 autocmd VimEnter * noremap <Leader>z :ZenMode<cr>
 
 
-" basedpyrightc
-lua << EOF
-vim.lsp.enable("basedpyright")
-EOF
-
 " nvim cmp, Completion
 set completeopt=menu,menuone,noselect
 
@@ -339,50 +331,37 @@ lua <<EOF
     })
   })
 
--- Set up lspconfig.
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
--- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-require("lspconfig").pyright.setup{
+-- Set up lspconfig
+vim.lsp.config('pyright', {
     cmd = { "pyright-langserver", "--stdio" },
-        filetypes = { "python" },
-        --root_dir = function(startpath)
-            --       return M.search_ancestors(startpath, matcher)
-            --  end,
-        settings = {
-            pyright = {
-                -- Using Ruff's import organizer
-                    disableOrganizeImports = true,
-            },
-            python = {
-                analysis = {
-                    autoSearchPaths = true,
-                    diagnosticMode = "workspace",
-                    useLibraryCodeForTypes = true,
-                    ignore = {'*'}
-                },
+    filetypes = { "python" },
+    settings = {
+        pyright = {
+            disableOrganizeImports = false,
+        },
+        python = {
+            analysis = {
+                autoSearchPaths = true,
+                diagnosticMode = "workspace",
+                useLibraryCodeForTypes = true,
+                ignore = {'*'}
             },
         },
-        single_file_support = true
-}
+    },
+    single_file_support = true
+})
 
-EOF
-
-""" Ruff lsp
-lua << EOF
-require('lspconfig').ruff.setup {
-  init_options = {
-    settings = {
-      logLevel = 'debug',
-    }
-  }
-}
+vim.lsp.enable('pyright')
 
 vim.lsp.config('ruff', {
-  init_options = {
-    settings = {
-      -- Ruff language server settings go here
+    init_options = {
+        settings = {
+            settings = {
+                lint = { enable = true },
+                typeCheckingMode = "off"
+            }
+        }
     }
-  }
 })
 
 vim.lsp.enable('ruff')
@@ -392,54 +371,13 @@ EOF
 """" Tree sitter
 lua <<EOF
 
-require'nvim-treesitter.configs'.setup {
-  -- A list of parser names, or "all"
-  ensure_installed = { "c", "lua", "rust", "python","markdown", "yaml"},
-
-  -- Install parsers synchronously (only applied to `ensure_installed`)
-  sync_install = false,
-
-  -- Automatically install missing parsers when entering buffer
-  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+require('nvim-treesitter').setup {
+  ensure_installed = { "lua", "rust", "python", "markdown", "yaml" },
   auto_install = true,
-
-  -- List of parsers to ignore installing (for "all")
-  ignore_install = { "javascript", "c" },
-
-  ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
-  -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
-
-  highlight = {
-    -- `false` will disable the whole extension
-    enable = true,
-
-    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
-    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
-    -- the name of the parser)
-    -- list of language that will be disabled
-    disable = { "c", "rust" },
-    -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
-    disable = function(lang, buf)
-        local max_filesize = 100 * 1024 -- 100 KB
-        local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-        if ok and stats and stats.size > max_filesize then
-            return true
-        end
-    end,
-
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
-  },
+  ignore_install = { "javascript", "c" }
 }
 EOF
 
-
-"lua << EOF
-"require'treesitter-context'
-"EOF
 
 """ Trouble
 lua << EOF
@@ -642,17 +580,6 @@ require("neovim_tips").setup {
   user_file = vim.fn.stdpath("config") .. "/neovim_tips/user_tips.md",
   daily_tip = 0,  -- Daily tip: 0=off, 1=once per day, 2=every startup
 }
-EOF
-
-""""""
-" Venv selector
-"
-lua << EOF
-require("venv-selector").setup({ 
-    search = {},
-    options = {
-    enable_default_searches = True -- disable all built-in searches
-  }})
 EOF
 
 """""
