@@ -61,8 +61,7 @@ Plug 'rose-pine/neovim'
 Plug 'shaunsingh/nord.nvim'
 
 " Snippets
-Plug 'SirVer/ultisnips' " snippets manager
-Plug 'fhill2/telescope-ultisnips.nvim'
+Plug 'nvim-lua/luasnip"
 
 " Context
 Plug 'wellle/context.vim'
@@ -94,6 +93,18 @@ Plug 'atiladefreitas/dooing'
 "----------------------------------
 
 call plug#end()
+
+" Luasnip setup
+lua <<EOF
+require("luasnip").config.setup({
+  history = true,
+})
+
+-- Load snippets from VSCode format
+local ls = require("luasnip.loaders.from_vscode")
+ls.from_json()()
+ls.from_json({ path = vim.fn.stdpath("data") .. "/snippets" })()
+EOF
 
 
 nnoremap <SPACE> <Nop>
@@ -282,7 +293,7 @@ lua <<EOF
     snippet = {
       -- REQUIRED - you must specify a snippet engine
       expand = function(args)
-        vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+        require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
       end,
     },
     window = {
@@ -298,7 +309,6 @@ lua <<EOF
     }),
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
-      { name = 'ultisnips' }, -- For ultisnips users.
     }, {
       { name = 'buffer' },
     })

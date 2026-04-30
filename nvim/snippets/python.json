@@ -1,0 +1,128 @@
+{
+	"cmp": "rich comparison methods",
+	"desc": "methods implementing rich comparison",
+	"postTabStop": 0,
+	"prefix": "cmp",
+	"body": "def __eq__(self, other):\n\t${1:pass}\n\ndef __ne__(self, other):\n\t${2:pass}\n\ndef __lt__(self, other):\n\t${3:pass}\n\ndef __le__(self, other):\n\t${4:pass}\n\ndef __gt__(self, other):\n\t${5:pass}\n\ndef __ge__(self, other):\n\t${6:pass}\n\ndef __cmp__(self, other):\n\t${7:pass}",
+	"name": ""
+},
+{
+	"cmp": "methods implementing string representation",
+	"desc": "methods implementing string representation",
+	"postTabStop": 0,
+	"prefix": "repr",
+	"body": "def __repr__(self):\n\t${1:pass}\n\ndef __str__(self):\n\t${2:pass}\n\ndef __unicode__(self):\n\t${3:pass}",
+	"name": ""
+},
+{
+	"cmp": "function or class method",
+	"desc": "function or class method",
+	"postTabStop": 0,
+	"prefix": "deff",
+	"body": "def ${1:fname}($2):\n\t$0",
+	"name": ""
+},
+{
+	"cmp": "function with docstrings",
+	"desc": "function with docstrings",
+	"postTabStop": 0,
+	"prefix": "def",
+	"body": "def ${1:function}($2):\n\t\"\"\"\n\t${3:TODO: Docstring for $1.}\n\t\"\"\"\n\t${4:pass}",
+	"name": ""
+},
+{
+	"cmp": "from module import name",
+	"desc": "from module import name",
+	"postTabStop": 0,
+	"prefix": "from",
+	"body": "from ${1:module} import ${2:Stuff}",
+	"name": ""
+},
+{
+	"cmp": "Try / Except",
+	"desc": "Try / Except",
+	"postTabStop": 0,
+	"prefix": "try",
+	"body": "try:\n\t${1:pass}\nexcept ${2:Exception} as ${3:e}:\n\t${4:raise $3}",
+	"name": ""
+},
+{
+	"cmp": "Try / Except / Else",
+	"desc": "Try / Except / Else",
+	"postTabStop": 0,
+	"prefix": "trye",
+	"body": "try:\n\t${1:pass}\nexcept ${2:Exception} as ${3:e}:\n\t${4:raise $3}\nelse:\n\t${5:pass}",
+	"name": ""
+},
+{
+	"cmp": "Try / Except / Finally",
+	"desc": "Try / Except / Finally",
+	"postTabStop": 0,
+	"prefix": "tryf",
+	"body": "try:\n\t${1:pass}\nexcept ${2:Exception} as ${3:e}:\n\t${4:raise $3}\nfinally:\n\t${5:pass}",
+	"name": ""
+},
+{
+	"cmp": "Try / Except / Else / Finally",
+	"desc": "Try / Except / Else / Finally",
+	"postTabStop": 0,
+	"prefix": "tryef",
+	"body": "try:\n\t${1:pass}\nexcept ${2:Exception} as ${3:e}:\n\t${4:raise}\nelse:\n\t${5:pass}\nfinally:\n\t${6:pass}",
+	"name": ""
+},
+{
+	"cmp": "Debug with pudb",
+	"desc": "Debug with pudb",
+	"postTabStop": 0,
+	"prefix": "pudb",
+	"body": "import pudb; pudb.set_trace()",
+	"name": ""
+},
+{
+	"cmp": "Debug with pudb and telnet client",
+	"desc": "Debug with pudb and telnet client",
+	"postTabStop": 0,
+	"prefix": "pudbt",
+	"body": "#telnet 127.0.0.1 6899\nimport subprocess\nfrom pudb.remote import set_trace\n\nr = subprocess.run(['tput', 'cols'], stdout=subprocess.PIPE)\ncols = int(r.stdout.decode('utf-8'))\n\nr = subprocess.run(['tput', 'lines'], stdout=subprocess.PIPE)\nlines = int(r.stdout.decode('utf-8'))\n\nset_trace(term_size=(cols, lines))",
+	"name": ""
+},
+{
+	"cmp": "Simple argparse",
+	"desc": "Simple argparse",
+	"postTabStop": 0,
+	"prefix": "argparse",
+	"body": "import argparse\nparser = argparse.ArgumentParser()\nparser.add_argument('--experiment_name')\nparser.add_argument('--hpo', default=False, action=argparse.BooleanOptionalAction)\nargs = parser.parse_args()",
+	"name": ""
+},
+{
+	"cmp": "Import logger",
+	"desc": "Import logger",
+	"postTabStop": 0,
+	"prefix": "logi",
+	"body": "import logging\nlogger = logging.getLogger(__name__)\n#logger.info, error, warning, debug",
+	"name": ""
+},
+{
+	"cmp": "doc string",
+	"desc": "doc string",
+	"postTabStop": 0,
+	"prefix": "doc",
+	"body": "\"\"\"\nParameters\n---\n---\n\"\"\"",
+	"name": ""
+},
+{
+	"cmp": "Color class",
+	"desc": "Color class",
+	"postTabStop": 0,
+	"prefix": "color_class",
+	"body": "class TermColor:\n\tBLACK = '\\033[30m'\n\tRED = '\\033[31m'\n\tGREEN = '\\033[32m'\n\tYELLOW = '\\033[33m'  # orange on some systems\n\tBLUE = '\\033[34m'\n\tMAGENTA = '\\033[35m'\n\tCYAN = '\\033[36m'\n\tLIGHT_GRAY = '\\033[37m'\n\tDARK_GRAY = '\\033[90m'\n\tBRIGHT_RED = '\\033[91m'\n\tBRIGHT_GREEN = '\\033[92m'\n\tBRIGHT_YELLOW = '\\033[93m'\n\tBRIGHT_BLUE = '\\033[94m'\n\tBRIGHT_MAGENTA = '\\033[95m'\n\tBRIGHT_CYAN = '\\033[96m'\n\tWHITE = '\\033[97m'\n\n\tRESET = '\\033[0m'",
+	"name": ""
+},
+{
+	"cmp": "Data Class",
+	"desc": "Data Class",
+	"postTabStop": 0,
+	"prefix": "dataclass",
+	"body": "from dataclasses import dataclass\n@dataclass\nclass ReplaceMe:\n\tvariable: dict\n\tvariable2: list",
+	"name": ""
+}
