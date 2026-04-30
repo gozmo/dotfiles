@@ -40,10 +40,7 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'folke/trouble.nvim' " :Trouble, shows a pretty list of error and others
 
-"" To be able to install pyright
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" telescope
+"" telescope
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 
@@ -61,7 +58,7 @@ Plug 'rose-pine/neovim'
 Plug 'shaunsingh/nord.nvim'
 
 " Snippets
-Plug 'nvim-lua/luasnip"
+Plug 'nvim-lua/luasnip'
 
 " Context
 Plug 'wellle/context.vim'
@@ -228,7 +225,13 @@ let g:airline_section_z = ''
 
 " Mason
 lua << EOF
-require("mason").setup()
+require("mason").setup({
+  ensure_installed = {
+    "pyright",
+    "ruff",
+    "lua_ls",
+  },
+})
 EOF
 
 
