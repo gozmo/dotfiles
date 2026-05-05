@@ -1,0 +1,2 @@
+#!/usr/bin/env fish
+tmux showenv -s | string replace -rf '^((?:SSH|DISPLAY).*?)=(".*?"); export.*' 'set -gx $1 $2' | source

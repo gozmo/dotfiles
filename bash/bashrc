@@ -1,16 +1,5 @@
 
-
-if [ "$TERM" = "xterm" ]; then
-    export TERM=xterm-256color
-fi
-if [ "$TERM" = "screen" -o "$TERM" = "screen-256color" ]; then
-    #export TERM=screen-256color
-    export TERM=xterm-256color
-    unset TERMCAP
-fi
-
-
-export PATH=~/opt/lazygit:~/opt/nvim/:$PATH:~/dotfiles/bin:$HOME/.local/bin:$HOME/.pyenv/bin:~/opt/fishline/:~/opt/lazygit
+export PATH=~/opt/lazygit:~/opt/nvim/:$PATH:~/dotfiles/bin:$HOME/.local/bin:$HOME/.pyenv/bin:~/opt/fishline/
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -32,37 +21,10 @@ alias tmux='tmux -2'
 shopt -s checkwinsize
 
 ####
-# powerline-shell 
-####
-function _update_ps1() {
-    PS1=$(powerline-shell $?)
-}
-
-if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
-    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
-fi
-
-####
 # fzf
 ###
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
-####
-# python
-####
-#export PYENV_ROOT="$HOME/.pyenv"
-#command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-#eval "$(pyenv init -)"
-
-
-
-####
-# java
-####
-
-# Java debugging
-#export JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
 
 ####
 # tmux
@@ -86,25 +48,4 @@ alias egrep='egrep --color=auto'
 ## Local bashrc
 source $HOME/.bashrc.local
 
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/pontus/sleepcycle/google-cloud-sdk/path.bash.inc' ]; then . '/home/pontus/sleepcycle/google-cloud-sdk/path.bash.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/pontus/sleepcycle/google-cloud-sdk/completion.bash.inc' ]; then . '/home/pontus/sleepcycle/google-cloud-sdk/completion.bash.inc'; fi
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/pontus/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/pontus/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/pontus/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/pontus/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
 
