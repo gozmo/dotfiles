@@ -61,7 +61,9 @@ Plug 'ThorstenRhau/token'
 Plug 'ember-theme/nvim'
 
 " Snippets
-Plug 'nvim-lua/luasnip'
+Plug 'SirVer/ultisnips'
+Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+Plug 'nvim-telescope/telescope-ultisnips.nvim'
 
 " Context
 Plug 'wellle/context.vim'
@@ -94,20 +96,17 @@ Plug 'atiladefreitas/dooing'
 
 call plug#end()
 
-" Luasnip setup
-lua <<EOF
-require("luasnip").config.setup({
-  history = true,
-})
-
--- Load snippets from VSCode format
-local ls = require("luasnip.loaders.from_vscode")
-ls.from_json()()
-ls.from_json({ path = vim.fn.stdpath("data") .. "/snippets" })()
-EOF
+" UltiSnips
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsEditSplit="horizontal"
+let g:UltiSnipsSnippetDirectories=["~/dotfiles/nvim/ulti_snippets"]
 
 
 nnoremap <SPACE> <Nop>
+
+
 let mapleader=" "
 
 " Show a red column and linewidth 120
@@ -163,10 +162,8 @@ xnoremap <c-k> :m-2<cr>gv=gv
 xnoremap <c-j> :m'>+<cr>gv=gv
 
 "Go to definition and declaration
-lua << EOF
-    vim.api.nvim_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { noremap = true, silent = true })
-    vim.api.nvim_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
-EOF
+nnoremap gD :lua vim.lsp.buf.declaration()<CR>
+nnoremap gd :lua vim.lsp.buf.definition()<CR>
 
 filetype plugin indent on
 "syntax on
@@ -206,7 +203,11 @@ endif
 lua << EOF
 vim.o.autoread = true
 vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
-  command = "if mode() != 'c' | checktime | endif",
+  callback = function()
+    if vim.fn.mode() ~= 'c' then
+      vim.cmd('checktime')
+    end
+  end,
   pattern = "*",
 })
 EOF
@@ -298,12 +299,6 @@ lua <<EOF
   local cmp = require'cmp'
 
   cmp.setup({
-    snippet = {
-      -- REQUIRED - you must specify a snippet engine
-      expand = function(args)
-        require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
-      end,
-    },
     window = {
       -- completion = cmp.config.window.bordered(),
       -- documentation = cmp.config.window.bordered(),
@@ -314,9 +309,16 @@ lua <<EOF
       ['<C-Space>'] = cmp.mapping.complete(),
       ['<C-e>'] = cmp.mapping.abort(),
       ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+      ['<Tab>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          return cmp.confirm({ select = true })
+        end
+        fallback()
+      end, { 'i', 's' }),
     }),
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
+      { name = 'ultisnips' },
     }, {
       { name = 'buffer' },
     })
@@ -326,6 +328,7 @@ lua <<EOF
   cmp.setup.filetype('gitcommit', {
     sources = cmp.config.sources({
       { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
+      { name = 'ultisnips' },
     }, {
       { name = 'buffer' },
     })
@@ -457,23 +460,7 @@ require'marks'.setup {
 
 EOF
 
-" Ultisnips
-" Trigger configuration. You need to change this to something other than <tab> if you use one of the following:
-" - https://github.com/Valloric/YouCompleteMe
-" - https://github.com/nvim-lua/completion-nvim
-set runtimepath+=~/dotfiles/nvim/
-let g:UltiSnipsSnippetDirectories=["UltiSnips","ulti_snippets", $HOME.'/dotfiles/nvim/ulti_snippets']
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
-
-" add to telescope
-lua << EOF
-require('telescope').load_extension('ultisnips')
-EOF
 
 
 "
@@ -547,8 +534,19 @@ nnoremap <leader>r :lua require('telescope.builtin').lsp_references()<CR>
 
 set wildignore+=*.png,*.jpg,*.jpeg,*/build/*,*.pyc,*.log,*/log/*,*/logs/*,*.log.*,*.class,*.json,*.txt,*.cr2,*.raw,*.pickle,*.ipynb
 
-lua << EOF 
-require('telescope').setup{ defaults = { file_ignore_patterns = {'build', 'mlruns', 'cr2', 'cache', '.ipynb', '.pickle', "resources/"} } } 
+lua << EOF
+require('telescope').setup{
+  defaults = {
+    file_ignore_patterns = {'build', 'mlruns', 'cr2', 'cache', '.ipynb', '.pickle', "resources/"}
+  },
+  extensions = {
+    ultisnips = {
+      use_current_buffer = false,
+      show_keyword_length = true,
+    },
+  }
+}
+require('telescope').load_extension('ultisnips')
 EOF
 
 
