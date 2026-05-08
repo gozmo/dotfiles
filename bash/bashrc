@@ -45,6 +45,8 @@ alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
 
+OLLAMA_NO_CLOUD=1
+OLLAMA_KEEP_ALIVE=1h
 ## Local bashrc
 source $HOME/.bashrc.local
 
