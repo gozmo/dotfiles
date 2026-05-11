@@ -63,7 +63,7 @@ Plug 'ember-theme/nvim'
 " Snippets
 Plug 'SirVer/ultisnips'
 Plug 'quangnguyen30192/cmp-nvim-ultisnips'
-Plug 'nvim-telescope/telescope-ultisnips.nvim'
+Plug 'fhill2/telescope-ultisnips.nvim'
 
 " Context
 Plug 'wellle/context.vim'
