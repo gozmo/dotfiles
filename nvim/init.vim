@@ -193,7 +193,7 @@ set expandtab
 set softtabstop=4
 
 let g:sonokai_style = 'andromeda'
-colorscheme token
+colorscheme gruvbox-material
 
 if has('gui_running')
   set guifont=Monospace
