@@ -192,7 +192,32 @@ set expandtab
 set softtabstop=4
 
 let g:sonokai_style = 'andromeda'
-colorscheme gruvbox-material
+
+" Per-directory colorscheme: longest matching prefix wins.
+lua << EOF
+local colorscheme_by_path = {
+   ["~/dotfiles"]      = "nord",
+   ["~/repos/headroom"] = "rose-pine",
+   ["~/repos/service-headroom"] = "eldritch",
+}
+local default_colorscheme = "gruvbox-material"
+
+local function pick_colorscheme()
+  local cwd = vim.fn.getcwd()
+  local best_path, best_scheme = "", default_colorscheme
+  for path, scheme in pairs(colorscheme_by_path) do
+    local expanded = vim.fn.expand(path)
+    if cwd == expanded or cwd:sub(1, #expanded + 1) == expanded .. "/" then
+      if #expanded > #best_path then
+        best_path, best_scheme = expanded, scheme
+      end
+    end
+  end
+  return best_scheme
+end
+
+vim.cmd.colorscheme(pick_colorscheme())
+EOF
 
 if has('gui_running')
   set guifont=Monospace
