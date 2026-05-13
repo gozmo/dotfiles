@@ -7,7 +7,6 @@ Plug 'mason-org/mason.nvim'
 " Bars and window stuff
 Plug 'folke/todo-comments.nvim' " Find todo comments in repo
 Plug 'folke/which-key.nvim' "Show command window 
-Plug 'vuciv/vim-bujo' "Task manager and Todo lists
 Plug 'preservim/nerdtree' "Press F2 and get the directory tree
 Plug 'mbbill/undotree' "Press F5 and get undohistory
 
@@ -90,7 +89,7 @@ Plug 'ThePrimeagen/harpoon', {'branch': 'harpoon2'}
 Plug 'saxon1964/neovim-tips' 
 Plug 'MunifTanjim/nui.nvim'
 Plug 'MeanderingProgrammer/render-markdown.nvim'
-Plug 'atiladefreitas/dooing'
+Plug 'vuciv/vim-bujo' "Task manager and Todo lists
 
 "----------------------------------
 
@@ -593,8 +592,8 @@ EOF
 "
 lua << EOF
 require("neovim_tips").setup {
-  user_file = vim.fn.stdpath("config") .. "/neovim_tips/user_tips.md",
-  daily_tip = 0,  -- Daily tip: 0=off, 1=once per day, 2=every startup
+  user_file = vim.fn.stdpath("config") .. "~/dotfiles/nvim/user_tips.md",
+  daily_tip = 1,  -- Daily tip: 0=off, 1=once per day, 2=every startup
 }
 EOF
 
@@ -611,3 +610,5 @@ EOF
 "
 
 let g:vimwiki_list = [{'path': '~/dotfiles/vimwiki/'}]
+
+
