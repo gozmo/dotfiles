@@ -55,3 +55,85 @@ CoC
 ['<C-Space>'] = cmp.mapping.complete(),
 ['<C-e>'] = cmp.mapping.abort(),
 ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+
+__Leader Mappings (mapleader = " ")__
+
+__File/Search__
+<leader>f :Telescope find_files
+<leader>g :Telescope live_grep
+<leader>b :Telescope buffers
+<leader>reg :Telescope registers
+<leader>t :Telescope lsp_document_symbols (functions)
+<leader>e :Telescope diagnostics
+<leader>r :Telescope lsp_references
+
+__Snippets__
+<leader>s :Telescope ultisnips
+
+__Harpoon__
+<leader>a :add current file to harpoon list
+<leader>h :open harpoon file picker
+
+__Flash (jump to text)__
+<leader>m :flash jump
+
+__ZenMode__
+<leader>z :ZenMode
+
+__Other__
+<leader>* :search and replace word under cursor in whole file
+
+__F-Key Mappings__
+F2 :NERDTreeToggle
+F3 :ContextToggle
+F4 :Vista nvim_lsp
+F5 :UndotreeToggle
+F8 :Trouble diagnostics toggle
+F9 :TodoTelescope
+F10 :DiffviewOpen -uno
+F12 :vsplit ~/dotfiles/nvim/hints
+
+__Window Navigation__
+Alt+h :move to left window
+Alt+j :move to lower window
+Alt/k :move to upper window
+Alt+l :move to right window
+
+__Line/Buffer Movement__
+Ctrl+j :move line down
+Ctrl+k :move line up
+Ctrl+i :go forward (jump to location mark)
+Ctrl+o :go back (jump from location mark)
+Ctrl+t :move cursor one tab forward
+
+__Definition/Declaration__
+gd :go to local definition
+gD :go to global definition
+grr :rename symbol in current scope (LSP)
+
+__Text Object__
+ib :select inner block ()
+iB :select inner block {}
+"xy :yank to register x
+"xp :paste from register x
+y'a :yank from mark a
+r! :redirect command output into buffer
+
+__Diagnostics__
+<c-w>d :diagnostic on current line
+
+__Colors/Inspection__
+:Inspect :inspect item under cursor
+
+__Completion (nvim-cmp)__
+Ctrl+Space :open completion
+Ctrl+e :cancel completion
+Ctrl+b :scroll docs up
+Ctrl+f :scroll docs down
+Tab :confirm completion (or fallback)
+S-Tab :jump backward in UltiSnips
+CR :confirm selected item
+
+__UltiSnips__
+Tab :expand snippet / jump forward
+S-Tab :jump backward
