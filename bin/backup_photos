@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+rsync -ahP --info=progress2 /media/yama/bilder/ /mnt/bilder/
+rsync -ahP --info=progress2 "/media/yama/amanda/Foton telefon/Telefonfoton" /mnt/amanda
+
