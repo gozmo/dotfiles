@@ -136,7 +136,36 @@ nmap <silent> <F8> :Trouble diagnostics toggle<CR>
 
 nmap <silent> <F9> :TodoTelescope<CR>
 nmap <silent> <F10> :DiffviewOpen -uno<CR>
-nmap <silent> <F12> :vsplit ~/dotfiles/nvim/hints<CR>
+lua << EOF
+local hints_win = nil
+function ToggleHints()
+  if hints_win and vim.api.nvim_win_is_valid(hints_win) then
+    vim.api.nvim_win_close(hints_win, true)
+    hints_win = nil
+    return
+  end
+
+  local path = vim.fn.expand('~/dotfiles/nvim/hints')
+  local buf = vim.fn.bufnr(path, true)
+  vim.fn.bufload(buf)
+  vim.bo[buf].buflisted = false
+
+  local width = math.floor(vim.o.columns * 0.7)
+  local height = math.floor(vim.o.lines * 0.8)
+  hints_win = vim.api.nvim_open_win(buf, true, {
+    relative = 'editor',
+    width = width,
+    height = height,
+    row = math.floor((vim.o.lines - height) / 2),
+    col = math.floor((vim.o.columns - width) / 2),
+    style = 'minimal',
+    border = 'rounded',
+    title = ' hints ',
+    title_pos = 'center',
+  })
+end
+EOF
+nmap <silent> <F12> :lua ToggleHints()<CR>
 
 
 "Search for selected text, forwards or backwards.
@@ -552,9 +581,10 @@ nnoremap <leader>g <cmd>Telescope live_grep<cr>
 nnoremap <leader>b <cmd>Telescope buffers<cr>
 nnoremap <leader>reg <cmd>Telescope registers<cr>
 nnoremap <leader>s <cmd>Telescope ultisnips<cr>
-nnoremap <leader>t :lua require('telescope.builtin').lsp_document_symbols({ symbols='function' })<CR>
+nnoremap <leader>tt :lua require('telescope.builtin').lsp_document_symbols({ symbols='function' })<CR>
 nnoremap <leader>e :lua require('telescope.builtin').diagnostics()<CR>
 nnoremap <leader>r :lua require('telescope.builtin').lsp_references()<CR>
+nnoremap <leader>tc <cmd>Telescope colorscheme<cr>
 
 set wildignore+=*.png,*.jpg,*.jpeg,*/build/*,*.pyc,*.log,*/log/*,*/logs/*,*.log.*,*.class,*.json,*.txt,*.cr2,*.raw,*.pickle,*.ipynb
 
