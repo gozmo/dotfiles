@@ -47,6 +47,7 @@ alias egrep='egrep --color=auto'
 
 OLLAMA_NO_CLOUD=1
 OLLAMA_KEEP_ALIVE=1h
+ANTHROPIC_MODEL="claude-opus-4-6"'
 ## Local bashrc
 source $HOME/.bashrc.local
 
