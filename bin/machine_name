@@ -1,143 +1,94 @@
-#!/usr/bin/env bash
-# Generates an ASCII-art hostname banner with per-letter color gradients.
-# Font data is embedded directly — no external files or dependencies needed.
+#!/usr/bin/env python3
+"""Generates an ASCII-art hostname banner with per-letter sunset gradients."""
 
-set -euo pipefail
+import platform
+
+FONT_ROWS = 6
 
 # ═══════════════════════════════════════════════════════════════════
 #  EMBEDDED FONT DATA — 6-row box-drawing characters (a–z)
 # ═══════════════════════════════════════════════════════════════════
 
-font_rows=6
-
-a_0=" █████╗ "     a_1="██╔══██╗"    a_2="███████║"    a_3="██╔══██║"
-a_4="██║  ██║"    a_5="╚═╝  ╚═╝"
-
-b_0="██████╗ "    b_1="██╔══██╗"    b_2="██████╔╝"    b_3="██╔══██╗"
-b_4="██████╔╝"    b_5="╚═════╝ "
-
-c_0=" ██████╗"   c_1="██╔════╝"    c_2="██║     "    c_3="██║     "
-c_4="╚██████╗"    c_5=" ╚═════╝"
-
-d_0="██████╗ "    d_1="██╔══██╗"    d_2="██║  ██║"    d_3="██║  ██║"
-d_4="██████╔╝"    d_5="╚═════╝ "
-
-e_0="███████╗"    e_1="██╔════╝"    e_2="█████╗  "    e_3="██╔══╝  "
-e_4="███████╗"    e_5="╚══════╝"
-
-f_0="███████╗"    f_1="██╔════╝"    f_2="█████╗  "    f_3="██╔══╝  "
-f_4="██║     "    f_5="╚═╝     "
-
-g_0=" ██████╗ "   g_1="██╔════╝ "    g_2="██║  ███╗"   g_3="██║   ██║"
-g_4="╚██████╔╝"   g_5=" ╚═════╝ "
-
-h_0="██╗  ██╗"    h_1="██║  ██║"    h_2="███████║"    h_3="██╔══██║"
-h_4="██║  ██║"    h_5="╚═╝  ╚═╝"
-
-i_0="██╗"        i_1="██║"       i_2="██║"       i_3="██║"       i_4="██║"
-i_5="╚═╝"
-
-j_0="     ██╗"   j_1="     ██║"    j_2="     ██║"    j_3="██   ██║"
-j_4="╚█████╔╝"   j_5=" ╚════╝ "
-
-k_0="██╗  ██╗"    k_1="██║ ██╔╝"    k_2="█████╔╝ "    k_3="██╔═██╗ "
-k_4="██║  ██╗"    k_5="╚═╝  ╚═╝"
-
-l_0="██╗     "   l_1="██║     "    l_2="██║     "    l_3="██║     "
-l_4="███████╗"  l_5="╚══════╝"
-
-m_0="███╗   ███╗" m_1="████╗ ████║" m_2="██╔████╔██║" m_3="██║╚██╔╝██║"
-m_4="██║ ╚═╝ ██║" m_5="╚═╝     ╚═╝"
-
-n_0="███╗   ██╗"  n_1="████╗  ██║"  n_2="██╔██╗ ██║"  n_3="██║╚██╗██║"
-n_4="██║ ╚████║"  n_5="╚═╝  ╚═══╝"
-
-o_0=" ██████╗ "   o_1="██╔═══██╗"    o_2="██║   ██║"   o_3="██║   ██║"
-o_4="╚██████╔╝"   o_5=" ╚═════╝ "
-
-p_0="██████╗ "    p_1="██╔══██╗"    p_2="██████╔╝"    p_3="██╔═══╝ "
-p_4="██║     "   p_5="╚═╝     "
-
-q_0=" ██████╗ "   q_1="██╔═══██╗"    q_2="██║   ██║"   q_3="██║▄▄ ██║"
-q_4="╚██████╔╝"   q_5=" ╚══▀▀═╝ "
-
-r_0="██████╗ "    r_1="██╔══██╗"    r_2="██████╔╝"    r_3="██╔══██╗"
-r_4="██║  ██║"    r_5="╚═╝  ╚═╝"
-
-s_0="███████╗"    s_1="██╔════╝"    s_2="███████╗"    s_3="╚════██║"
-s_4="███████║"    s_5="╚══════╝"
-
-t_0="████████╗"   t_1="╚══██╔══╝"   t_2="   ██║   "  t_3="   ██║   "
-t_4="   ██║   "   t_5="   ╚═╝   "
-
-u_0="██╗   ██╗"   u_1="██║   ██║"    u_2="██║   ██║"   u_3="██║   ██║"
-u_4="╚██████╔╝"   u_5=" ╚═════╝ "
-
-v_0="██╗   ██╗"   v_1="██║   ██║"    v_2="██║   ██║"   v_3="╚██╗ ██╔╝"
-v_4=" ╚████╔╝ "   v_5="  ╚═══╝  "
-
-w_0="██╗    ██╗"  w_1="██║    ██║"  w_2="██║ █╗ ██║"  w_3="██║███╗██║"
-w_4="╚███╔███╔╝"  w_5="╚══╝╚══╝ "
-
-x_0="██╗  ██╗"    x_1="╚██╗██╔╝"    x_2=" ╚███╔╝ "   x_3=" ██╔██╗ "
-x_4="██╔╝ ██║"    x_5="╚═╝  ╚═╝"
-
-y_0="██╗   ██╗"   y_1="╚██╗ ██╔╝"    y_2=" ╚████╔╝ "   y_3="  ╚██╔╝  "
-y_4="   ██║   "   y_5="   ╚═╝   "
-
-z_0="███████╗"    z_1="╚══███╔╝"    z_2="  ███╔╝ "    z_3=" ███╔╝  "
-z_4="███████╗"    z_5="╚══════╝"
+FONT = {
+    'a': [" █████╗ ", "██╔══██╗", "███████║", "██╔══██║", "██║  ██║", "╚═╝  ╚═╝"],
+    'b': ["██████╗ ", "██╔══██╗", "██████╔╝", "██╔══██╗", "██████╔╝", "╚═════╝ "],
+    'c': [" ██████╗", "██╔════╝", "██║     ", "██║     ", "╚██████╗", " ╚═════╝"],
+    'd': ["██████╗ ", "██╔══██╗", "██║  ██║", "██║  ██║", "██████╔╝", "╚═════╝ "],
+    'e': ["███████╗", "██╔════╝", "█████╗  ", "██╔══╝  ", "███████╗", "╚══════╝"],
+    'f': ["███████╗", "██╔════╝", "█████╗  ", "██╔══╝  ", "██║     ", "╚═╝     "],
+    'g': [" ██████╗ ", "██╔════╝ ", "██║  ███╗", "██║   ██║", "╚██████╔╝", " ╚═════╝ "],
+    'h': ["██╗  ██╗", "██║  ██║", "███████║", "██╔══██║", "██║  ██║", "╚═╝  ╚═╝"],
+    'i': ["██╗", "██║", "██║", "██║", "██║", "╚═╝"],
+    'j': ["     ██╗", "     ██║", "     ██║", "██   ██║", "╚█████╔╝", " ╚════╝ "],
+    'k': ["██╗  ██╗", "██║ ██╔╝", "█████╔╝ ", "██╔═██╗ ", "██║  ██╗", "╚═╝  ╚═╝"],
+    'l': ["██╗     ", "██║     ", "██║     ", "██║     ", "███████╗", "╚══════╝"],
+    'm': ["███╗   ███╗", "████╗ ████║", "██╔████╔██║", "██║╚██╔╝██║", "██║ ╚═╝ ██║", "╚═╝     ╚═╝"],
+    'n': ["███╗   ██╗", "████╗  ██║", "██╔██╗ ██║", "██║╚██╗██║", "██║ ╚████║", "╚═╝  ╚═══╝"],
+    'o': [" ██████╗ ", "██╔═══██╗", "██║   ██║", "██║   ██║", "╚██████╔╝", " ╚═════╝ "],
+    'p': ["██████╗ ", "██╔══██╗", "██████╔╝", "██╔═══╝ ", "██║     ", "╚═╝     "],
+    'q': [" ██████╗ ", "██╔═══██╗", "██║   ██║", "██║▄▄ ██║", "╚██████╔╝", " ╚══▀▀═╝ "],
+    'r': ["██████╗ ", "██╔══██╗", "██████╔╝", "██╔══██╗", "██║  ██║", "╚═╝  ╚═╝"],
+    's': ["███████╗", "██╔════╝", "███████╗", "╚════██║", "███████║", "╚══════╝"],
+    't': ["████████╗", "╚══██╔══╝", "   ██║   ", "   ██║   ", "   ██║   ", "   ╚═╝   "],
+    'u': ["██╗   ██╗", "██║   ██║", "██║   ██║", "██║   ██║", "╚██████╔╝", " ╚═════╝ "],
+    'v': ["██╗   ██╗", "██║   ██║", "██║   ██║", "╚██╗ ██╔╝", " ╚████╔╝ ", "  ╚═══╝  "],
+    'w': ["██╗    ██╗", "██║    ██║", "██║ █╗ ██║", "██║███╗██║", "╚███╔███╔╝", "╚══╝╚══╝ "],
+    'x': ["██╗  ██╗", "╚██╗██╔╝", " ╚███╔╝ ", " ██╔██╗ ", "██╔╝ ██║", "╚═╝  ╚═╝"],
+    'y': ["██╗   ██╗", "╚██╗ ██╔╝", " ╚████╔╝ ", "  ╚██╔╝  ", "   ██║   ", "   ╚═╝   "],
+    'z': ["███████╗", "╚══███╔╝", "  ███╔╝ ", " ███╔╝  ", "███████╗", "╚══════╝"],
+}
 
 # ═══════════════════════════════════════════════════════════════════
 #  RENDERING LOGIC WITH SUNSET GRADIENT (Hot Pink -> Deep Orange)
 # ═══════════════════════════════════════════════════════════════════
+def main():
+    # Get lowercase hostname
+    hostname = platform.node().lower()
 
-HOST="$(hostname | tr '[:upper:]' '[:lower:]')"
+    # Filter only a-z characters (skip digits, hyphens, etc.)
+    chars = [ch for ch in hostname if ch in FONT]
+    count = len(chars)
 
-# 1. Pre-scan hostname for valid letters and store them.
-#    Non-alpha chars (digits, hyphens) are skipped entirely as requested.
-chars=()
-for (( i = 0; i < ${#HOST}; i++ )); do
-  ch="${HOST:$i:1}"
-  if [[ "$ch" =~ [a-z] ]]; then
-    chars+=("$ch")
-  fi
-done
+    if count == 0:
+        return
 
-count=${#chars[@]}
-if (( count == 0 )); then exit 0; fi
+    # Sunset Gradient Endpoints (RGB)
+    # Start: Hot Pink (#FF69B4)
+    start_r, start_g, start_b = 255, 105, 180
+    # End: Deep Orange (#FF3D00)
+    end_r, end_g, end_b = 255, 61, 0
 
-# Gradient Endpoints (RGB)
-# Start: Hot Pink (#FF69B4)
-R_START=255; G_START=105; B_START=180
-# End: Deep Orange (Material #FF3D00)
-R_END=255;   G_END=61;    B_END=0
+    # Pre-calculate colors and glyph strings for each letter position
+    letter_data = []
+    divisor = max(count - 1, 1)
 
-PADDING="      "
-ESC=$'\033'  # ANSI escape character
+    for i, ch in enumerate(chars):
+        # Linear Interpolation (Scale: 0 to 1, then map to 0-255)
+        ratio = i / divisor
+        
+        r = int(start_r + (end_r - start_r) * ratio)
+        g = int(start_g + (end_g - start_g) * ratio)
+        b = int(start_b + (end_b - start_b) * ratio)
 
-# 2. Render row by row to maintain block-art alignment
-for (( row = 0; row < font_rows; row++ )); do
-  line=""
-  for (( k = 0; k < count; k++ )); do
-    ch="${chars[k]}"
-    var_name="${ch}_${row}"
+        # TrueColor ANSI escape code: \033[38;2;R;G;Bm
+        color_code = f"\033[38;2;{r};{g};{b}m"
+        
+        # Store the 6 rows of this character, each prefixed with its specific color
+        letter_data.append([{
+            "glyph": FONT[ch][row],
+            "color": color_code
+        } for row in range(FONT_ROWS)])
 
-    # 3. Calculate Gradient Color using integer math (shift >> 8 avoids float)
-    #    Scale: 256 steps from Start to End. 
-    if (( count > 1 )); then
-      ratio=$(( k * 256 / (count - 1) ))
-    else
-      ratio=0 # Just use start color if single letter
-    fi
+    # Assemble and print lines
+    padding = "      "  # 6 spaces gap between letters
+    
+    for row in range(FONT_ROWS):
+        line_parts = []
+        for letter_info_list in letter_data:
+            info = letter_info_list[row]
+            line_parts.append(f"{info['color']}{info['glyph']}{padding}")
+        
+        print("".join(line_parts))
 
-    # Linear Interpolation: Delta = (End - Start) * fraction_of_256
-    r=$(( R_START + ((R_END - R_START) * ratio >> 8) ))
-    g=$(( G_START + ((G_END - G_START) * ratio >> 8) ))
-    b=$(( B_START + ((B_END - B_START) * ratio >> 8) ))
-
-    # 4. Inject TrueColor ANSI escape code and glyph into line
-    line+="${ESC}[38;2;${r};${g};${b}m${!var_name}${PADDING}"
-  done
-  printf "%s\n" "$line"
-done
+if __name__ == "__main__":
+    main()
