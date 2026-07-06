@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Generates an ASCII-art banner from the current hostname.
-# Font data is embedded directly — no external files needed.
+# Generates an ASCII-art hostname banner with per-letter color gradients.
+# Font data is embedded directly — no external files or dependencies needed.
 
 set -euo pipefail
 
@@ -89,22 +89,55 @@ z_0="███████╗"    z_1="╚══███╔╝"    z_2="  █�
 z_4="███████╗"    z_5="╚══════╝"
 
 # ═══════════════════════════════════════════════════════════════════
-#  RENDERING LOGIC
+#  RENDERING LOGIC WITH SUNSET GRADIENT (Hot Pink -> Deep Orange)
 # ═══════════════════════════════════════════════════════════════════
 
 HOST="$(hostname | tr '[:upper:]' '[:lower:]')"
-PADDING="      "   # six-space gap between letters
 
+# 1. Pre-scan hostname for valid letters and store them.
+#    Non-alpha chars (digits, hyphens) are skipped entirely as requested.
+chars=()
+for (( i = 0; i < ${#HOST}; i++ )); do
+  ch="${HOST:$i:1}"
+  if [[ "$ch" =~ [a-z] ]]; then
+    chars+=("$ch")
+  fi
+done
+
+count=${#chars[@]}
+if (( count == 0 )); then exit 0; fi
+
+# Gradient Endpoints (RGB)
+# Start: Hot Pink (#FF69B4)
+R_START=255; G_START=105; B_START=180
+# End: Deep Orange (Material #FF3D00)
+R_END=255;   G_END=61;    B_END=0
+
+PADDING="      "
+ESC=$'\033'  # ANSI escape character
+
+# 2. Render row by row to maintain block-art alignment
 for (( row = 0; row < font_rows; row++ )); do
   line=""
-  for (( i = 0; i < ${#HOST}; i++ )); do
-    ch="${HOST:$i:1}"
+  for (( k = 0; k < count; k++ )); do
+    ch="${chars[k]}"
+    var_name="${ch}_${row}"
 
-    # Only render a–z (skip digits, punctuation, spaces, …)
-    if [[ "$ch" =~ [a-z] ]]; then
-      var_name="${ch}_${row}"
-      line+="${!var_name}${PADDING}"
+    # 3. Calculate Gradient Color using integer math (shift >> 8 avoids float)
+    #    Scale: 256 steps from Start to End. 
+    if (( count > 1 )); then
+      ratio=$(( k * 256 / (count - 1) ))
+    else
+      ratio=0 # Just use start color if single letter
     fi
+
+    # Linear Interpolation: Delta = (End - Start) * fraction_of_256
+    r=$(( R_START + ((R_END - R_START) * ratio >> 8) ))
+    g=$(( G_START + ((G_END - G_START) * ratio >> 8) ))
+    b=$(( B_START + ((B_END - B_START) * ratio >> 8) ))
+
+    # 4. Inject TrueColor ANSI escape code and glyph into line
+    line+="${ESC}[38;2;${r};${g};${b}m${!var_name}${PADDING}"
   done
-  printf '%s\n' "$line"
+  printf "%s\n" "$line"
 done
