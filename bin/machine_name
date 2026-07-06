@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
-"""Generates an ASCII-art hostname banner with per-letter sunset gradients."""
+"""Generates an ASCII-art hostname banner with dynamic per-machine gradients.
 
-import platform
+Options:
+  -r, --random    Use a random theme instead of the machine's stable identity.
+"""
 
-FONT_ROWS = 6
-
-# ═══════════════════════════════════════════════════════════════════
-#  EMBEDDED FONT DATA — 6-row box-drawing characters (a–z)
-# ═══════════════════════════════════════════════════════════════════
+import sys
+import socket
+import zlib
+import random
 
 FONT = {
     'a': [" █████╗ ", "██╔══██╗", "███████║", "██╔══██║", "██║  ██║", "╚═╝  ╚═╝"],
@@ -38,57 +39,70 @@ FONT = {
     'z': ["███████╗", "╚══███╔╝", "  ███╔╝ ", " ███╔╝  ", "███████╗", "╚══════╝"],
 }
 
-# ═══════════════════════════════════════════════════════════════════
-#  RENDERING LOGIC WITH SUNSET GRADIENT (Hot Pink -> Deep Orange)
-# ═══════════════════════════════════════════════════════════════════
+# Gradient Palettes: Start Color -> End Color (TrueColor RGB)
+PALETTES = {
+    "sunset":  {"start": (255, 105, 180), "end": (255, 61, 0)},   # Hot Pink -> Deep Orange
+    "ocean":   {"start": (39, 49, 79),   "end": (135, 218, 255)}, # Dark Blue -> Azure
+    "neon":    {"start": (200, 0, 255),   "end": (0, 255, 127)}, # Electric Purple -> Spring Green
+    "inferno": {"start": (139, 0, 0),     "end": (255, 215, 0)}, # Crimson Fire -> Gold
+}
+
+FONT_ROWS = len(next(iter(FONT.values())))
+PAD = "      "
+
+def pick_theme(hostname: str, use_random: bool) -> tuple[tuple[int,int,int], tuple[int,int,int]]:
+    """Select a gradient theme based on hostname hash or random luck."""
+    palette_names = list(PALETTES.keys())
+    
+    if use_random:
+        selected_name = random.choice(palette_names)
+    else:
+        # Deterministic Stable Randomness using CRC32
+        idx = zlib.crc32(hostname.encode()) % len(palette_names)
+        selected_name = palette_names[idx]
+
+    theme = PALETTES[selected_name]
+    return (theme["start"][0], theme["start"][1], theme["start"][2]), \
+           (theme["end"][0],   theme["end"][1],   theme["end"][2])
+
+def interpolate_color(start_rgb, end_rgb, ratio: float) -> tuple[int,int,int]:
+    """Linear RGB interpolation based on position along the text."""
+    return tuple(int(s + (e - s) * ratio) for s, e in zip(start_rgb, end_rgb))
+
 def main():
-    # Get lowercase hostname
-    hostname = platform.node().lower()
-
-    # Filter only a-z characters (skip digits, hyphens, etc.)
-    chars = [ch for ch in hostname if ch in FONT]
-    count = len(chars)
-
-    if count == 0:
+    # Parse simple arguments manually to keep it dependency-light or use argparse
+    use_random = "-r" in sys.argv or "--random" in sys.argv
+    
+    hostname = socket.gethostname().lower()
+    
+    # Filter only characters present in the font (skip numbers/symbols as agreed)
+    visible_chars = [c for c in hostname if c in FONT]
+    
+    if not visible_chars:
         return
 
-    # Sunset Gradient Endpoints (RGB)
-    # Start: Hot Pink (#FF69B4)
-    start_r, start_g, start_b = 255, 105, 180
-    # End: Deep Orange (#FF3D00)
-    end_r, end_g, end_b = 255, 61, 0
+    count = len(visible_chars)
+    start_rgb, end_rgb = pick_theme(hostname, use_random)
 
-    # Pre-calculate colors and glyph strings for each letter position
-    letter_data = []
+    # Precompute colors for each letter position (0.0 to 1.0 spread)
+    precomputed_colors = []
     divisor = max(count - 1, 1)
-
-    for i, ch in enumerate(chars):
-        # Linear Interpolation (Scale: 0 to 1, then map to 0-255)
-        ratio = i / divisor
-        
-        r = int(start_r + (end_r - start_r) * ratio)
-        g = int(start_g + (end_g - start_g) * ratio)
-        b = int(start_b + (end_b - start_b) * ratio)
-
-        # TrueColor ANSI escape code: \033[38;2;R;G;Bm
-        color_code = f"\033[38;2;{r};{g};{b}m"
-        
-        # Store the 6 rows of this character, each prefixed with its specific color
-        letter_data.append([{
-            "glyph": FONT[ch][row],
-            "color": color_code
-        } for row in range(FONT_ROWS)])
-
-    # Assemble and print lines
-    padding = "      "  # 6 spaces gap between letters
     
-    for row in range(FONT_ROWS):
-        line_parts = []
-        for letter_info_list in letter_data:
-            info = letter_info_list[row]
-            line_parts.append(f"{info['color']}{info['glyph']}{padding}")
+    for i in range(count):
+        ratio = i / divisor
+        rgb = interpolate_color(start_rgb, end_rgb, ratio)
+        # TrueColor ANSI: \033[38;2;R;G;Bm
+        precomputed_colors.append(f"\033[38;2;{rgb[0]};{rgb[1]};{rgb[2]}m")
+
+    # Render row by row to keep the block art alignment tight
+    for row_idx in range(FONT_ROWS):
+        line_data = []
+        for i, char in enumerate(visible_chars):
+            color_code = precomputed_colors[i]
+            glyph_row = FONT[char][row_idx]
+            line_data.append(f"{color_code}{glyph_row}{PAD}")
         
-        print("".join(line_parts))
+        print("".join(line_data))
 
 if __name__ == "__main__":
     main()
