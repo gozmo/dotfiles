@@ -1,0 +1,292 @@
+#!/usr/bin/env python3
+"""Analyze token usage from Pi agent and Claude Code session JSONL files."""
+
+import json
+from pathlib import Path
+from datetime import datetime
+
+PI_SESS_DIR = Path.home() / ".pi" / "agent" / "sessions"
+CLAUDE_PROJ_DIR = Path.home() / ".claude" / "projects"
+PRICE_LOW = 3.0   # $ per 1M tokens
+PRICE_HIGH = 5.0  # $ per 1M tokens
+
+
+def find_jsonl_files(session_dir: Path) -> list[Path]:
+    """Find all .jsonl files in subfolders of the session directory."""
+    if not session_dir.exists():
+        return []
+    return sorted(session_dir.glob("**/*.jsonl"))
+
+
+def extract_pi_tokens(filepath: Path) -> list[dict]:
+    """Parse a Pi JSONL file and extract totalTokens from each entry."""
+    entries = []
+    with open(filepath, "r") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                data = json.loads(line)
+                msg = data.get("message", {})
+                usage = msg.get("usage") or data.get("usage")
+                if usage and "totalTokens" in usage:
+                    entries.append(
+                        {
+                            "tokens": usage["totalTokens"],
+                            "timestamp": data.get("timestamp", ""),
+                            "model": msg.get("model", "unknown"),
+                        }
+                    )
+            except (json.JSONDecodeError, AttributeError, TypeError):
+                continue
+    return entries
+
+
+def extract_claude_tokens(filepath: Path) -> list[dict]:
+    """Parse a Claude JSONL file and extract input_tokens + output_tokens."""
+    entries = []
+    with open(filepath, "r") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                data = json.loads(line)
+                msg = data.get("message", {})
+                usage = msg.get("usage")
+                if usage and ("input_tokens" in usage or "output_tokens" in usage):
+                    input_toks = usage.get("input_tokens", 0)
+                    output_toks = usage.get("output_tokens", 0)
+                    total = input_toks + output_toks
+                    if total > 0:
+                        entries.append(
+                            {
+                                "tokens": total,
+                                "input": input_toks,
+                                "output": output_toks,
+                                "cache_creation": usage.get("cache_creation_input_tokens", 0),
+                                "cache_read": usage.get("cache_read_input_tokens", 0),
+                                "timestamp": data.get("timestamp", ""),
+                                "model": msg.get("model", "unknown"),
+                            }
+                        )
+            except (json.JSONDecodeError, AttributeError, TypeError):
+                continue
+    return entries
+
+
+def parse_session_name(folder: str) -> str:
+    """Clean up the encoded session folder name."""
+    name = folder.replace("--", "/")
+    # For Claude, strip leading -home-gozmo- prefix for cleaner display
+    if name.startswith("-home-gozmo-"):
+        name = name[len("-home-gozmo-"):]
+    return name
+
+
+def process_files(files: list[Path], extractor, source_name: str) -> dict:
+    """Process a list of JSONL files and return aggregated stats."""
+    grand_total = 0
+    total_entries = 0
+    session_stats: dict[str, dict] = {}
+    model_totals: dict[str, int] = {}
+
+    for filepath in files:
+        folder = filepath.parent.name
+        display_name = parse_session_name(folder)
+        entries = extractor(filepath)
+
+        if not entries:
+            continue
+
+        session_total = sum(e["tokens"] for e in entries)
+        grand_total += session_total
+        total_entries += len(entries)
+
+        model_counts: dict[str, int] = {}
+        for entry in entries:
+            m = entry["model"]
+            model_counts[m] = model_counts.get(m, 0) + entry["tokens"]
+            model_totals[m] = model_totals.get(m, 0) + entry["tokens"]
+
+        session_stats[display_name] = {
+            "tokens": session_total,
+            "entries": len(entries),
+            "models": model_counts,
+            "file": filepath.name,
+        }
+
+    return {
+        "source": source_name,
+        "files_analyzed": len(files),
+        "token_entries": total_entries,
+        "total_tokens": grand_total,
+        "sessions": session_stats,
+        "model_totals": model_totals,
+    }
+
+
+def format_number(n: int) -> str:
+    """Format a number as human-readable string with appropriate suffix."""
+    if n >= 1_000_000_000:
+        return f"{n/1_000_000_000:.2f}B"
+    elif n >= 1_000_000:
+        return f"{n/1_000_000:.2f}M"
+    elif n >= 1_000:
+        return f"{n/1_000:.1f}K"
+    return str(n)
+
+
+def print_source_report(stats: dict, combined_total: int):
+    """Print a formatted report for one data source (Pi or Claude)."""
+    source = stats["source"]
+    total = stats["total_tokens"]
+    sessions = stats["sessions"]
+
+    print()
+    print("\u2500" * 60)
+    print(f"  \U0001f4ca {source} Usage")
+    print("\u2500" * 60)
+
+    if not sessions:
+        print("  No data found.")
+        return total
+
+    # Per-session breakdown sorted by token count
+    for name, info in sorted(sessions.items(), key=lambda x: x[1]["tokens"], reverse=True):
+        t = info["tokens"]
+        pct_of_source = (t / total * 100) if total else 0
+        pct_of_combined = (t / combined_total * 100) if combined_total else 0
+        low = t / 1_000_000 * PRICE_LOW
+        high = t / 1_000_000 * PRICE_HIGH
+        print(f"    {name}")
+        print(f"      Tokens:  {t:>12,} ({format_number(t)})")
+        print(f"      Entries: {info['entries']:>12}")
+        pct_str = f"{pct_of_source:>6.1f}% of {source}, {pct_of_combined:.1f}% combined"
+        print(f"      Share:   {pct_str}")
+        print(f"      Cost:    ${low:.2f} \u2014 ${high:.2f}")
+        # Model breakdown per session
+        for model, toks in sorted(info["models"].items(), key=lambda x: x[1], reverse=True):
+            print(f"        - {model}: {toks:,} ({format_number(toks)})")
+        print()
+
+    # Source summary box
+    price_low = total / 1_000_000 * PRICE_LOW
+    price_high = total / 1_000_000 * PRICE_HIGH
+
+    print(f"    {'Source Summary':^52}")
+    print(f"    \u2502 Files analyzed:     {stats['files_analyzed']}")
+    print(f"    \u2502 Token entries:      {stats['token_entries']:,}")
+    print(f"    \u2502 Total tokens:       {total:,} ({format_number(total)})")
+    cost_str = f"${price_low:,.2f} \u2014 ${price_high:,.2f}"
+    print(f"    \u2502 Estimated cost:    {cost_str}")
+
+    if stats["model_totals"]:
+        print("    Model Usage:")
+        for model, toks in sorted(stats["model_totals"].items(), key=lambda x: x[1], reverse=True):
+            pct = (toks / total * 100) if total else 0
+            bar = "\u2588" * int(pct / 3)
+            print(f"    \u2502   {model}: {toks:>10,} ({pct:5.1f}%) {bar}")
+
+
+def main():
+    pi_files = find_jsonl_files(PI_SESS_DIR)
+    claude_files = find_jsonl_files(CLAUDE_PROJ_DIR)
+
+    if not pi_files and not claude_files:
+        print("No JSONL files found in either Pi or Claude directories.")
+        return
+
+    # Process both sources
+    pi_stats = process_files(pi_files, extract_pi_tokens, "Pi")
+    claude_stats = process_files(claude_files, extract_claude_tokens, "Claude")
+
+    # Calculate combined total
+    combined_tokens = pi_stats["total_tokens"] + claude_stats["total_tokens"]
+    combined_entries = pi_stats["token_entries"] + claude_stats["token_entries"]
+    combined_files = pi_stats["files_analyzed"] + claude_stats["files_analyzed"]
+
+    # Merge model totals
+    combined_models: dict[str, int] = {}
+    all_models = {**pi_stats["model_totals"], **claude_stats["model_totals"]}
+    for m, t in all_models.items():
+        combined_models[m] = combined_models.get(m, 0) + t
+
+    # === Print Report ===
+    print("=" * 72)
+    print("  \U0001f916 AI Agent Token Usage Report (Pi + Claude)")
+    now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(f"  Generated: {now_str}")
+    print("=" * 72)
+
+    # Combined overview table
+    pi_share = (pi_stats["total_tokens"] / combined_tokens * 100) if combined_tokens else 0
+    claude_share = (claude_stats["total_tokens"] / combined_tokens * 100) if combined_tokens else 0
+
+    print()
+    print("=" * 72)
+    print("  Overview")
+    print("=" * 72)
+    print()
+    pi_bar = "\u2588" * int(pi_share / 3)
+    claude_bar = "\u2588" * int(claude_share / 3)
+
+    print(f"  Source     | Tokens           | Share")
+    print("  -----------+------------------+------")
+    print(f"  Pi         | {pi_stats['total_tokens']:>14,}   | {format_number(pi_stats['total_tokens'])}")
+    print(f"             |                 | {pi_bar} {pi_share:.0f}%")
+    print("  -----------+------------------+------")
+    print(f"  Claude     | {claude_stats['total_tokens']:>14,}   | {format_number(claude_stats['total_tokens'])}")
+    print(f"             |                 | {claude_bar} {claude_share:.0f}%")
+    print("  -----------+------------------+------")
+    total_bar = "\u2588" * 33
+    price_low = combined_tokens / 1_000_000 * PRICE_LOW
+    price_high = combined_tokens / 1_000_000 * PRICE_HIGH
+    cost_range = f"${price_low:.2f} \u2014 ${price_high:.2f}"
+    print(f"  TOTAL      | {combined_tokens:>14,}   | {format_number(combined_tokens)}")
+    print(f"             |                 | {total_bar}")
+    print(f"  Est. cost:  {cost_range:>27}")
+
+    # Print Pi report
+    if pi_stats["sessions"]:
+        print_source_report(pi_stats, combined_tokens)
+
+    # Print Claude report
+    if claude_stats["sessions"]:
+        print_source_report(claude_stats, combined_tokens)
+
+    # === Grand Total ===
+    print()
+    print("=" * 72)
+    print("  \U0001f3c6 GRAND TOTAL (Pi + Claude Combined)")
+    print("=" * 72)
+    print()
+    print(f"    Files analyzed:      {combined_files}")
+    print(f"    Token entries:       {combined_entries:,}")
+    print(f"    Total tokens:        {combined_tokens:,} ({format_number(combined_tokens)})")
+    cost_range = f"${price_low:,.2f} \u2014 ${price_high:,.2f}"
+    print()
+    print("    Per-source breakdown:")
+    print(f"      Pi:     {pi_stats['total_tokens']:>12,} ({pi_share:5.1f}%)")
+    print(f"      Claude: {claude_stats['total_tokens']:>12,} ({claude_share:5.1f}%)")
+    print()
+    print("    Estimated cost:")
+    print(f"      Low ($3/M):       ${price_low:,.2f}")
+    print(f"      High ($5/M):      ${price_high:,.2f}")
+    print()
+
+    if combined_models:
+        print("    Model Usage (combined):")
+        print("    " + "-" * 40)
+        for model, toks in sorted(combined_models.items(), key=lambda x: x[1], reverse=True):
+            pct = (toks / combined_tokens * 100) if combined_tokens else 0
+            bar = "\u2588" * int(pct / 3)
+            print(f"      {model}: {toks:>12,} ({pct:5.1f}%) {bar}")
+
+    print()
+    print("=" * 72)
+
+
+if __name__ == "__main__":
+    main()
