@@ -37,7 +37,6 @@ FONT = {
 
 # Define Palettes using an array of RGB tuples (stops).
 PALETTES = [
-    # --- 2-Stop Gradients ---
     {
         "name": "sunset",
         "colors": [(255, 105, 180), (255, 61, 0)]       # Hot Pink -> Deep Orange
@@ -55,7 +54,6 @@ PALETTES = [
         "colors": [(139, 0, 0), (255, 215, 0)]          # Crimson Fire -> Gold
     },
 
-    # --- 3-Stop Gradients ---
     {
         "name": "vaporwave",
         "colors": [
@@ -81,7 +79,6 @@ PALETTES = [
         ]
     },
 
-    # --- Latest Requests: Specific RGB Transitions ---
     {
         "name": "nature_flow",
         "colors": [
