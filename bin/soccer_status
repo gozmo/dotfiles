@@ -20,6 +20,7 @@ class Team:
     name_search: str
     display_name: str
     league_label: str
+    color: str
 
 
 @dataclass
@@ -77,10 +78,10 @@ class TermColor:
 
 
 TEAMS = [
-    Team("swe.1", "gais", "GAIS", "Allsvenskan"),
-    Team("ger.1", "union berlin", "Union Berlin", "Bundesliga"),
-    Team("ita.1", "atalanta", "Atalanta", "Serie A"),
-    Team("eng.1", "brighton", "Brighton & Hove Albion", "Premier League"),
+    Team("swe.1", "gais", "GAIS", "Allsvenskan", TermColor.BRIGHT_GREEN),
+    Team("ger.1", "union berlin", "Union Berlin", "Bundesliga", TermColor.BRIGHT_RED),
+    Team("ita.1", "atalanta", "Atalanta", "Serie A", TermColor.BLUE),
+    Team("eng.1", "brighton", "Brighton & Hove Albion", "Premier League", TermColor.BRIGHT_BLUE),
 ]
 
 
@@ -192,7 +193,8 @@ def fetch_team_status(team: Team) -> str:
 
 
 def format_status(status: TeamStatus) -> str:
-    lines = [f"== {status.team.display_name} · {status.team.league_label} =="]
+    name = status.team.color + status.team.display_name + TermColor.RESET
+    lines = [f"{name} · {status.team.league_label} =="]
     position = status.position
     if position is None:
         lines.append("  Table:   not in current table")
@@ -211,7 +213,7 @@ def format_status(status: TeamStatus) -> str:
     form = ""
     for match in reversed(status.recent):
         form += match.result + " "
-    latest = status.recent[0]
+    latest = status.recent[-1]
     lines.append(f"  Last 5:  {form.strip()}")
     lines.append(
         f"  Latest:  {latest.date} · {latest.result} · {latest.score} vs {latest.opponent} ({latest.home_away})"
