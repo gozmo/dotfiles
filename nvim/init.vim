@@ -77,6 +77,10 @@ Plug 'tpope/vim-eunuch' " File management on current buffer, rename file and mov
 " Motion
 Plug 'folke/flash.nvim'
 
+" Claude
+Plug 'coder/claudecode.nvim'
+Plug 'folke/snacks.nvim'
+
 " --- Evaluate these plugins ---
 
 " Debug, 
@@ -90,6 +94,7 @@ Plug 'saxon1964/neovim-tips'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'MeanderingProgrammer/render-markdown.nvim'
 Plug 'vuciv/vim-bujo' "Task manager and Todo lists
+Plug 'leolaurindo/tunnelvision.nvim'
 
 "----------------------------------
 
@@ -104,6 +109,9 @@ let g:UltiSnipsSnippetDirectories=["~/dotfiles/nvim/ulti_snippets"]
 
 
 nnoremap <SPACE> <Nop>
+lua << EOF
+vim.keymap.set('n', '<CapsLock>', '<Esc>', { noremap = true, silent = true })
+EOF
 
 
 let mapleader=" "
@@ -660,6 +668,13 @@ require("flash").setup()
 vim.keymap.set("n", "<leader>m", function() require("flash").jump() end, {})
 EOF
 
+"""""
+" Render markdown
+"
+lua << EOF
+require('render-markdown').setup({})
+EOF
+
 """"
 " vimwiki
 "
@@ -667,3 +682,18 @@ EOF
 let g:vimwiki_list = [{'path': '~/dotfiles/vimwiki/'}]
 
 
+
+""""
+" claudecoder
+" https://github.com/coder/claudecode.nvim
+"
+
+nmap <silent> <leader>ac :ClaudeCode<CR>
+"{ "<leader>a", nil, desc = "AI/Claude Code" },
+"{ "<leader>ac", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
+"{ "<leader>af", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
+"{ "<leader>ar", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
+"{ "<leader>aC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
+"{ "<leader>am", "<cmd>ClaudeCodeSelectModel<cr>", desc = "Select Claude model" },
+"{ "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>", desc = "Add current buffer" },
+"{ "<leader>as", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send to Claude" },
