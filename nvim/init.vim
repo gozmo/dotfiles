@@ -47,16 +47,10 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'sainnhe/sonokai'
 Plug 'rebelot/kanagawa.nvim'
 Plug 'sainnhe/gruvbox-material'
-Plug 'michaeldyrynda/carbon'
-Plug 'catppuccin/nvim'
-Plug 'scottmckendry/cyberdream.nvim'
-Plug 'olimorris/onedarkpro.nvim'
 Plug 'https://codeberg.org/evergarden/nvim.git', { 'as': 'evergarden' }
 Plug 'neanias/everforest-nvim', { 'branch': 'main' }
-Plug 'rose-pine/neovim'
 Plug 'shaunsingh/nord.nvim'
 Plug 'eldritch-theme/eldritch.nvim'
-Plug 'ThorstenRhau/token'
 Plug 'ember-theme/nvim'
 
 " Snippets
@@ -74,22 +68,12 @@ Plug 'vimwiki/vimwiki'
 Plug 'preservim/nerdcommenter' "Comment code with <leader>cc
 Plug 'tpope/vim-eunuch' " File management on current buffer, rename file and move it
 
-" Motion
-Plug 'folke/flash.nvim'
 
-" Claude
-Plug 'coder/claudecode.nvim'
-Plug 'folke/snacks.nvim'
 
 " --- Evaluate these plugins ---
 
-" Debug, 
-Plug 'mfussenegger/nvim-dap'
-Plug 'Davidyz/coredumpy.nvim' 
-
 
 " Evaluate
-Plug 'ThePrimeagen/harpoon', {'branch': 'harpoon2'}
 Plug 'saxon1964/neovim-tips' 
 Plug 'MunifTanjim/nui.nvim'
 Plug 'MeanderingProgrammer/render-markdown.nvim'
@@ -619,37 +603,6 @@ EOF
 
 let g:context_enabled=1
 
-"""
-" harpoon
-"
-lua << EOF
-local harpoon = require("harpoon")
-harpoon:setup()
-vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
-
--- basic telescope configuration
-local conf = require("telescope.config").values
-local function toggle_telescope(harpoon_files)
-    local file_paths = {}
-    for _, item in ipairs(harpoon_files.items) do
-        table.insert(file_paths, item.value)
-    end
-
-    require("telescope.pickers").new({}, {
-        prompt_title = "Harpoon",
-        finder = require("telescope.finders").new_table({
-            results = file_paths,
-        }),
-        previewer = conf.file_previewer({}),
-        sorter = conf.generic_sorter({}),
-    }):find()
-end
-
-vim.keymap.set("n", "<leader>h", function() toggle_telescope(harpoon:list()) end,
-    { desc = "Open harpoon window" })
-
-EOF
-
 
 """"""
 " Vim tips
@@ -661,13 +614,6 @@ require("neovim_tips").setup {
 }
 EOF
 
-"""""
-" Flashvim
-"
-lua << EOF
-require("flash").setup()
-vim.keymap.set("n", "<leader>m", function() require("flash").jump() end, {})
-EOF
 
 """""
 " Render markdown
