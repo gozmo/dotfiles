@@ -1,0 +1,7 @@
+echo "mounting mldev to ~/mnt/mldev"
+sshfs mldev: ~/mnt/mldev -o reconnect
+echo "success!"
+
+echo "mounting elephant to ~/mnt/elephant"
+sshfs elephant: ~/mnt/elephant -o reconnect
+echo "success!"
