@@ -1,11 +1,14 @@
 source $HOME/dotfiles/fish/variables.fish
 
-set FLINE_PATH $HOME/opt/fishline
-source $FLINE_PATH/fishline.fish
 
-function fish_prompt
-    fishline -s $status
+# Render dynamic machine identity (prevent duplicate runs in Tmux/login shells)
+if not set -q _MACHINE_NAME_PRINTED_TEST
+    machine_name
+    set -g _MACHINE_NAME_PRINTED_TEST true
 end
+
+set -gx OLLAMA_KEEP_ALIVE 1h
+set -gx CLAUDE_CODE_MAX_OUTPUT_TOKENS 64000
 
 alias tmux='tmux -2'
 alias ll='ls -alF --color=auto'
@@ -16,10 +19,11 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
-test -f ~/.fzf.fish; and source ~/.fzf.fish
 
-if status is-interactive; and not set -q TMUX
-    exec tmux
-end
+#if status is-interactive; and not set -q TMUX
+    #exec tmux
+#end
 
-test -f $HOME/.config/fish/config.fish_old; and source $HOME/.config/fish/config.fish_old
+
+# opencode
+fish_add_path /home/gozmo/.opencode/bin

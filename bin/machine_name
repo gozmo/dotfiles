@@ -1,110 +1,174 @@
-#!/usr/bin/env bash
-# Generates an ASCII-art banner from the current hostname.
-# Font data is embedded directly — no external files needed.
+#!/usr/bin/env python3
+"""Generates an ASCII-art hostname banner with dynamic 2-stop or 3-stop gradients."""
 
-set -euo pipefail
+import sys
+import socket
+import zlib
+import random
 
-# ═══════════════════════════════════════════════════════════════════
-#  EMBEDDED FONT DATA — 6-row box-drawing characters (a–z)
-# ═══════════════════════════════════════════════════════════════════
+FONT = {
+    'a': [" █████╗ ", "██╔══██╗", "███████║", "██╔══██║", "██║  ██║", "╚═╝  ╚═╝"],
+    'b': ["██████╗ ", "██╔══██╗", "██████╔╝", "██╔══██╗", "██████╔╝", "╚═════╝ "],
+    'c': [" ██████╗", "██╔════╝", "██║     ", "██║     ", "╚██████╗", " ╚═════╝"],
+    'd': ["██████╗ ", "██╔══██╗", "██║  ██║", "██║  ██║", "██████╔╝", "╚═════╝ "],
+    'e': ["███████╗", "██╔════╝", "█████╗  ", "██╔══╝  ", "███████╗", "╚══════╝"],
+    'f': ["███████╗", "██╔════╝", "█████╗  ", "██╔══╝  ", "██║     ", "╚═╝     "],
+    'g': [" ██████╗ ", "██╔════╝ ", "██║  ███╗", "██║   ██║", "╚██████╔╝", " ╚═════╝ "],
+    'h': ["██╗  ██╗", "██║  ██║", "███████║", "██╔══██║", "██║  ██║", "╚═╝  ╚═╝"],
+    'i': ["██╗", "██║", "██║", "██║", "██║", "╚═╝"],
+    'j': ["     ██╗", "     ██║", "     ██║", "██   ██║", "╚█████╔╝", " ╚════╝ "],
+    'k': ["██╗  ██╗", "██║ ██╔╝", "█████╔╝ ", "██╔═██╗ ", "██║  ██╗", "╚═╝  ╚═╝"],
+    'l': ["██╗     ", "██║     ", "██║     ", "██║     ", "███████╗", "╚══════╝"],
+    'm': ["███╗   ███╗", "████╗ ████║", "██╔████╔██║", "██║╚██╔╝██║", "██║ ╚═╝ ██║", "╚═╝     ╚═╝"],
+    'n': ["███╗   ██╗", "████╗  ██║", "██╔██╗ ██║", "██║╚██╗██║", "██║ ╚████║", "╚═╝  ╚═══╝"],
+    'o': [" ██████╗ ", "██╔═══██╗", "██║   ██║", "██║   ██║", "╚██████╔╝", " ╚═════╝ "],
+    'p': ["██████╗ ", "██╔══██╗", "██████╔╝", "██╔═══╝ ", "██║     ", "╚═╝     "],
+    'q': [" ██████╗ ", "██╔═══██╗", "██║   ██║", "██║▄▄ ██║", "╚██████╔╝", " ╚══▀▀═╝ "],
+    'r': ["██████╗ ", "██╔══██╗", "██████╔╝", "██╔══██╗", "██║  ██║", "╚═╝  ╚═╝"],
+    's': ["███████╗", "██╔════╝", "███████╗", "╚════██║", "███████║", "╚══════╝"],
+    't': ["████████╗", "╚══██╔══╝", "   ██║   ", "   ██║   ", "   ██║   ", "   ╚═╝   "],
+    'u': ["██╗   ██╗", "██║   ██║", "██║   ██║", "██║   ██║", "╚██████╔╝", " ╚═════╝ "],
+    'v': ["██╗   ██╗", "██║   ██║", "██║   ██║", "╚██╗ ██╔╝", " ╚████╔╝ ", "  ╚═══╝  "],
+    'w': ["██╗    ██╗", "██║    ██║", "██║ █╗ ██║", "██║███╗██║", "╚███╔███╔╝", "╚══╝╚══╝ "],
+    'x': ["██╗  ██╗", "╚██╗██╔╝", " ╚███╔╝ ", " ██╔██╗ ", "██╔╝ ██║", "╚═╝  ╚═╝"],
+    'y': ["██╗   ██╗", "╚██╗ ██╔╝", " ╚████╔╝ ", "  ╚██╔╝  ", "   ██║   ", "   ╚═╝   "],
+    'z': ["███████╗", "╚══███╔╝", "  ███╔╝ ", " ███╔╝  ", "███████╗", "╚══════╝"],
+}
 
-font_rows=6
+# Define Palettes using an array of RGB tuples (stops).
+PALETTES = [
+    {
+        "name": "sunset",
+        "colors": [(255, 105, 180), (255, 61, 0)]       # Hot Pink -> Deep Orange
+    },
+    {
+        "name": "ocean",
+        "colors": [(39, 49, 79), (135, 218, 255)]       # Dark Blue Sky -> Azure
+    },
+    {
+        "name": "neon",
+        "colors": [(200, 0, 255), (0, 255, 127)]        # Electric Purple -> Spring Green
+    },
+    {
+        "name": "inferno",
+        "colors": [(139, 0, 0), (255, 215, 0)]          # Crimson Fire -> Gold
+    },
 
-a_0=" █████╗ "     a_1="██╔══██╗"    a_2="███████║"    a_3="██╔══██║"
-a_4="██║  ██║"    a_5="╚═╝  ╚═╝"
+    {
+        "name": "vaporwave",
+        "colors": [
+            (255, 0, 128),   # Hot Pink Start
+            (0, 255, 255),   # Cyan Middle
+            (255, 255, 0)    # Yellow End
+        ]
+    },
+    {
+        "name": "aurora",
+        "colors": [
+            (0, 255, 148),   # Spring Green Start
+            (60, 10, 255),   # Deep Indigo Middle
+            (255, 0, 192)    # Magenta End
+        ]
+    },
+    {
+        "name": "galaxy",
+        "colors": [
+            (75, 0, 130),    # Indigo Start
+            (230, 0, 255),   # Bright Violet Middle
+            (255, 215, 0)    # Gold End
+        ]
+    },
 
-b_0="██████╗ "    b_1="██╔══██╗"    b_2="██████╔╝"    b_3="██╔══██╗"
-b_4="██████╔╝"    b_5="╚═════╝ "
+    {
+        "name": "nature_flow",
+        "colors": [
+            (0, 0, 255),     # Blue Start
+            (0, 255, 0),     # Green Middle
+            (255, 255, 0)    # Yellow End
+        ]
+    },
+    {
+        "name": "cotton_candy",
+        "colors": [
+            (255, 105, 180), # Pink Start
+            (255, 255, 0),   # Yellow Middle
+            (138, 43, 226)   # Purple End
+        ]
+    },
+]
 
-c_0=" ██████╗"   c_1="██╔════╝"    c_2="██║     "    c_3="██║     "
-c_4="╚██████╗"    c_5=" ╚═════╝"
+FONT_ROWS = len(next(iter(FONT.values())))
+PAD = "      "
 
-d_0="██████╗ "    d_1="██╔══██╗"    d_2="██║  ██║"    d_3="██║  ██║"
-d_4="██████╔╝"    d_5="╚═════╝ "
+def get_palette(hostname: str, use_random: bool) -> list[tuple[int,int,int]]:
+    """Deterministically assign a palette or pick randomly."""
+    
+    if use_random:
+        return random.choice(PALETTES)["colors"]
+    
+    # Deterministic Stable Randomness using CRC32
+    idx = zlib.crc32(hostname.encode()) % len(PALETTES)
+    return PALETTES[idx]["colors"]
 
-e_0="███████╗"    e_1="██╔════╝"    e_2="█████╗  "    e_3="██╔══╝  "
-e_4="███████╗"    e_5="╚══════╝"
+def interpolate_gradient(colors: list[tuple], ratio: float) -> tuple[int,int,int]:
+    """Interpolate color based on a normalized ratio 0.0 -> 1.0 through multiple stops."""
+    
+    num_segments = len(colors) - 1
+    
+    if ratio <= 0.0:
+        return colors[0]
+    if ratio >= 1.0:
+        return colors[-1]
 
-f_0="███████╗"    f_1="██╔════╝"    f_2="█████╗  "    f_3="██╔══╝  "
-f_4="██║     "    f_5="╚═╝     "
+    # Find the exact segment index (e.g., 2 segments -> seg_idx could be 0.45 or 1.9)
+    segment_pos = ratio * num_segments
+    seg_idx = int(segment_pos)
+    
+    # Guard against floating point precision errors
+    if seg_idx >= num_segments:
+        return colors[-1]
 
-g_0=" ██████╗ "   g_1="██╔════╝ "    g_2="██║  ███╗"   g_3="██║   ██║"
-g_4="╚██████╔╝"   g_5=" ╚═════╝ "
+    start_c = colors[seg_idx]
+    end_c   = colors[seg_idx + 1]
+    
+    # Local ratio within this specific segment (0.0 -> 1.0)
+    local_ratio = segment_pos - seg_idx
+    
+    return tuple(int(s + (e - s) * local_ratio) for s, e in zip(start_c, end_c))
 
-h_0="██╗  ██╗"    h_1="██║  ██║"    h_2="███████║"    h_3="██╔══██║"
-h_4="██║  ██║"    h_5="╚═╝  ╚═╝"
+def main():
+    use_random = "-r" in sys.argv or "--random" in sys.argv
+    
+    hostname = socket.gethostname().lower()
+    
+    # Filter only characters present in the font 
+    visible_chars = [c for c in hostname if c in FONT]
+    
+    if not visible_chars:
+        return
 
-i_0="██╗"        i_1="██║"       i_2="██║"       i_3="██║"       i_4="██║"
-i_5="╚═╝"
+    count = len(visible_chars)
+    colors_stops = get_palette(hostname, use_random)
 
-j_0="     ██╗"   j_1="     ██║"    j_2="     ██║"    j_3="██   ██║"
-j_4="╚█████╔╝"   j_5=" ╚════╝ "
+    # Precompute TrueColor codes for every letter
+    precomputed_colors = []
+    divisor = max(count - 1, 1)
+    
+    for i in range(count):
+        ratio = i / divisor
+        rgb = interpolate_gradient(colors_stops, ratio)
+        # \033[38;2;R;G;Bm
+        precomputed_colors.append(f"\033[38;2;{rgb[0]};{rgb[1]};{rgb[2]}m")
 
-k_0="██╗  ██╗"    k_1="██║ ██╔╝"    k_2="█████╔╝ "    k_3="██╔═██╗ "
-k_4="██║  ██╗"    k_5="╚═╝  ╚═╝"
+    # Render row by row to keep alignment tight
+    for row_idx in range(FONT_ROWS):
+        line_data = []
+        for i, char in enumerate(visible_chars):
+            color_code = precomputed_colors[i]
+            glyph_row = FONT[char][row_idx]
+            line_data.append(f"{color_code}{glyph_row}{PAD}")
+        
+        print("".join(line_data))
 
-l_0="██╗     "   l_1="██║     "    l_2="██║     "    l_3="██║     "
-l_4="███████╗"  l_5="╚══════╝"
-
-m_0="███╗   ███╗" m_1="████╗ ████║" m_2="██╔████╔██║" m_3="██║╚██╔╝██║"
-m_4="██║ ╚═╝ ██║" m_5="╚═╝     ╚═╝"
-
-n_0="███╗   ██╗"  n_1="████╗  ██║"  n_2="██╔██╗ ██║"  n_3="██║╚██╗██║"
-n_4="██║ ╚████║"  n_5="╚═╝  ╚═══╝"
-
-o_0=" ██████╗ "   o_1="██╔═══██╗"    o_2="██║   ██║"   o_3="██║   ██║"
-o_4="╚██████╔╝"   o_5=" ╚═════╝ "
-
-p_0="██████╗ "    p_1="██╔══██╗"    p_2="██████╔╝"    p_3="██╔═══╝ "
-p_4="██║     "   p_5="╚═╝     "
-
-q_0=" ██████╗ "   q_1="██╔═══██╗"    q_2="██║   ██║"   q_3="██║▄▄ ██║"
-q_4="╚██████╔╝"   q_5=" ╚══▀▀═╝ "
-
-r_0="██████╗ "    r_1="██╔══██╗"    r_2="██████╔╝"    r_3="██╔══██╗"
-r_4="██║  ██║"    r_5="╚═╝  ╚═╝"
-
-s_0="███████╗"    s_1="██╔════╝"    s_2="███████╗"    s_3="╚════██║"
-s_4="███████║"    s_5="╚══════╝"
-
-t_0="████████╗"   t_1="╚══██╔══╝"   t_2="   ██║   "  t_3="   ██║   "
-t_4="   ██║   "   t_5="   ╚═╝   "
-
-u_0="██╗   ██╗"   u_1="██║   ██║"    u_2="██║   ██║"   u_3="██║   ██║"
-u_4="╚██████╔╝"   u_5=" ╚═════╝ "
-
-v_0="██╗   ██╗"   v_1="██║   ██║"    v_2="██║   ██║"   v_3="╚██╗ ██╔╝"
-v_4=" ╚████╔╝ "   v_5="  ╚═══╝  "
-
-w_0="██╗    ██╗"  w_1="██║    ██║"  w_2="██║ █╗ ██║"  w_3="██║███╗██║"
-w_4="╚███╔███╔╝"  w_5="╚══╝╚══╝ "
-
-x_0="██╗  ██╗"    x_1="╚██╗██╔╝"    x_2=" ╚███╔╝ "   x_3=" ██╔██╗ "
-x_4="██╔╝ ██║"    x_5="╚═╝  ╚═╝"
-
-y_0="██╗   ██╗"   y_1="╚██╗ ██╔╝"    y_2=" ╚████╔╝ "   y_3="  ╚██╔╝  "
-y_4="   ██║   "   y_5="   ╚═╝   "
-
-z_0="███████╗"    z_1="╚══███╔╝"    z_2="  ███╔╝ "    z_3=" ███╔╝  "
-z_4="███████╗"    z_5="╚══════╝"
-
-# ═══════════════════════════════════════════════════════════════════
-#  RENDERING LOGIC
-# ═══════════════════════════════════════════════════════════════════
-
-HOST="$(hostname | tr '[:upper:]' '[:lower:]')"
-PADDING="      "   # six-space gap between letters
-
-for (( row = 0; row < font_rows; row++ )); do
-  line=""
-  for (( i = 0; i < ${#HOST}; i++ )); do
-    ch="${HOST:$i:1}"
-
-    # Only render a–z (skip digits, punctuation, spaces, …)
-    if [[ "$ch" =~ [a-z] ]]; then
-      var_name="${ch}_${row}"
-      line+="${!var_name}${PADDING}"
-    fi
-  done
-  printf '%s\n' "$line"
-done
+if __name__ == "__main__":
+    main()

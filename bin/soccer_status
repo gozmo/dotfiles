@@ -1,0 +1,232 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import json
+import operator
+import re
+import urllib.request
+from concurrent.futures import ThreadPoolExecutor
+from dataclasses import dataclass
+
+ESPN_V2 = "https://site.web.api.espn.com/apis/site/v2/sports/soccer"
+ESPN_STANDINGS = "https://site.web.api.espn.com/apis/v2/sports/soccer"
+USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64)"
+FORM_LEN = 5
+
+
+@dataclass
+class Team:
+    league: str
+    name_search: str
+    display_name: str
+    league_label: str
+    color: str
+
+
+@dataclass
+class LeaguePosition:
+    rank: int
+    points: int
+    games_played: int
+    wins: int
+    draws: int
+    losses: int
+    table_size: int
+
+
+@dataclass
+class Standings:
+    season_name: str
+    position: LeaguePosition | None
+
+
+@dataclass
+class MatchResult:
+    date: str
+    result: str
+    home_away: str
+    score: str
+    opponent: str
+
+
+@dataclass
+class TeamStatus:
+    team: Team
+    position: LeaguePosition | None
+    recent: list[MatchResult]
+
+
+class TermColor:
+     BLACK = '\033[30m'
+     RED = '\033[31m'
+     GREEN = '\033[32m'
+     YELLOW = '\033[33m' # orange on some systems
+     BLUE = '\033[34m'
+     MAGENTA = '\033[35m'
+     CYAN = '\033[36m'
+     LIGHT_GRAY = '\033[37m'
+     DARK_GRAY = '\033[90m'
+     BRIGHT_RED = '\033[91m'
+     BRIGHT_GREEN = '\033[92m'
+     BRIGHT_YELLOW = '\033[93m'
+     BRIGHT_BLUE = '\033[94m'
+     BRIGHT_MAGENTA = '\033[95m'
+     BRIGHT_CYAN = '\033[96m'
+     WHITE = '\033[97m'
+ 
+     RESET = '\033[0m'
+
+
+TEAMS = [
+    Team("swe.1", "gais", "GAIS", "Allsvenskan", TermColor.BRIGHT_GREEN),
+    Team("ger.1", "union berlin", "Union Berlin", "Bundesliga", TermColor.BRIGHT_RED),
+    Team("ita.1", "atalanta", "Atalanta", "Serie A", TermColor.BLUE),
+    Team("eng.1", "brighton", "Brighton & Hove Albion", "Premier League", TermColor.BRIGHT_BLUE),
+]
+
+
+def fetch_json(url: str) -> dict:
+    request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+    with urllib.request.urlopen(request, timeout=20) as response:
+        return json.load(response)
+
+
+def find_team_id(team: Team) -> str | None:
+    data = fetch_json(f"{ESPN_V2}/{team.league}/teams")
+    for entry in data["sports"][0]["leagues"][0]["teams"]:
+        if team.name_search.lower() in entry["team"]["displayName"].lower():
+            return entry["team"]["id"]
+    return None
+
+
+def stat_value(entry: dict, abbreviation: str) -> int:
+    for stat in entry["stats"]:
+        if stat["abbreviation"] == abbreviation:
+            return int(stat["value"] or 0)
+    return 0
+
+
+def get_standings(team: Team, team_id: str) -> Standings:
+    url = (
+        f"{ESPN_STANDINGS}/{team.league}/standings?region=us&lang=en&contentorigin=espn"
+    )
+    data = fetch_json(url)
+    league = data["children"][0]
+    entries = league["standings"]["entries"]
+    position = None
+    for entry in entries:
+        if entry["team"]["id"] == team_id:
+            position = LeaguePosition(
+                rank=stat_value(entry, "R"),
+                points=stat_value(entry, "P"),
+                games_played=stat_value(entry, "GP"),
+                wins=stat_value(entry, "W"),
+                draws=stat_value(entry, "D"),
+                losses=stat_value(entry, "L"),
+                table_size=len(entries),
+            )
+    return Standings(season_name=league["name"], position=position)
+
+
+def find_competitor(competitors: list[dict], team_id: str, own: bool) -> dict:
+    for competitor in competitors:
+        if (competitor["team"]["id"] == team_id) == own:
+            return competitor
+    raise ValueError(f"team {team_id} not in match")
+
+
+def to_match_result(event: dict, team_id: str) -> MatchResult:
+    competition = event["competitions"][0]
+    us = find_competitor(competition["competitors"], team_id, own=True)
+    them = find_competitor(competition["competitors"], team_id, own=False)
+    us_score = int(us["score"]["value"] or 0)
+    them_score = int(them["score"]["value"] or 0)
+    if us["winner"]:
+        result = f"{TermColor.GREEN}W{TermColor.RESET}"
+    elif us_score == them_score:
+        result = "D"
+    else:
+        result = f"{TermColor.RED}L{TermColor.RESET}"
+    return MatchResult(
+        date=event["date"][:10],
+        result=result,
+        home_away=us["homeAway"],
+        score=f"{us_score}-{them_score}",
+        opponent=them["team"]["displayName"],
+    )
+
+
+def recent_matches(
+    team: Team, team_id: str, season_year: int, limit: int
+) -> list[MatchResult]:
+    matches = []
+    for season in (season_year, season_year - 1):
+        url = f"{ESPN_V2}/{team.league}/teams/{team_id}/schedule?season={season}"
+        matches.extend(fetch_json(url).get("events", []))
+    completed = [
+        event
+        for event in matches
+        if event["competitions"][0]["status"]["type"]["state"] == "post"
+    ]
+    completed.sort(key=operator.itemgetter("date"), reverse=True)
+    matches = [to_match_result(event, team_id) for event in completed[:limit]]
+    matches.reverse()
+    return matches
+
+
+def season_year_from(standings: Standings) -> int:
+    match = re.search(r"\d{4}", standings.season_name)
+    if match:
+        return int(match.group())
+    return 2026
+
+
+def fetch_team_status(team: Team) -> str:
+    team_id = find_team_id(team)
+    if team_id is None:
+        return f"== {team.display_name} ==\n  team not found in {team.league}\n"
+    standings = get_standings(team, team_id)
+    recent = recent_matches(team, team_id, season_year_from(standings), FORM_LEN)
+    return format_status(
+        TeamStatus(team=team, position=standings.position, recent=recent)
+    )
+
+
+def format_status(status: TeamStatus) -> str:
+    name = status.team.color + status.team.display_name + TermColor.RESET
+    lines = [f"{name} · {status.team.league_label} =="]
+    position = status.position
+    if position is None:
+        lines.append("  Table:   not in current table")
+    elif position.games_played == 0:
+        lines.append(
+            f"  Table:   {position.rank} of {position.table_size} · no matches played yet"
+        )
+    else:
+        lines.append(
+            f"  Table:   #{position.rank} of {position.table_size} · {position.points} pts"
+            f" · {position.games_played} played ({position.wins} W {position.draws}D {position.losses}L)"
+        )
+    if not status.recent:
+        lines.append("  Last 5:  no recent matches found")
+        return "\n".join(lines) + "\n"
+    form = ""
+    for match in reversed(status.recent):
+        form += match.result + " "
+    latest = status.recent[-1]
+    lines.append(f"  Last 5:  {form.strip()}")
+    lines.append(
+        f"  Latest:  {latest.date} · {latest.result} · {latest.score} vs {latest.opponent} ({latest.home_away})"
+    )
+    return "\n".join(lines) + "\n"
+
+
+def main() -> None:
+    with ThreadPoolExecutor(max_workers=len(TEAMS)) as pool:
+        futures = [pool.submit(fetch_team_status, team) for team in TEAMS]
+        for future in futures:
+            print(future.result())
+
+
+if __name__ == "__main__":
+    main()

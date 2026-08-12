@@ -1,10 +1,5 @@
-sudo apt-get install -y fish fonts-powerline
+sudo apt-get install -y fish 
 
-if [[ ! -d $HOME/opt/fishline ]]
-then
-    mkdir -p $HOME/opt/fishline
-    git clone https://github.com/0rax/fishline.git $HOME/opt/fishline
-fi
 
 mkdir -p $HOME/.config/fish
 

@@ -1,0 +1,71 @@
+TODO:
+Images not showing when clicking on them
+Remove mislabeled faces
+
+
+Ideas:
+* Similar images 
+  * gallery mode
+  * semantic search
+* Faces 
+  * Add bbox around face in gallery view
+  * remove labels
+  * randomize batch
+* Ranking
+  * Predict ranking of unranked images
+* Tags
+  * Predict tags
+  * Use clip for tags
+* Concepts
+  * Train model
+  * Use active learning
+* Gallery view
+  * Detailed view when looking at image
+  * Toggle faces
+  * Image details info
+  * Find similar images
+  * 
+
+
+Problems to solve:
+* Find good background images
+* Deal with macro images
+* Find sequence of images
+* Cluster images
+* Make concept classifications
+  * Start with clip search
+  * Active Learning pipeline
+  * Cannot classify every image
+
+
+
+# Working log
+
+## 
+@src/webserver/templates/faces.html
+@src/face_recognition
+1. make a new face label page for labeling similar faces
+2. it should be linked in the main face label page
+3. on the page, all the available labels should be on the left hand side
+4. clicking on one label on the left hand side shows a batch of non label faces that is similar to the label
+
+
+## Show bbox around faces in face view, to verify the annotation is correct
+show bbox around faces in face view
+
+## Some images doesnt show up
+some thumbnails in the rating page does not show up: GET /thumb/2022/10/23/_W8A0312_thumb.jpg HTTP/1.1" 404 -
+
+
+## Rate multiple images in a batch as winner
+- Add 1-n rating under the picture cards
+- click on the image makes it the only winner
+- add continue button
+ 
+# Future
+## Bootstrap ratings from stars
+
+## Rating sampling reiterate
+is there a temporal connection, if one picture get rated positive, should neighbours get a small boost?
+
+

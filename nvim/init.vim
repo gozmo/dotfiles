@@ -95,6 +95,7 @@ Plug 'MunifTanjim/nui.nvim'
 Plug 'MeanderingProgrammer/render-markdown.nvim'
 Plug 'vuciv/vim-bujo' "Task manager and Todo lists
 Plug 'leolaurindo/tunnelvision.nvim'
+Plug 'TheNoeTrevino/haunt.nvim' "Annotate code
 
 "----------------------------------
 
