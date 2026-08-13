@@ -205,7 +205,7 @@ def format_status(status: TeamStatus) -> str:
     else:
         lines.append(
             f"  Table:   #{position.rank} of {position.table_size} · {position.points} pts"
-            f" · {position.games_played} played ({position.wins} W {position.draws}D {position.losses}L)"
+            f" · {position.games_played} played ({position.wins}W {position.draws}D {position.losses}L)"
         )
     if not status.recent:
         lines.append("  Last 5:  no recent matches found")
