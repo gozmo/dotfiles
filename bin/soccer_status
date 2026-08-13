@@ -83,8 +83,6 @@ TEAMS = [
     Team("ita.1", "atalanta", "Atalanta", "Serie A", TermColor.BLUE),
     Team("eng.1", "brighton", "Brighton & Hove Albion", "Premier League", TermColor.BRIGHT_BLUE),
     Team("eng.1", "aston villa", "Aston Villa", "Premier League", TermColor.BRIGHT_MAGENTA),
-    Team("arg.1", "river plate", "River Plate", "Liga Profesional", TermColor.BRIGHT_RED),
-    Team("arg.1", "boca juniors", "Boca Juniors", "Liga Profesional", TermColor.BRIGHT_BLUE),
 ]
 
 
