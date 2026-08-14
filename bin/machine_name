@@ -139,9 +139,9 @@ def interpolate_gradient(colors: list[tuple], ratio: float) -> tuple[int,int,int
 def main():
     use_random = "-r" in sys.argv or "--random" in sys.argv
     
-    hostname = socket.gethostname().lower()
-    
-    # Filter only characters present in the font 
+    hostname = socket.gethostname().lower()[:11]
+
+    # Filter only characters present in the font
     visible_chars = [c for c in hostname if c in FONT]
     
     if not visible_chars:
