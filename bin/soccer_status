@@ -83,6 +83,7 @@ TEAMS = [
     Team("eng.1", "brighton", "Brighton & Hove Albion", "Premier League", TermColor.BRIGHT_BLUE),
     Team("eng.1", "hull city", "Hull City", "Premier League", TermColor.BRIGHT_YELLOW),
     Team("eng.1", "sunderland", "Sunderland", "Premier League", TermColor.BRIGHT_RED),
+    Team("eng.2", "west ham", "West Ham United", "Championship", TermColor.LIGHT_GRAY),
     Team("eng.2", "blackburn rovers", "Blackburn Rovers", "Championship", TermColor.CYAN),
     Team("ita.1", "atalanta", "Atalanta", "Serie A", TermColor.BLUE),
     Team("ger.1", "union berlin", "Union Berlin", "Bundesliga", TermColor.BRIGHT_RED),
