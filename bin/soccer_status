@@ -79,13 +79,13 @@ class TermColor:
 
 TEAMS = [
     Team("swe.1", "gais", "GAIS", "Allsvenskan", TermColor.BRIGHT_GREEN),
-    Team("ger.1", "union berlin", "Union Berlin", "Bundesliga", TermColor.BRIGHT_RED),
-    Team("ita.1", "atalanta", "Atalanta", "Serie A", TermColor.BLUE),
+    Team("eng.1", "aston villa", "Aston Villa", "Premier League", TermColor.BRIGHT_MAGENTA),
     Team("eng.1", "brighton", "Brighton & Hove Albion", "Premier League", TermColor.BRIGHT_BLUE),
-    Team("eng.2", "blackburn rovers", "Blackburn Rovers", "Championship", TermColor.CYAN),
     Team("eng.1", "hull city", "Hull City", "Premier League", TermColor.BRIGHT_YELLOW),
     Team("eng.1", "sunderland", "Sunderland", "Premier League", TermColor.BRIGHT_RED),
-    Team("eng.1", "aston villa", "Aston Villa", "Premier League", TermColor.BRIGHT_MAGENTA),
+    Team("eng.2", "blackburn rovers", "Blackburn Rovers", "Championship", TermColor.CYAN),
+    Team("ita.1", "atalanta", "Atalanta", "Serie A", TermColor.BLUE),
+    Team("ger.1", "union berlin", "Union Berlin", "Bundesliga", TermColor.BRIGHT_RED),
 ]
 
 
@@ -198,7 +198,7 @@ def fetch_team_status(team: Team) -> str:
 
 def format_status(status: TeamStatus) -> str:
     name = status.team.color + status.team.display_name + TermColor.RESET
-    lines = [f"{name} · {status.team.league_label} =="]
+    lines = [f"{name} · {status.team.league_label}"]
     position = status.position
     if position is None:
         lines.append("  Table:   not in current table")
