@@ -79,7 +79,6 @@ class TermColor:
 
 TEAMS = [
     Team("swe.1", "gais", "GAIS", "Allsvenskan", TermColor.BRIGHT_GREEN),
-    Team("eng.1", "aston villa", "Aston Villa", "Premier League", TermColor.BRIGHT_MAGENTA),
     Team("eng.1", "brighton", "Brighton & Hove Albion", "Premier League", TermColor.BRIGHT_BLUE),
     Team("eng.1", "hull city", "Hull City", "Premier League", TermColor.BRIGHT_YELLOW),
     Team("eng.1", "sunderland", "Sunderland", "Premier League", TermColor.BRIGHT_RED),
@@ -187,15 +186,16 @@ def season_year_from(standings: Standings) -> int:
     return 2026
 
 
-def fetch_team_status(team: Team) -> str:
+def fetch_team_status(team: Team) -> tuple[str, str]:
     team_id = find_team_id(team)
     if team_id is None:
-        return f"== {team.display_name} ==\n  team not found in {team.league}\n"
+        return f"== {team.display_name} ==\n  team not found in {team.league}\n", ""
     standings = get_standings(team, team_id)
     recent = recent_matches(team, team_id, season_year_from(standings), FORM_LEN)
+    latest_date = recent[-1].date if recent else ""
     return format_status(
         TeamStatus(team=team, position=standings.position, recent=recent)
-    )
+    ), latest_date
 
 
 def format_status(status: TeamStatus) -> str:
@@ -229,9 +229,10 @@ def format_status(status: TeamStatus) -> str:
 
 def main() -> None:
     with ThreadPoolExecutor(max_workers=len(TEAMS)) as pool:
-        futures = [pool.submit(fetch_team_status, team) for team in TEAMS]
-        for future in futures:
-            print(future.result())
+        results = list(pool.map(fetch_team_status, TEAMS))
+    results.sort(key=lambda r: r[1], reverse=True)
+    for output, _ in results:
+        print(output)
 
 
 if __name__ == "__main__":

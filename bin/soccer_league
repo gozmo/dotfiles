@@ -61,6 +61,7 @@ class TermColor:
 LEAGUES = [
     League("eng.1", "Premier League", TermColor.BRIGHT_MAGENTA),
     League("eng.2", "Championship", TermColor.CYAN),
+    League("eng.3", "League One", TermColor.GREEN),
     League("ita.1", "Serie A", TermColor.BLUE),
     League("ger.1", "Bundesliga", TermColor.BRIGHT_RED),
 ]
